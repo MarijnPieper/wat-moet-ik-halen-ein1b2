@@ -5,12 +5,14 @@ import android.os.Bundle;
 
 public class WatmoetikhalenActivity extends Activity {
     /** Called when the activity is first created. */
+	private DbAdapter dbHelper;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        //hallo dit is laura's test
         
-        //Waarom werkt het niet zoals ik dat wil???
+        dbHelper = new DbAdapter(this);
+        dbHelper.open();
     }
 }
