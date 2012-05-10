@@ -8,9 +8,13 @@ public class WatmoetikhalenActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
-        //hallo dit is laura's test
+        setContentView(R.layout.vakkenpakket_layout);
         
-        //Waarom werkt het niet zoals ik dat wil???
+        
+        
+        
+    
+    	
+    
     }
 }
