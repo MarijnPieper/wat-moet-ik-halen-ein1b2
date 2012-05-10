@@ -9,7 +9,11 @@ public class WatmoetikhalenActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+<<<<<<< HEAD
         
         // Zebrapad
+=======
+        //hallo dit is laura's test
+>>>>>>> 9c44240c61aa70b0d28c5d4f14a4f4884f609228
     }
 }
