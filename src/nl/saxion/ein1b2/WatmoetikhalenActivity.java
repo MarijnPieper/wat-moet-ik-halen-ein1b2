@@ -10,5 +10,7 @@ public class WatmoetikhalenActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         //hallo dit is laura's test
+        
+        //Waarom werkt het niet zoals ik dat wil???
     }
 }
