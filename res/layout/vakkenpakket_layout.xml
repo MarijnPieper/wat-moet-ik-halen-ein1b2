@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textViewVakkenpakket"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Vakkenpakket Toevoegen"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:paddingTop="5dp"
+        android:paddingBottom="20dp" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp" >
+
+        <TextView
+            android:id="@+id/lblNaam"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="5dp"
+            android:text="Naam:"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <EditText
+            android:id="@+id/txtNaam"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.10"
+            android:padding="10dp" >
+        </EditText>
+    </LinearLayout>
+
+
+        	
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp" >
+
+        <TextView
+            android:id="@+id/lblStartdatum"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="5dp"
+            android:text="Start datum:"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <EditText
+            android:id="@+id/txtStartDatum"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.10"
+            android:inputType="date" >
+
+            
+        </EditText>
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp" >
+
+        <TextView
+            android:id="@+id/lblEinddatum"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="5dp"
+            android:text="Eind datum:"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <EditText
+            android:id="@+id/txtEindDatum"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.10"
+            android:inputType="date" >
+
+            
+        </EditText>
+
+    </LinearLayout>
+  
+
+    <nl.saxion.ein1b2.Line
+        android:id="@+id/line1"
+        android:layout_width="wrap_content"
+        android:layout_height="8dp" />
+
+    
+
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp" >
+
+        <TextView
+            android:id="@+id/lblVakken"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="5dp"
+            android:text="Vakken"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <Button
+            android:id="@+id/btnAddVak"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.10"
+            android:text="+" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/listView1"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:padding="5dp" >
+    </ListView>
+    <Button
+        android:id="@+id/buttonToevoegen"
+        android:layout_width="match_parent"
+        android:layout_height="62dp"
+        android:padding="10dp"
+        android:text="Toevoegen" />
+
+</LinearLayout>
