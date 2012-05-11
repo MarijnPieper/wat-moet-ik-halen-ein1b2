@@ -18,7 +18,7 @@ public class PeriodeActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.vakkenpakket_layout);
+        setContentView(R.layout.periodes);
         
 //        ListView l = (ListView) findViewById(R.id.listViewPeriodes);
 //        periodes = new ArrayList<Periode>();
