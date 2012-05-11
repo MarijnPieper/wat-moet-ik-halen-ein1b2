@@ -1,6 +1,7 @@
 package nl.saxion.ein1b2;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 public class WatmoetikhalenActivity extends Activity {
@@ -10,20 +11,19 @@ public class WatmoetikhalenActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-<<<<<<< HEAD
-        setContentView(R.layout.vakkenpakket_layout);
-        
-        
-        
-        
-    
-    	
-    
-=======
-        setContentView(R.layout.main);
+        //TODO: Toets overzicht layout, geen vakkenpakket
+        //setContentView(R.layout.main);
+       startVakkenpakketToevoegenActivity();
         
         dbHelper = new DbAdapter(this);
         dbHelper.open();
->>>>>>> 70c927c13df78cd60e14faa11d6f8d4ea0eb3ec0
+        dbHelper.close();
     }
+    
+    private void startVakkenpakketToevoegenActivity(){
+    	Intent i = new Intent(this, ActivityVakkenpakketToevoegen.class);
+		startActivity(i);
+    }
+    
+    
 }
