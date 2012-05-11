@@ -20,14 +20,14 @@ public class PeriodeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.periodes);
         
-//        ListView l = (ListView) findViewById(R.id.listViewPeriodes);
-//        periodes = new ArrayList<Periode>();
-//        periodes.add(new Periode("Kwartiel 1", new GregorianCalendar(2012,1,1), new GregorianCalendar(2012,4,4)));
-//        periodes.add(new Periode("Kwartiel 2", new GregorianCalendar(2012,1,1), new GregorianCalendar(2012,4,4)));
-//        adapter = new PeriodesAdapter(this, R.layout.periodeadapter, periodes);
-//       
-//        l.setAdapter(adapter);
-//        l.setOnItemClickListener(new ClickListener());
+        ListView l = (ListView) findViewById(R.id.listViewPeriodes);
+        periodes = new ArrayList<Periode>();
+        periodes.add(new Periode("Kwartiel 1", new GregorianCalendar(2012,1,1), new GregorianCalendar(2012,4,4)));
+        periodes.add(new Periode("Kwartiel 2", new GregorianCalendar(2012,1,1), new GregorianCalendar(2012,4,4)));
+        adapter = new PeriodesAdapter(this, R.layout.periodeadapter, periodes);
+       
+        l.setAdapter(adapter);
+        l.setOnItemClickListener(new ClickListener());
     }
     
     class ClickListener implements OnItemClickListener {
