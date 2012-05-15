@@ -11,7 +11,7 @@
         android:padding="5dp" >
 
         <TextView
-            android:id="@+id/textViewNaamVak"
+            android:id="@+id/lblVaknaam"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -20,7 +20,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <EditText
-            android:id="@+id/editTextVakNaam"
+            android:id="@+id/txtVaknaam"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.10" >

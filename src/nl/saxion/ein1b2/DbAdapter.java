@@ -1,6 +1,10 @@
 package nl.saxion.ein1b2;
 
+import java.util.ArrayList;
+
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -19,6 +23,21 @@ public class DbAdapter {
 		mydb = dbHelper.getWritableDatabase();
 		return this;
 	}
+	
+	public void close() {
+		if(mydb != null){
+			dbHelper.close();
+		}
+	}
+	
+	public void insertVakkenpakket(String naam, CustomDate startdatum, CustomDate einddatum){
+		ContentValues values = new ContentValues();
+		values.put("naam", naam);
+		values.put("startdatum", startdatum.toStringForDB());
+		values.put("einddatum", einddatum.toStringForDB());
+		long newPeriode = mydb.insert("periodes", null, values);
+	}
+	
 	
 	
 	public static class DatabaseHelper extends SQLiteOpenHelper {
@@ -50,8 +69,7 @@ public class DbAdapter {
 		private static final String CREATE_TBL_TOETSTYPE = "CREATE TABLE toetstype ("
 				+ "id INTEGER PRIMARY KEY AUTOINCREMENT"
 				+ ", naam VARCHAR(255)"
-				+ ", som INTEGER"
-				+ ", FOREIGN KEY(vak_id) REFERENCES vak(id));";
+				+ ", som INTEGER);";
 		
 		private static final String CREATE_TBL_DEELTOETS = "CREATE TABLE deeltoets ("
 				+ "id INTEGER PRIMARY KEY AUTOINCREMENT"
@@ -75,8 +93,8 @@ public class DbAdapter {
 		private static final String CREATE_TBL_TODO = "CREATE TABLE todo ("
 				+ "id INTEGER PRIMARY KEY AUTOINCREMENT"
 				+ ", titel varchar(255)"
-				+ ", beschrijving varchar(255))"
-				+ ", afgerond TINYINT;";
+				+ ", beschrijving varchar(255)"
+				+ ", afgerond TINYINT);";
 		
 		private static final String INSERT_TOETSTYPE= "INSERT INTO toetstype (naam, som) SELECT ('Proefwerk', 3) UNION ALL SELECT ('Schiftelijke Overhoring', 1);";
 		
