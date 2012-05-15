@@ -19,8 +19,6 @@ public class ActivityVakkenpakketToevoegen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vakkenpakket_layout);
         
-        
-        
         //Vak toevoegen
         Button addvak = (Button) findViewById(R.id.btnAddVak);
         addvak.setOnClickListener(new OnClickListener() {

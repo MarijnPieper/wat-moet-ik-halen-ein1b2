@@ -38,7 +38,19 @@ public class DbAdapter {
 		long newPeriode = mydb.insert("periodes", null, values);
 	}
 	
-	
+	public ArrayList<Periode> selectVakkenpakketten(){
+		ArrayList<Periode> periode = new ArrayList<Periode>();
+		
+		Cursor cursor = mydb.rawQuery("SELECT * FROM Periode", null);
+		cursor.moveToFirst();
+		
+		while (cursor.isAfterLast() == false) {
+			Periode p = new Periode(cursor.getString(0), cursor.getString(1),cursor.getString(2));
+			periode.add(p);
+		}
+		
+		return periode;
+	}
 	
 	public static class DatabaseHelper extends SQLiteOpenHelper {
 		private static final String SET_PRAGMA = "PRAGMA foreign_keys = 1;";

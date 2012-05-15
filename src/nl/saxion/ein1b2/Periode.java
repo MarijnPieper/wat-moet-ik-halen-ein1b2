@@ -4,37 +4,50 @@ import java.util.GregorianCalendar;
 
 public class Periode {
 	private String naam;
-	private GregorianCalendar startDatum;
-	private GregorianCalendar eindDatum;
+	private CustomDate startdatum;
+	private CustomDate einddatum;
 	
-	public Periode(String naam, GregorianCalendar startDatum, GregorianCalendar eindDatum){
-		this.setNaam(naam);
-		this.setStartDatum(startDatum);
-		this.setEindDatum(eindDatum);
+	public Periode(String naam, CustomDate startDatum, CustomDate eindDatum){
+		this.naam = naam;
+		this.startdatum = startDatum;
+		this.einddatum = eindDatum;
 	}
-
-	public String getNaam() {
+	
+	public Periode(String naam, String startDatum, String eindDatum) {
+		this.naam = naam;
+		this.startdatum = convertStringtoDate(startDatum);
+		this.einddatum = convertStringtoDate(eindDatum);
+	}
+	
+	private CustomDate convertStringtoDate(String Date) {
+		String[] splitDate = Date.split("-");
+		String[] splitDay = splitDate[2].split(" ");
+		CustomDate newDate = new CustomDate(Integer.parseInt(splitDay[0]), Integer.parseInt(splitDate[1]),Integer.parseInt(splitDate[0]));
+		return newDate;
+	}
+	
+	protected String getNaam() {
 		return naam;
 	}
 
-	public void setNaam(String naam) {
+	protected void setNaam(String naam) {
 		this.naam = naam;
 	}
 
-	public GregorianCalendar getStartDatum() {
-		return startDatum;
+	protected CustomDate getStartdatum() {
+		return startdatum;
 	}
 
-	public void setStartDatum(GregorianCalendar startDatum) {
-		this.startDatum = startDatum;
+	protected void setStartdatum(CustomDate startdatum) {
+		this.startdatum = startdatum;
 	}
 
-	public GregorianCalendar getEindDatum() {
-		return eindDatum;
+	protected CustomDate getEinddatum() {
+		return einddatum;
 	}
 
-	public void setEindDatum(GregorianCalendar eindDatum) {
-		this.eindDatum = eindDatum;
+	protected void setEinddatum(CustomDate einddatum) {
+		this.einddatum = einddatum;
 	}
 	
 	
