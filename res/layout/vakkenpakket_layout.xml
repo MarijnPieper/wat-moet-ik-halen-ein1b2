@@ -2,39 +2,52 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
-
-    <TextView
-        android:id="@+id/textViewVakkenpakket"
+    android:orientation="vertical" 
+    android:padding="5dp">
+
+    <LinearLayout
+        android:id="@+id/linearLayout5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Vakkenpakket Toevoegen"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:paddingTop="5dp"
-        android:paddingBottom="20dp" />
-
+        android:orientation="horizontal"  >
+
+        <TextView
+            android:id="@+id/txtVakkenpakket"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.70"
+            android:gravity="center"
+            android:text="Pakket Toevoegen"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+        <Button
+            android:id="@+id/btnToevoegen"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.30"           
+            android:text="+"
+             />
+
+    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp" >
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/lblNaam"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingLeft="5dp"
+            android:layout_weight=".40"
             android:text="Naam:"
             android:textAppearance="?android:attr/textAppearanceMedium" />
-
+
         <EditText
             android:id="@+id/txtNaam"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1.10"
-            android:padding="10dp" >
+            android:layout_weight=".60">
         </EditText>
     </LinearLayout>
 
@@ -43,15 +56,13 @@
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp" >
+        android:layout_height="wrap_content" >
 
         <TextView
             android:id="@+id/lblStartdatum"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingLeft="5dp"
+            android:layout_weight=".40"
             android:text="Start datum:"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -59,7 +70,7 @@
             android:id="@+id/txtStartDatum"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1.10"
+            android:layout_weight=".60"
             android:inputType="date" >
 
             
@@ -69,15 +80,13 @@
     <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp" >
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/lblEinddatum"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingLeft="5dp"
+            android:layout_weight=".40"
             android:text="Eind datum:"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -85,10 +94,8 @@
             android:id="@+id/txtEindDatum"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1.10"
+            android:layout_weight=".60"
             android:inputType="date" >
-
-            
         </EditText>
 
     </LinearLayout>
@@ -98,21 +105,18 @@
         android:id="@+id/line1"
         android:layout_width="wrap_content"
         android:layout_height="8dp" />
-
-    
-
+
     <LinearLayout
         android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp" >
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/lblVakken"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingLeft="5dp"
+            android:layout_weight=".70"
+            android:gravity="center"
             android:text="Vakken"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -120,21 +124,15 @@
             android:id="@+id/btnAddVak"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1.10"
+            android:layout_weight=".30"
             android:text="+" />
     </LinearLayout>
 
     <ListView
         android:id="@+id/listView1"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:padding="5dp" >
-    </ListView>
-    <Button
-        android:id="@+id/buttonToevoegen"
-        android:layout_width="match_parent"
-        android:layout_height="62dp"
-        android:padding="10dp"
-        android:text="Toevoegen" />
+        android:layout_height="wrap_content" >
+    </ListView>
+    
 
 </LinearLayout>
