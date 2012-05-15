@@ -23,7 +23,7 @@ public class ActivityVakkenpakketToevoegen extends Activity {
         
         //Vak toevoegen
         Button addvak = (Button) findViewById(R.id.btnAddVak);
-        addvak.setOnClickListener(new OnClickListener() {
+        addvak.setOnClickListener(new OnClickListener()  {
 			
 			public void onClick(View v) {
 				AlertDialog.Builder alert = new AlertDialog.Builder(ActivityVakkenpakketToevoegen.this);
