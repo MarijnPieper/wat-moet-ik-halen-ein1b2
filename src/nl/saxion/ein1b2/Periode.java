@@ -1,13 +1,12 @@
 package nl.saxion.ein1b2;
 
-import java.util.GregorianCalendar;
 
 public class Periode {
 	private String naam;
-	private GregorianCalendar startDatum;
-	private GregorianCalendar eindDatum;
+	private CustomDate startDatum;
+	private CustomDate eindDatum;
 	
-	public Periode(String naam, GregorianCalendar startDatum, GregorianCalendar eindDatum){
+	public Periode(String naam, CustomDate startDatum, CustomDate eindDatum){
 		this.setNaam(naam);
 		this.setStartDatum(startDatum);
 		this.setEindDatum(eindDatum);
@@ -21,19 +20,19 @@ public class Periode {
 		this.naam = naam;
 	}
 
-	public GregorianCalendar getStartDatum() {
+	public CustomDate getStartDatum() {
 		return startDatum;
 	}
 
-	public void setStartDatum(GregorianCalendar startDatum) {
+	public void setStartDatum(CustomDate startDatum) {
 		this.startDatum = startDatum;
 	}
 
-	public GregorianCalendar getEindDatum() {
+	public CustomDate getEindDatum() {
 		return eindDatum;
 	}
 
-	public void setEindDatum(GregorianCalendar eindDatum) {
+	public void setEindDatum(CustomDate eindDatum) {
 		this.eindDatum = eindDatum;
 	}
 	
