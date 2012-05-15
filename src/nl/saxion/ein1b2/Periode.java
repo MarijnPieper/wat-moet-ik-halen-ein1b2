@@ -1,7 +1,7 @@
 package nl.saxion.ein1b2;
 
-
 public class Periode {
+	private int id;
 	private String naam;
 	private CustomDate startDatum;
 	private CustomDate eindDatum;
@@ -11,12 +11,28 @@ public class Periode {
 		this.setStartDatum(startDatum);
 		this.setEindDatum(eindDatum);
 	}
-
-	public String getNaam() {
+	
+	// Alleen gebruiken i.c.m. Database
+	public Periode(int id, String naam, String startDatum, String eindDatum) {
+		this.setID(id);
+		this.setNaam(naam);
+		this.setStartDatum(convertStringtoDate(startDatum));
+		this.setEindDatum(convertStringtoDate(eindDatum));
+	}
+	
+	// Zet string om naar CustomDate. Zet alleen Datum om, niet de tijd!
+	private CustomDate convertStringtoDate(String Date) {
+		String[] splitDate = Date.split("-");
+		String[] splitDay = splitDate[2].split(" ");
+		CustomDate newDate = new CustomDate(Integer.parseInt(splitDay[0]), Integer.parseInt(splitDate[1]),Integer.parseInt(splitDate[0]));
+		return newDate;
+	}
+	
+	protected String getNaam() {
 		return naam;
 	}
 
-	public void setNaam(String naam) {
+	protected void setNaam(String naam) {
 		this.naam = naam;
 	}
 
@@ -36,5 +52,11 @@ public class Periode {
 		this.eindDatum = eindDatum;
 	}
 	
+	protected void setID(int ID) {
+		this.id = ID;
+	}
 	
+	protected int getID() {
+		return id;
+	}
 }

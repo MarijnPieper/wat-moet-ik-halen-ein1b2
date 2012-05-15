@@ -178,3 +178,4 @@ public class ActivityVakkenpakketToevoegen extends Activity implements OnClickLi
 		
 	}
 }
+

@@ -38,7 +38,35 @@ public class DbAdapter {
 		long newPeriode = mydb.insert("periodes", null, values);
 	}
 	
+	public ArrayList<Periode> selectVakkenpakketten(){
+		ArrayList<Periode> periode = new ArrayList<Periode>();
+		
+		Cursor cursor = mydb.rawQuery("SELECT * FROM Periode", null);
+		cursor.moveToFirst();
+		
+		while (cursor.isAfterLast() == false) {
+			Periode p = new Periode(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2),cursor.getString(3));
+			periode.add(p);
+		}
+		
+		return periode;
+	}
 	
+	public ArrayList<Vak> selectVakken(int pakketID) {
+		ArrayList<Vak> vakken = new ArrayList<Vak>();
+		String[] args = new String[]{String.valueOf(pakketID)};
+		
+		Cursor cursor = mydb.rawQuery("SELECT * FROM vak WHERE periode_id=?", args);
+		cursor.moveToFirst();
+		
+		while (cursor.isAfterLast() == false) {
+			Vak v = new Vak(cursor.getString(2), 1);
+			vakken.add(v);
+			//TODO Cijfer meegeven. Nu standaard 1.
+		}
+		
+		return vakken;
+	}
 	
 	public static class DatabaseHelper extends SQLiteOpenHelper {
 		private static final String SET_PRAGMA = "PRAGMA foreign_keys = 1;";
