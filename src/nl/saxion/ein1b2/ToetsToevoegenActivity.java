@@ -12,22 +12,32 @@ import android.widget.Spinner;
 
 public class ToetsToevoegenActivity extends Activity {
 
-	private ArrayList<Vak> vakkenlijst = new ArrayList<Vak>();
-	private ArrayAdapter<Vak> vakAdapter;	
+	private ArrayAdapter<Vak> vakAdapter;
+	private ArrayAdapter<TypeToets> typeToetsAdapter;	
 	private Vak vak;
 	private int currentItem=-1;
+	private DbAdapter adapter;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.toets_toevoegen);
-
+		
+		adapter = new DbAdapter(this);
+		
+		adapter.open();
+		ArrayList<TypeToets> types = adapter.selectTypeToetsen();
+		ArrayList<Vak> vakken = adapter.selectVakken(1);
+		adapter.close();
+		
 		Spinner vakSpinner = (Spinner)findViewById(R.id.spinnerVakNaam);
 		Spinner typeSpinner = (Spinner)findViewById(R.id.spinnerToetsType);
-		Spinner reminderSpinner = (Spinner)findViewById(R.id.spinnerReminder);
-
-		vakAdapter = new ArrayAdapter<Vak>(this, android.R.layout.simple_dropdown_item_1line, vakkenlijst);
-		vakSpinner.setAdapter(vakAdapter);
+		
+		vakAdapter = new ArrayAdapter<Vak>(this, android.R.layout.simple_dropdown_item_1line, vakken);
+		typeSpinner.setAdapter(vakAdapter);
+		
+		typeToetsAdapter = new ArrayAdapter<TypeToets>(this, android.R.layout.simple_dropdown_item_1line, types);
+		vakSpinner.setAdapter(typeToetsAdapter);
 	}
 
 	class MySpinnerListener implements OnItemSelectedListener {
@@ -41,7 +51,6 @@ public class ToetsToevoegenActivity extends Activity {
 
 		public void onNothingSelected(AdapterView<?> arg0) {
 			// TODO Auto-generated method stub
-
 		}
 
 	}

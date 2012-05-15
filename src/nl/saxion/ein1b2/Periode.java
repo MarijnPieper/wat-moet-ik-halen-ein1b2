@@ -1,41 +1,62 @@
 package nl.saxion.ein1b2;
 
-import java.util.GregorianCalendar;
-
 public class Periode {
+	private int id;
 	private String naam;
-	private GregorianCalendar startDatum;
-	private GregorianCalendar eindDatum;
+	private CustomDate startDatum;
+	private CustomDate eindDatum;
 	
-	public Periode(String naam, GregorianCalendar startDatum, GregorianCalendar eindDatum){
+	public Periode(String naam, CustomDate startDatum, CustomDate eindDatum){
 		this.setNaam(naam);
 		this.setStartDatum(startDatum);
 		this.setEindDatum(eindDatum);
 	}
-
-	public String getNaam() {
+	
+	// Alleen gebruiken i.c.m. Database
+	public Periode(int id, String naam, String startDatum, String eindDatum) {
+		this.setID(id);
+		this.setNaam(naam);
+		this.setStartDatum(convertStringtoDate(startDatum));
+		this.setEindDatum(convertStringtoDate(eindDatum));
+	}
+	
+	// Zet string om naar CustomDate. Zet alleen Datum om, niet de tijd!
+	private CustomDate convertStringtoDate(String Date) {
+		String[] splitDate = Date.split("-");
+		String[] splitDay = splitDate[2].split(" ");
+		CustomDate newDate = new CustomDate(Integer.parseInt(splitDay[0]), Integer.parseInt(splitDate[1]),Integer.parseInt(splitDate[0]));
+		return newDate;
+	}
+	
+	protected String getNaam() {
 		return naam;
 	}
 
-	public void setNaam(String naam) {
+	protected void setNaam(String naam) {
 		this.naam = naam;
 	}
 
-	public GregorianCalendar getStartDatum() {
+	public CustomDate getStartDatum() {
 		return startDatum;
 	}
 
-	public void setStartDatum(GregorianCalendar startDatum) {
+	public void setStartDatum(CustomDate startDatum) {
 		this.startDatum = startDatum;
 	}
 
-	public GregorianCalendar getEindDatum() {
+	public CustomDate getEindDatum() {
 		return eindDatum;
 	}
 
-	public void setEindDatum(GregorianCalendar eindDatum) {
+	public void setEindDatum(CustomDate eindDatum) {
 		this.eindDatum = eindDatum;
 	}
 	
+	protected void setID(int ID) {
+		this.id = ID;
+	}
 	
+	protected int getID() {
+		return id;
+	}
 }

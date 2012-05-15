@@ -1,8 +1,5 @@
-
 package nl.saxion.ein1b2;
 
-import android.app.Activity;
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,7 +13,7 @@ public class WatmoetikhalenActivity extends Activity {
         super.onCreate(savedInstanceState);
         //TODO: Toets overzicht layout, geen vakkenpakket
         //setContentView(R.layout.main);
-        startVakkenpakketToevoegenActivity();
+       startVakkenpakketToevoegenActivity();
         
         dbHelper = new DbAdapter(this);
         dbHelper.open();
@@ -27,7 +24,4 @@ public class WatmoetikhalenActivity extends Activity {
     	Intent i = new Intent(this, ActivityVakkenpakketToevoegen.class);
 		startActivity(i);
     }
-    
-    
-
 }
