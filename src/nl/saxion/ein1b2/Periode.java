@@ -1,24 +1,26 @@
 package nl.saxion.ein1b2;
 
-import java.util.GregorianCalendar;
-
 public class Periode {
+	private int id;
 	private String naam;
 	private CustomDate startdatum;
 	private CustomDate einddatum;
 	
 	public Periode(String naam, CustomDate startDatum, CustomDate eindDatum){
-		this.naam = naam;
-		this.startdatum = startDatum;
-		this.einddatum = eindDatum;
+		this.setNaam(naam);
+		this.setStartdatum(startDatum);
+		this.setEinddatum(eindDatum);
 	}
 	
-	public Periode(String naam, String startDatum, String eindDatum) {
+	// Alleen gebruiken i.c.m. Database
+	public Periode(int id, String naam, String startDatum, String eindDatum) {
+		this.id = id;
 		this.naam = naam;
 		this.startdatum = convertStringtoDate(startDatum);
 		this.einddatum = convertStringtoDate(eindDatum);
 	}
 	
+	// Zet string om naar CustomDate. Zet alleen Datum om, niet de tijd!
 	private CustomDate convertStringtoDate(String Date) {
 		String[] splitDate = Date.split("-");
 		String[] splitDay = splitDate[2].split(" ");
@@ -50,5 +52,11 @@ public class Periode {
 		this.einddatum = einddatum;
 	}
 	
+	protected void setID(int ID) {
+		this.id = ID;
+	}
 	
+	protected int getID() {
+		return id;
+	}
 }

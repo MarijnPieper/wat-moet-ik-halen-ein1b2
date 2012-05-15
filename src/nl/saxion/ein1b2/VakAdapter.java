@@ -20,15 +20,14 @@ public class VakAdapter extends ArrayAdapter<Vak>{
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (convertView == null) {
-			convertView = inflater.inflate(R.layout.vakkenpakketadapter, null);
+			convertView = inflater.inflate(R.layout.vakadapter, null);
 		}
 		Vak vak = getItem(position);
 		if (vak != null) {
 			EditText vaknaam = (EditText) convertView.findViewById(R.id.txtVaknaam);
-			vaknaam.setText(vak.getVak());			
+			vaknaam.setText(vak.getVakNaam());			
 		}
 		
 		return convertView;
 	}
-
 }

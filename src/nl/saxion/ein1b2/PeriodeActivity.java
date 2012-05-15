@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,6 +22,7 @@ public class PeriodeActivity extends Activity {
         setContentView(R.layout.periodes);
          
         Button Plus = (Button) findViewById(R.id.PeriodeAddVak);
+
         Plus.setOnClickListener(new ClickListener());
                 
         dbHelper = new DbAdapter(this);
@@ -51,6 +51,12 @@ public class PeriodeActivity extends Activity {
 		startActivity(i);
     }
     
+    private void startVakOverzicht(int pID) {
+    	Intent i = new Intent(this, VakActivity.class);
+    	i.putExtra("ID", pID);
+    	startActivity(i);
+    }
+    
     class ClickListener implements OnClickListener {
     	
 		public void onClick(View v) {
@@ -60,14 +66,14 @@ public class PeriodeActivity extends Activity {
 		    	startPeriodeToevoegen();
 			}
 		}
-    	
     }
     
     class ItemClickListener implements OnItemClickListener {
 
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
-			
+			Periode periode = (Periode)parent.getAdapter().getItem(position);
+			startVakOverzicht(periode.getID());
 		}	
     }  
 }
