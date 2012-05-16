@@ -1,7 +1,6 @@
 package nl.saxion.ein1b2;
 
 import java.util.ArrayList;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -48,6 +47,7 @@ public class DbAdapter {
 		while (cursor.isAfterLast() == false) {
 			Periode p = new Periode(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2),cursor.getString(3));
 			periode.add(p);
+			cursor.moveToNext();
 		}
 		
 		return periode;
