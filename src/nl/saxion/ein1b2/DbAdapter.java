@@ -35,7 +35,7 @@ public class DbAdapter {
 		values.put("naam", p.getNaam());
 		values.put("startdatum", p.getStartDatum().toStringForDB());
 		values.put("einddatum", p.getEindDatum().toStringForDB());
-		long newPeriode = mydb.insert("periodes", null, values);
+		long newPeriode = mydb.insert("periode", null, values);
 		
 		for (Vak v: p.getVakken())
 		{
@@ -43,7 +43,7 @@ public class DbAdapter {
 			vak.put("periode_id", newPeriode);
 			vak.put("naam", v.getNaam());
 			vak.put("iscijfer", v.isIscijfer());
-			long newVak = mydb.insert("vak", null, values);
+			long newVak = mydb.insert("vak", null, vak);
 		}
 		return newPeriode;
 	}
@@ -57,6 +57,7 @@ public class DbAdapter {
 		while (cursor.isAfterLast() == false) {
 			Periode p = new Periode(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2),cursor.getString(3));
 			periode.add(p);
+			cursor.moveToNext();
 		}
 		
 		return periode;

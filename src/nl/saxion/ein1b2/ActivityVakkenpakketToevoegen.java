@@ -71,7 +71,7 @@ public class ActivityVakkenpakketToevoegen extends Activity implements OnClickLi
 		if (naam != null && !naam.equals("")
 				&& startDatum != null
 				&& eindDatum != null){
-			Periode pakket = new Periode(naam, startDatum, eindDatum);
+			Periode pakket = new Periode(naam, startDatum, eindDatum, arrVak);
 			dbHelper.open();
 			dbHelper.insertVakkenpakket(pakket);
 			dbHelper.close();	

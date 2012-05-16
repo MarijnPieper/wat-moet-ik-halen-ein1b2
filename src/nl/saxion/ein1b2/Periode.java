@@ -10,10 +10,11 @@ public class Periode {
 	private ArrayList<Vak> vakken;
 	
 
-	public Periode(String naam, CustomDate startDatum, CustomDate eindDatum){
+	public Periode(String naam, CustomDate startDatum, CustomDate eindDatum, ArrayList<Vak> vakken){
 		this.setNaam(naam);
 		this.setStartDatum(startDatum);
 		this.setEindDatum(eindDatum);
+		this.setVakken(vakken);
 	}
 	
 	// Alleen gebruiken i.c.m. Database
