@@ -16,6 +16,7 @@ import android.view.View.OnFocusChangeListener;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ListView;
 
 public class ActivityVakkenpakketToevoegen extends Activity implements OnClickListener {
 	private ArrayList<Vak> arrVak;
@@ -28,6 +29,7 @@ public class ActivityVakkenpakketToevoegen extends Activity implements OnClickLi
 	static final int EINDDATUM_DIALOG_ID = 1;  
 	static final int ERROR_STARTDATUM_KEINERDAN_EINDDATUM_DIALOG_ID = 2;  
 	private long viewIdDialog = 0;
+	private DbAdapter dbHelper;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -39,7 +41,9 @@ public class ActivityVakkenpakketToevoegen extends Activity implements OnClickLi
         txtNaam = (EditText) findViewById(R.id.txtNaam);
 		txtStartDatum = (EditText) findViewById(R.id.txtStartDatum);
 		txtEindDatum = (EditText) findViewById(R.id.txtEindDatum);
-        
+		ListView listview = (ListView) findViewById(R.id.listView1);
+		VakAdapter adapter = new VakAdapter(this, R.layout.vakkenpakketadapter, arrVak);
+		listview.setAdapter(adapter);
         
         //Vakkenpakket toevoegen
         Button btnPakketToevoegen = (Button)findViewById(R.id.btnToevoegen);
@@ -55,7 +59,7 @@ public class ActivityVakkenpakketToevoegen extends Activity implements OnClickLi
         txtEindDatum.setText(eindDatum.toString());
         
         vakToevoegenInstellen();       
-        
+        dbHelper = new DbAdapter(this);
 	}
 	
 
@@ -66,6 +70,9 @@ public class ActivityVakkenpakketToevoegen extends Activity implements OnClickLi
 				&& startDatum != null
 				&& eindDatum != null){
 			Periode pakket = new Periode(naam, startDatum, eindDatum);
+			dbHelper.open();
+			dbHelper.insertVakkenpakket(pakket);
+			dbHelper.close();
 		}
 		
 	}
