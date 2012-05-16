@@ -67,6 +67,21 @@ public class DbAdapter {
 		return types;
 	}
 	
+	public double selectGemCijferVak(int VakID) {
+		Double TotalCijfer = new Double(0);
+		Double Count = new Double(0);
+		String[] args = new String[]{String.valueOf(VakID)};
+		Cursor cursor = mydb.rawQuery("SELECT * FROM toets WHERE vak_id=?", args);
+		cursor.moveToFirst();
+		
+		while (cursor.isAfterLast() == false) {
+			TotalCijfer = TotalCijfer + Double.parseDouble(cursor.getString(5));
+			Count++;
+		}
+		
+		return TotalCijfer / Count;
+	}
+	
 	public ArrayList<Vak> selectVakken(int pakketID) {
 		ArrayList<Vak> vakken = new ArrayList<Vak>();
 		String[] args = new String[]{String.valueOf(pakketID)};
