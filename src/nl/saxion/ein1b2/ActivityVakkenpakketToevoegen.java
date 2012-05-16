@@ -64,7 +64,7 @@ public class ActivityVakkenpakketToevoegen extends Activity implements OnClickLi
 	
 	public void setListVakken(){
 		ListView listview = (ListView) findViewById(R.id.listView1);
-		VakAdapter adapter = new VakAdapter(this, R.layout.vakkenpakketadapter, arrVak);
+		VakOverzichtAdapter adapter = new VakOverzichtAdapter(this, R.layout.vakkenpakketadapter, arrVak);
 		listview.setAdapter(adapter);
 	}
 	

@@ -53,12 +53,12 @@ public class PeriodeActivity extends Activity {
     }
     
     private void startPeriodeToevoegen() {
-    	Intent i = new Intent(this, ActivityVakkenpakketToevoegen.class);
+    	Intent i = new Intent(this,  ActivityVakkenpakketToevoegen.class);
 		startActivity(i);
     }
     
     private void startVakOverzicht(int pID) {
-    	Intent i = new Intent(this, VakActivity.class);
+    	Intent i = new Intent(this, VakOverzichtActivity.class);
     	i.putExtra("ID", pID);
     	startActivity(i);
     }
