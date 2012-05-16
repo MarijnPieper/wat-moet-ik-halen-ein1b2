@@ -66,13 +66,14 @@ public class ActivityVakkenpakketToevoegen extends Activity implements OnClickLi
 	public void onClick(View view) {		
 		String naam = txtNaam.getText().toString();
 				
-		if (naam != null && naam.equals("")
+		if (naam != null && !naam.equals("")
 				&& startDatum != null
 				&& eindDatum != null){
 			Periode pakket = new Periode(naam, startDatum, eindDatum);
 			dbHelper.open();
 			dbHelper.insertVakkenpakket(pakket);
-			dbHelper.close();
+			dbHelper.close();	
+			this.finish();
 		}
 		
 	}
