@@ -23,6 +23,7 @@ public class ActivityVakkenpakketToevoegen extends Activity implements OnClickLi
 	private EditText txtNaam;
 	private EditText txtStartDatum;
 	private EditText txtEindDatum;
+	Button btnPakketToevoegen;
 	private CustomDate startDatum;
 	private CustomDate eindDatum;
 	static final int STARTDATUM_DIALOG_ID = 0;  
@@ -46,8 +47,9 @@ public class ActivityVakkenpakketToevoegen extends Activity implements OnClickLi
 		listview.setAdapter(adapter);
         
         //Vakkenpakket toevoegen
-        Button btnPakketToevoegen = (Button)findViewById(R.id.btnToevoegen);
+        btnPakketToevoegen = (Button)findViewById(R.id.btnToevoegen);
         btnPakketToevoegen.setOnClickListener(this);
+        btnPakketToevoegen.setEnabled(false);
         txtStartDatum.setOnFocusChangeListener(new showOnFocusDatum());
         txtStartDatum.setOnClickListener(new showOnClickDatum());
         txtEindDatum.setOnFocusChangeListener(new showOnFocusDatum());
@@ -94,9 +96,10 @@ public class ActivityVakkenpakketToevoegen extends Activity implements OnClickLi
 					
 					public void onClick(DialogInterface dialog, int which) {
 						String vaknaam = input.getText().toString();
-						if (vaknaam != null && vaknaam.equals("")){
+						if (vaknaam != null && !vaknaam.equals("")){
 							Vak vak = new Vak(vaknaam);
 							arrVak.add(vak);
+							btnPakketToevoegen.setEnabled(true);
 						}
 						return;						
 					}
