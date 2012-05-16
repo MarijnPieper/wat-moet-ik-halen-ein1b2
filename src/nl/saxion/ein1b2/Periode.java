@@ -1,15 +1,20 @@
 package nl.saxion.ein1b2;
 
+import java.util.ArrayList;
+
 public class Periode {
 	private int id;
 	private String naam;
 	private CustomDate startDatum;
 	private CustomDate eindDatum;
+	private ArrayList<Vak> vakken;
 	
-	public Periode(String naam, CustomDate startDatum, CustomDate eindDatum){
+
+	public Periode(String naam, CustomDate startDatum, CustomDate eindDatum, ArrayList<Vak> vakken){
 		this.setNaam(naam);
 		this.setStartDatum(startDatum);
 		this.setEindDatum(eindDatum);
+		this.setVakken(vakken);
 	}
 	
 	// Alleen gebruiken i.c.m. Database
@@ -59,4 +64,13 @@ public class Periode {
 	protected int getID() {
 		return id;
 	}
+	
+	public ArrayList<Vak> getVakken() {
+		return vakken;
+	}
+
+	public void setVakken(ArrayList<Vak> vakken) {
+		this.vakken = vakken;
+	}
+
 }

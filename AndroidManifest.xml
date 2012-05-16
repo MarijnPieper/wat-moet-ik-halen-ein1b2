@@ -19,5 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name="ActivityVakkenpakketToevoegen" ></activity>
+        <activity android:name="VakActivity" ></activity>
+        
     </application>
 </manifest>

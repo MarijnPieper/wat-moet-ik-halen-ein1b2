@@ -34,7 +34,16 @@ public class DbAdapter {
 		values.put("naam", p.getNaam());
 		values.put("startdatum", p.getStartDatum().toStringForDB());
 		values.put("einddatum", p.getEindDatum().toStringForDB());
-		long newPeriode = mydb.insert("periodes", null, values);
+		long newPeriode = mydb.insert("periode", null, values);
+		
+		for (Vak v: p.getVakken())
+		{
+			ContentValues vak = new ContentValues();
+			vak.put("periode_id", newPeriode);
+			vak.put("naam", v.getNaam());
+			vak.put("iscijfer", v.isIscijfer());
+			long newVak = mydb.insert("vak", null, vak);
+		}
 		return newPeriode;
 	}
 	

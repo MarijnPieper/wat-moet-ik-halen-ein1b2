@@ -71,7 +71,7 @@ public class ActivityVakkenpakketToevoegen extends Activity implements OnClickLi
 		if (naam != null && !naam.equals("")
 				&& startDatum != null
 				&& eindDatum != null){
-			Periode pakket = new Periode(naam, startDatum, eindDatum);
+			Periode pakket = new Periode(naam, startDatum, eindDatum, arrVak);
 			dbHelper.open();
 			dbHelper.insertVakkenpakket(pakket);
 			dbHelper.close();	
@@ -97,7 +97,8 @@ public class ActivityVakkenpakketToevoegen extends Activity implements OnClickLi
 					public void onClick(DialogInterface dialog, int which) {
 						String vaknaam = input.getText().toString();
 						if (vaknaam != null && !vaknaam.equals("")){
-							Vak vak = new Vak(vaknaam);
+							//TODO iscijfer toevoegen
+							Vak vak = new Vak(vaknaam, true);
 							arrVak.add(vak);
 							btnPakketToevoegen.setEnabled(true);
 						}

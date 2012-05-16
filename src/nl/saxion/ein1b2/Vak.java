@@ -1,33 +1,37 @@
 package nl.saxion.ein1b2;
 
 public class Vak {
-	private String vakNaam;
-	private double cijfer;
+	private String naam;
+	private boolean iscijfer;
 	private double doelCijfer;
 	
-	public Vak(String vakNaam) {
-		this.setVakNaam(vakNaam);
+	public Vak(String vakNaam, boolean iscijfer) {
+		this.setNaam(vakNaam);
+		this.setIscijfer(iscijfer);
 	}
 	
 	public Vak(String vakNaam, double doelCijfer) {
-		this.setVakNaam(vakNaam);
+		this.setNaam(vakNaam);
 		this.setDoelCijfer(doelCijfer);
 	}
 	
-	public String getVakNaam() {
-		return vakNaam;
-	}
-	public void setVakNaam(String vakNaam) {
-		this.vakNaam = vakNaam;
-	}
 	
-	public double getCijfer() {
-		return cijfer;
+	public String getNaam() {
+		return naam;
 	}
-	public void setCijfer(double cijfer) {
-		this.cijfer = cijfer;
+
+	public void setNaam(String naam) {
+		this.naam = naam;
 	}
-	
+
+	public boolean isIscijfer() {
+		return iscijfer;
+	}
+
+	public void setIscijfer(boolean iscijfer) {
+		this.iscijfer = iscijfer;
+	}
+
 	public double getDoelCijfer() {
 		return doelCijfer;
 	}
