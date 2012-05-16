@@ -23,6 +23,7 @@ public class ActivityVakkenpakketToevoegen extends Activity implements OnClickLi
 	private EditText txtNaam;
 	private EditText txtStartDatum;
 	private EditText txtEindDatum;
+	Button btnPakketToevoegen;
 	private CustomDate startDatum;
 	private CustomDate eindDatum;
 	static final int STARTDATUM_DIALOG_ID = 0;  
@@ -41,13 +42,12 @@ public class ActivityVakkenpakketToevoegen extends Activity implements OnClickLi
         txtNaam = (EditText) findViewById(R.id.txtNaam);
 		txtStartDatum = (EditText) findViewById(R.id.txtStartDatum);
 		txtEindDatum = (EditText) findViewById(R.id.txtEindDatum);
-		ListView listview = (ListView) findViewById(R.id.listView1);
-		VakAdapter adapter = new VakAdapter(this, R.layout.vakkenpakketadapter, arrVak);
-		listview.setAdapter(adapter);
-        
+		setListVakken();
+		
         //Vakkenpakket toevoegen
-        Button btnPakketToevoegen = (Button)findViewById(R.id.btnToevoegen);
+        btnPakketToevoegen = (Button)findViewById(R.id.btnToevoegen);
         btnPakketToevoegen.setOnClickListener(this);
+        btnPakketToevoegen.setEnabled(false);
         txtStartDatum.setOnFocusChangeListener(new showOnFocusDatum());
         txtStartDatum.setOnClickListener(new showOnClickDatum());
         txtEindDatum.setOnFocusChangeListener(new showOnFocusDatum());
@@ -62,6 +62,12 @@ public class ActivityVakkenpakketToevoegen extends Activity implements OnClickLi
         dbHelper = new DbAdapter(this);
 	}
 	
+	public void setListVakken(){
+		ListView listview = (ListView) findViewById(R.id.listView1);
+		VakAdapter adapter = new VakAdapter(this, R.layout.vakkenpakketadapter, arrVak);
+		listview.setAdapter(adapter);
+	}
+	
 
 	public void onClick(View view) {		
 		String naam = txtNaam.getText().toString();
@@ -69,7 +75,7 @@ public class ActivityVakkenpakketToevoegen extends Activity implements OnClickLi
 		if (naam != null && !naam.equals("")
 				&& startDatum != null
 				&& eindDatum != null){
-			Periode pakket = new Periode(naam, startDatum, eindDatum);
+			Periode pakket = new Periode(naam, startDatum, eindDatum, arrVak);
 			dbHelper.open();
 			dbHelper.insertVakkenpakket(pakket);
 			dbHelper.close();	
@@ -94,9 +100,12 @@ public class ActivityVakkenpakketToevoegen extends Activity implements OnClickLi
 					
 					public void onClick(DialogInterface dialog, int which) {
 						String vaknaam = input.getText().toString();
-						if (vaknaam != null && vaknaam.equals("")){
-							Vak vak = new Vak(vaknaam);
+						if (vaknaam != null && !vaknaam.equals("")){
+							//TODO iscijfer toevoegen
+							Vak vak = new Vak(vaknaam, true);
 							arrVak.add(vak);
+							btnPakketToevoegen.setEnabled(true);
+							setListVakken();
 						}
 						return;						
 					}

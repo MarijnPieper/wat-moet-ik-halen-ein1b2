@@ -29,6 +29,12 @@ public class PeriodeActivity extends Activity {
         FillPeriodes();
     }
     
+    @Override
+    public void onResume() {
+    	super.onResume();
+    	FillPeriodes();
+    }
+    
     private void FillPeriodes(){
     	ArrayList<Periode> periodes = new ArrayList<Periode>();
     	

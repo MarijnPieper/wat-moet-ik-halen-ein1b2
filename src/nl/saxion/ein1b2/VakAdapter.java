@@ -25,7 +25,7 @@ public class VakAdapter extends ArrayAdapter<Vak>{
 		Vak vak = getItem(position);
 		if (vak != null) {
 			EditText vaknaam = (EditText) convertView.findViewById(R.id.txtVaknaam);
-			vaknaam.setText(vak.getVakNaam());			
+			vaknaam.setText(vak.getNaam());			
 		}
 		
 		return convertView;
