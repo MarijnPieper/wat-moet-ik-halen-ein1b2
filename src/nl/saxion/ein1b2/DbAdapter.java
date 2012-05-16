@@ -30,12 +30,13 @@ public class DbAdapter {
 		}
 	}
 	
-	public void insertVakkenpakket(String naam, CustomDate startdatum, CustomDate einddatum){
+	public long insertVakkenpakket(Periode p){
 		ContentValues values = new ContentValues();
-		values.put("naam", naam);
-		values.put("startdatum", startdatum.toStringForDB());
-		values.put("einddatum", einddatum.toStringForDB());
+		values.put("naam", p.getNaam());
+		values.put("startdatum", p.getStartDatum().toStringForDB());
+		values.put("einddatum", p.getEindDatum().toStringForDB());
 		long newPeriode = mydb.insert("periodes", null, values);
+		return newPeriode;
 	}
 	
 	public ArrayList<Periode> selectVakkenpakketten(){
