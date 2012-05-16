@@ -35,7 +35,7 @@ public class ActivityVakkenpakketToevoegen extends Activity implements OnClickLi
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.vakkenpakket_layout);
+        setContentView(R.layout.periodetoevoegen);
         
         //Variable declareren
         arrVak = new ArrayList<Vak>();
@@ -64,7 +64,7 @@ public class ActivityVakkenpakketToevoegen extends Activity implements OnClickLi
 	
 	public void setListVakken(){
 		ListView listview = (ListView) findViewById(R.id.listView1);
-		VakOverzichtAdapter adapter = new VakOverzichtAdapter(this, R.layout.vakkenpakketadapter, arrVak);
+		VakToevoegenAdapter adapter = new VakToevoegenAdapter(this, R.layout.vaktoevoegenadapter, arrVak);
 		listview.setAdapter(adapter);
 	}
 	

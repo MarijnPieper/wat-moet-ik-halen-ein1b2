@@ -20,7 +20,7 @@ public class VakToevoegenAdapter extends ArrayAdapter<Vak>{
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (convertView == null) {
-			convertView = inflater.inflate(R.layout.vakadapter, null);
+			convertView = inflater.inflate(R.layout.vaktoevoegenadapter, null);
 		}
 		Vak vak = getItem(position);
 		if (vak != null) {
