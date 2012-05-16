@@ -55,7 +55,6 @@ public class ActivityVakkenpakketToevoegen extends Activity implements OnClickLi
         txtEindDatum.setText(eindDatum.toString());
         
         vakToevoegenInstellen();       
-        
 	}
 	
 

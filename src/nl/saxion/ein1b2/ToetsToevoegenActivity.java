@@ -14,7 +14,6 @@ public class ToetsToevoegenActivity extends Activity {
 
 	private ArrayAdapter<Vak> vakAdapter;
 	private ArrayAdapter<TypeToets> typeToetsAdapter;	
-	private Vak vak;
 	private int currentItem=-1;
 	private DbAdapter adapter;
 
@@ -43,10 +42,8 @@ public class ToetsToevoegenActivity extends Activity {
 	class MySpinnerListener implements OnItemSelectedListener {
 
 		public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-
 			currentItem = arg2;
 			Vak vak = vakAdapter.getItem(currentItem);
-			
 		}
 
 		public void onNothingSelected(AdapterView<?> arg0) {
