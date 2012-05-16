@@ -42,10 +42,8 @@ public class ActivityVakkenpakketToevoegen extends Activity implements OnClickLi
         txtNaam = (EditText) findViewById(R.id.txtNaam);
 		txtStartDatum = (EditText) findViewById(R.id.txtStartDatum);
 		txtEindDatum = (EditText) findViewById(R.id.txtEindDatum);
-		ListView listview = (ListView) findViewById(R.id.listView1);
-		VakAdapter adapter = new VakAdapter(this, R.layout.vakkenpakketadapter, arrVak);
-		listview.setAdapter(adapter);
-        
+		setListVakken();
+		
         //Vakkenpakket toevoegen
         btnPakketToevoegen = (Button)findViewById(R.id.btnToevoegen);
         btnPakketToevoegen.setOnClickListener(this);
@@ -62,6 +60,12 @@ public class ActivityVakkenpakketToevoegen extends Activity implements OnClickLi
         
         vakToevoegenInstellen();       
         dbHelper = new DbAdapter(this);
+	}
+	
+	public void setListVakken(){
+		ListView listview = (ListView) findViewById(R.id.listView1);
+		VakAdapter adapter = new VakAdapter(this, R.layout.vakkenpakketadapter, arrVak);
+		listview.setAdapter(adapter);
 	}
 	
 
@@ -101,6 +105,7 @@ public class ActivityVakkenpakketToevoegen extends Activity implements OnClickLi
 							Vak vak = new Vak(vaknaam, true);
 							arrVak.add(vak);
 							btnPakketToevoegen.setEnabled(true);
+							setListVakken();
 						}
 						return;						
 					}
