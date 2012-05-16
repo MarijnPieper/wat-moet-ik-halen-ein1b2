@@ -53,6 +53,20 @@ public class DbAdapter {
 		return periode;
 	}
 	
+	public ArrayList<TypeToets> selectTypeToetsen(){
+		ArrayList<TypeToets> types = new ArrayList<TypeToets>();
+		
+		Cursor cursor = mydb.rawQuery("SELECT * FROM TypeToets", null);
+		cursor.moveToFirst();
+		
+		while (cursor.isAfterLast() == false) {
+			TypeToets type = new TypeToets(cursor.getString(1));
+			types.add(type);
+		}
+		
+		return types;
+	}
+	
 	public ArrayList<Vak> selectVakken(int pakketID) {
 		ArrayList<Vak> vakken = new ArrayList<Vak>();
 		String[] args = new String[]{String.valueOf(pakketID)};

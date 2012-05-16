@@ -24,5 +24,4 @@ public class WatmoetikhalenActivity extends Activity {
     	Intent i = new Intent(this, ActivityVakkenpakketToevoegen.class);
 		startActivity(i);
     }
-   
 }
