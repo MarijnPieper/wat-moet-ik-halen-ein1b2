@@ -90,7 +90,7 @@ public class DbAdapter {
 		cursor.moveToFirst();
 
 		while (cursor.isAfterLast() == false) {
-			TypeToets type = new TypeToets(cursor.getString(1));
+			TypeToets type = new TypeToets(cursor.getString(1), Integer.parseInt(cursor.getString(0)));
 			types.add(type);
 		}
 
@@ -120,7 +120,7 @@ public class DbAdapter {
 		cursor.moveToFirst();
 
 		while (cursor.isAfterLast() == false) {
-			Vak v = new Vak(cursor.getString(2), 1);
+			Vak v = new Vak(cursor.getString(2),Integer.parseInt(cursor.getString(0)), 1);
 			vakken.add(v);
 			//TODO Cijfer meegeven. Nu standaard 1.
 		}

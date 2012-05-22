@@ -18,6 +18,10 @@ public class Toets {
 		this.beschrijving = beschrijving;
 		this.datum = datum;
 	}
+	
+	public Toets(String beschrijving) {
+		this.beschrijving = beschrijving;
+	}
 
 	public int getVak_id() {
 		return vak_id;
