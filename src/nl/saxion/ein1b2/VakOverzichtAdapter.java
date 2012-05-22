@@ -9,10 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
-public class VakAdapter extends ArrayAdapter<Vak>{
+public class VakOverzichtAdapter extends ArrayAdapter<Vak>{
 	private LayoutInflater inflater;
 
-	public VakAdapter(Context context,	int textViewResourceId, List<Vak> objects) {
+	public VakOverzichtAdapter(Context context,	int textViewResourceId, List<Vak> objects) {
 		super(context, textViewResourceId, objects);
 		inflater = LayoutInflater.from(context);
 	}

@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 public class ToetsToevoegenActivity extends Activity {
@@ -31,12 +33,14 @@ public class ToetsToevoegenActivity extends Activity {
 		
 		Spinner vakSpinner = (Spinner)findViewById(R.id.spinnerVakNaam);
 		Spinner typeSpinner = (Spinner)findViewById(R.id.spinnerToetsType);
-		
+		Button voegToetsToeButton = (Button)findViewById(R.id.buttonToetsToevoegen);
+		voegToetsToeButton.setOnClickListener(new MyOnClickListener());
 		vakAdapter = new ArrayAdapter<Vak>(this, android.R.layout.simple_dropdown_item_1line, vakken);
 		typeSpinner.setAdapter(vakAdapter);
 		
 		typeToetsAdapter = new ArrayAdapter<TypeToets>(this, android.R.layout.simple_dropdown_item_1line, types);
 		vakSpinner.setAdapter(typeToetsAdapter);
+		
 	}
 
 	class MySpinnerListener implements OnItemSelectedListener {
@@ -50,4 +54,14 @@ public class ToetsToevoegenActivity extends Activity {
 			// TODO Auto-generated method stub
 		}
 	}
+	
+	class MyOnClickListener implements OnClickListener {
+
+		public void onClick(View v) {
+			
+			
+		}
+		
+	}
+
 }

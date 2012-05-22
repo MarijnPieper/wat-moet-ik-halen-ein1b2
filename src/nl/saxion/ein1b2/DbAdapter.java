@@ -29,6 +29,14 @@ public class DbAdapter {
 		}
 	}
 	
+// Tijdelijk als commentaar, wordt aan gewerkt
+	
+//	public long insertToetsToevoegen(Toets t){
+//		ContentValues values = new ContentValues();
+//		values.put(key, value)
+//		return 0;
+//	}
+//	
 	public long insertVakkenpakket(Periode p){
 		ContentValues values = new ContentValues();
 		values.put("naam", p.getNaam());

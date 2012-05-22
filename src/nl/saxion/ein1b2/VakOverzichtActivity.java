@@ -6,11 +6,11 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.ListView;
 
-public class VakActivity extends Activity {
+public class VakOverzichtActivity extends Activity {
 	private int nID;
 	private ArrayList<Vak> vakken;
 	private DbAdapter db;
-	private VakAdapter adapter;
+	private VakOverzichtAdapter adapter;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -23,7 +23,7 @@ public class VakActivity extends Activity {
     	vakken = db.selectVakken(nID);
     	
     	ListView lvVakken = (ListView) findViewById(R.id.lvVakken);
-       	adapter = new VakAdapter(this, R.layout.vakadapter, vakken);
+       	adapter = new VakOverzichtAdapter(this, R.layout.vakadapter, vakken);
        	lvVakken.setAdapter(adapter);
     }
 }
