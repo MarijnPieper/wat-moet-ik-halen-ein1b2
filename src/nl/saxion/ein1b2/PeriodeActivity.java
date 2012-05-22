@@ -35,7 +35,7 @@ public class PeriodeActivity extends Activity {
     	FillPeriodes();
     }
     
-    private void FillPeriodes(){
+    private void FillPeriodes() {
     	ArrayList<Periode> periodes = new ArrayList<Periode>();
     	
     	ListView l = (ListView) findViewById(R.id.listViewPeriodes);
@@ -75,7 +75,6 @@ public class PeriodeActivity extends Activity {
     }
     
     class ItemClickListener implements OnItemClickListener {
-
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
 			Periode periode = (Periode)parent.getAdapter().getItem(position);

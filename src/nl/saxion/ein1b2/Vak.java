@@ -17,7 +17,6 @@ public class Vak {
 		this.setDoelCijfer(doelCijfer);
 	}
 	
-	
 	public String getNaam() {
 		return naam;
 	}

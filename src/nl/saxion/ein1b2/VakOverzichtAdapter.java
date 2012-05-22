@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
+import android.widget.TextView;
 
 public class VakOverzichtAdapter extends ArrayAdapter<Vak>{
 	private LayoutInflater inflater;
@@ -24,10 +24,12 @@ public class VakOverzichtAdapter extends ArrayAdapter<Vak>{
 		}
 		Vak vak = getItem(position);
 		if (vak != null) {
-			EditText vaknaam = (EditText) convertView.findViewById(R.id.txtVaknaam);
+			TextView vaknaam = (TextView) convertView.findViewById(R.id.VakNaam);
 			vaknaam.setText(vak.getNaam());			
 		}
 		
 		return convertView;
+		
+		
 	}
 }

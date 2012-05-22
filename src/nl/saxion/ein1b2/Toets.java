@@ -3,13 +3,11 @@ package nl.saxion.ein1b2;
 import java.util.GregorianCalendar;
 
 public class Toets {
-	
-	
+						
 	private int vak_id;
 	private int toetstype_id;
 	private String beschrijving;
 	private CustomDate datum;
-	
 	
 	public Toets(int vak_id, int toetstype_id, String beschrijving, CustomDate datum) {
 		
