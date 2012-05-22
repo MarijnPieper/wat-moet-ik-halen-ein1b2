@@ -1,7 +1,6 @@
 package nl.saxion.ein1b2;
 
 import java.util.ArrayList;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -29,16 +28,7 @@ public class DbAdapter {
 			dbHelper.close();
 		}
 	}
-//
-//	private static final String CREATE_TBL_TOETS = "CREATE TABLE toets ("
-//			+ "id INTEGER PRIMARY KEY AUTOINCREMENT"
-//			+ ", vak_id INTEGER NOT NULL"
-//			+ ", toetstype_id INTEGER NOT NULL"
-//			+ ", beschrijving VARCHAR(255)"
-//			+ ", datumtijd DATETIME"				
-//			+ ", cijfer DOUBLE"				
-//			+ ", FOREIGN KEY(vak_id) REFERENCES vak(id)"
-//			+ ", FOREIGN KEY(toetstype_id) REFERENCES toetstype(id));";
+
 	public long insertToetsToevoegen(Toets t){
 		ContentValues values = new ContentValues();
 		values.put("vak_id", t.getVak_id());
@@ -122,6 +112,7 @@ public class DbAdapter {
 		while (cursor.isAfterLast() == false) {
 			Vak v = new Vak(cursor.getString(2),Integer.parseInt(cursor.getString(0)), 1);
 			vakken.add(v);
+			cursor.moveToNext();
 			//TODO Cijfer meegeven. Nu standaard 1.
 		}
 

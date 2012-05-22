@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 public class PeriodesAdapter extends ArrayAdapter<Periode>  {
 	private LayoutInflater inflater;
+	private DbAdapter db;
 	
 	public PeriodesAdapter(Context context, int textViewResourceId,
 			List<Periode> items) {
