@@ -11,10 +11,13 @@ import android.widget.TextView;
 
 public class VakOverzichtAdapter extends ArrayAdapter<Vak>{
 	private LayoutInflater inflater;
+	private DbAdapter db;
+	private Context context;
 
 	public VakOverzichtAdapter(Context context,	int textViewResourceId, List<Vak> objects) {
 		super(context, textViewResourceId, objects);
 		inflater = LayoutInflater.from(context);
+		this.context = context;
 	}
 	
 	@Override
@@ -25,7 +28,23 @@ public class VakOverzichtAdapter extends ArrayAdapter<Vak>{
 		Vak vak = getItem(position);
 		if (vak != null) {
 			TextView vaknaam = (TextView) convertView.findViewById(R.id.VakNaam);
-			vaknaam.setText(vak.getNaam());			
+			vaknaam.setText(vak.getNaam());
+			
+			TextView cijfer = (TextView) convertView.findViewById(R.id.VakCijfer);
+			
+			db = new DbAdapter(context);
+			db.open();
+			Double huidigCijfer = db.selectGemCijferVak(vak.getVakID());
+			db.close();
+			
+			if (huidigCijfer.equals(Double.NaN)){
+				cijfer.setText("-");
+			}
+			else {
+				cijfer.setText(Double.toString(huidigCijfer));
+			}
+			
+			
 		}
 		
 		return convertView;
