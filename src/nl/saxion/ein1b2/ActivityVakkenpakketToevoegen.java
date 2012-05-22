@@ -28,7 +28,7 @@ public class ActivityVakkenpakketToevoegen extends Activity implements OnClickLi
 	private CustomDate eindDatum;
 	static final int STARTDATUM_DIALOG_ID = 0;  
 	static final int EINDDATUM_DIALOG_ID = 1;  
-	static final int ERROR_STARTDATUM_KEINERDAN_EINDDATUM_DIALOG_ID = 2;  
+	static final int ERROR_STARTDATUM_KLEINERDAN_EINDDATUM_DIALOG_ID = 2;  
 	private long viewIdDialog = 0;
 	private DbAdapter dbHelper;
 	
@@ -128,7 +128,7 @@ public class ActivityVakkenpakketToevoegen extends Activity implements OnClickLi
         	return new DatePickerDialog(this, new setDatumListener(), startDatum.get(GregorianCalendar.YEAR), startDatum.get(GregorianCalendar.MONTH), startDatum.get(GregorianCalendar.DAY_OF_MONTH));
         case EINDDATUM_DIALOG_ID:  
         	return new DatePickerDialog(this, new setDatumListener(), eindDatum.get(GregorianCalendar.YEAR), eindDatum.get(GregorianCalendar.MONTH), eindDatum.get(GregorianCalendar.DAY_OF_MONTH));
-        case ERROR_STARTDATUM_KEINERDAN_EINDDATUM_DIALOG_ID:
+        case ERROR_STARTDATUM_KLEINERDAN_EINDDATUM_DIALOG_ID:
         	AlertDialog.Builder builder = new AlertDialog.Builder(this);
         	builder.setMessage("De eind datum moet later zijn dan de start datum.");
         	builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {				
@@ -153,13 +153,13 @@ public class ActivityVakkenpakketToevoegen extends Activity implements OnClickLi
 				if (tmpDate.before(eindDatum) || tmpDate.equals(eindDatum)) {
 					startDatum.set(year, monthOfYear, dayOfMonth);
 					txtStartDatum.setText(startDatum.toString());
-				} else { showDialog(ERROR_STARTDATUM_KEINERDAN_EINDDATUM_DIALOG_ID); }				
+				} else { showDialog(ERROR_STARTDATUM_KLEINERDAN_EINDDATUM_DIALOG_ID); }				
 			}
 			else {
 				if (startDatum.before(tmpDate) || startDatum.equals(tmpDate)) {
 					eindDatum.set(year, monthOfYear, dayOfMonth);
 					txtEindDatum.setText(eindDatum.toString());
-				} else { showDialog(ERROR_STARTDATUM_KEINERDAN_EINDDATUM_DIALOG_ID); }
+				} else { showDialog(ERROR_STARTDATUM_KLEINERDAN_EINDDATUM_DIALOG_ID); }
 			}
 			
 		}

@@ -10,14 +10,18 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 public class ToetsToevoegenActivity extends Activity {
 
 	private ArrayAdapter<Vak> vakAdapter;
-	private ArrayAdapter<TypeToets> typeToetsAdapter;	
+	private ArrayAdapter<TypeToets> typeToetsAdapter;		
 	private int currentItem=-1;
 	private DbAdapter adapter;
+	static final int STARTDATUM_DIALOG_ID = 0; 
+	private CustomDate startDatum;
+	private EditText txtStartDatum;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -30,16 +34,19 @@ public class ToetsToevoegenActivity extends Activity {
 		ArrayList<TypeToets> types = adapter.selectTypeToetsen();
 		ArrayList<Vak> vakken = adapter.selectVakken(1);
 		adapter.close();
-		
 		Spinner vakSpinner = (Spinner)findViewById(R.id.spinnerVakNaam);
 		Spinner typeSpinner = (Spinner)findViewById(R.id.spinnerToetsType);
 		Button voegToetsToeButton = (Button)findViewById(R.id.buttonToetsToevoegen);
-		voegToetsToeButton.setOnClickListener(new MyOnClickListener());
+//		voegToetsToeButton.setOnClickListener(new VoegToetsToeOnClickListener());
 		vakAdapter = new ArrayAdapter<Vak>(this, android.R.layout.simple_dropdown_item_1line, vakken);
 		typeSpinner.setAdapter(vakAdapter);
-		
 		typeToetsAdapter = new ArrayAdapter<TypeToets>(this, android.R.layout.simple_dropdown_item_1line, types);
 		vakSpinner.setAdapter(typeToetsAdapter);
+		
+		//Datum
+		txtStartDatum = (EditText) findViewById(R.id.txtStartDatum);
+		startDatum = new CustomDate();
+		txtStartDatum.setText(startDatum.toString());
 		
 		
 	}
@@ -60,17 +67,23 @@ public class ToetsToevoegenActivity extends Activity {
 		}
 	}
 
-//	Wordt nog aan gewerkt, niet werkend...
-	class MyOnClickListener implements OnClickListener {
-//
-		public void onClick(View v) {
-//			
-//					Toets toets = new Toets(vak_id, toetstype_id, beschrijving, datum);
+
+	
+//	Wordt aan gewerkt!, Datum ed.
+//	class VoegToetsToeOnClickListener implements OnClickListener {
+//		
+//	public void onClick(View v) {
+//					ArrayList<TypeToets> types = adapter.selectTypeToetsen();
+//					Spinner vakSpinner = (Spinner)findViewById(R.id.spinnerVakNaam);
+//					Spinner typeSpinner = (Spinner)findViewById(R.id.spinnerToetsType);
+//					Vak vak = (Vak)vakSpinner.getAdapter().getItem(vakSpinner.getSelectedItemPosition());
+//					TypeToets typetoets = (TypeToets)typeSpinner.getAdapter().getItem(typeSpinner.getSelectedItemPosition());
+//					Toets toets = new Toets(vak.getVakID(), typetoets.getToetsID() );
 //					adapter.open();
 //					adapter.insertToetsToevoegen(toets);
 //					adapter.close();	
 //					finish();	
-		}	
-	}
+//		}	
+//	}
 
 }
