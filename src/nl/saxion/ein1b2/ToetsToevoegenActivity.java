@@ -62,6 +62,7 @@ public class ToetsToevoegenActivity extends Activity {
 		txtStartDatum.setOnFocusChangeListener(new showOnFocusDatum());
 		txtStartDatum.setOnClickListener(new showOnClickDatum());
 
+		String datum = txtStartDatum.getText().toString();
 
 
 	}
@@ -92,7 +93,7 @@ public class ToetsToevoegenActivity extends Activity {
 //			Spinner vakSpinner = (Spinner)findViewById(R.id.spinnerVakNaam);
 //			Spinner typeSpinner = (Spinner)findViewById(R.id.spinnerToetsType);
 //			Vak vak = (Vak)vakSpinner.getAdapter().getItem(vakSpinner.getSelectedItemPosition());
-//			TypeToets typetoets = (TypeToets)typeSpinner.getAdapter().getItem(typeSpinner.getSelectedItemPosition());
+//			TypeToets typetoets = (TypeToets)typeSpinner.getAdapter().getItem(typeSpinner.getSelectedItemPosition()); 
 //			Toets toets = new Toets(vak.getVakID(), typetoets.getToetsID() );
 //			adapter.open();
 //			adapter.insertToetsToevoegen(toets);
@@ -103,6 +104,12 @@ public class ToetsToevoegenActivity extends Activity {
 
 	//Datum methodes
 
+	private CustomDate convertStringtoDate(String Date ) {
+		String[] splitDate = Date.split("-");
+		String[] splitDay = splitDate[2].split(" ");
+		CustomDate newDate = new CustomDate(Integer.parseInt(splitDay[0]), Integer.parseInt(splitDate[1]),Integer.parseInt(splitDate[0]));
+		return newDate;
+	}
 
 	protected Dialog onCreateDialog(int id) {  
 		switch (id) {  

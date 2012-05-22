@@ -9,6 +9,10 @@ public class TypeToets {
 		this.setToetsID(toetsID);
 	}
 
+	@Override
+	public String toString(){
+		return naam;
+	}
 	public String getNaam() {
 		return naam;
 	}

@@ -14,7 +14,7 @@ public class WatmoetikhalenActivity extends Activity {
         //TODO: Toets overzicht layout, geen vakkenpakket
 //        setContentView(R.layout.main);
        startVakkenpakketToevoegenActivity();
-//        startToetsToevoegenActivity();
+
         
         dbHelper = new DbAdapter(this);
         dbHelper.open();
@@ -26,9 +26,5 @@ public class WatmoetikhalenActivity extends Activity {
 		startActivity(i);
     }
     
-//    private void startToetsToevoegenActivity()	{
-//    	Intent i = new Intent(this, ToetsToevoegenActivity.class);
-//    	startActivity(i);
-//    	
-//    }
+
 }

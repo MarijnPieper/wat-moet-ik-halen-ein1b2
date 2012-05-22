@@ -76,7 +76,7 @@ public class DbAdapter {
 	public ArrayList<TypeToets> selectTypeToetsen(){
 		ArrayList<TypeToets> types = new ArrayList<TypeToets>();
 
-		Cursor cursor = mydb.rawQuery("SELECT * FROM TypeToets", null);
+		Cursor cursor = mydb.rawQuery("SELECT * FROM toetstype", null);
 		cursor.moveToFirst();
 
 		while (cursor.isAfterLast() == false) {
