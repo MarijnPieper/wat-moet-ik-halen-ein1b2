@@ -1,15 +1,27 @@
 package nl.saxion.ein1b2;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
+
+import nl.saxion.ein1b2.ActivityVakkenpakketToevoegen.setDatumListener;
+import nl.saxion.ein1b2.ActivityVakkenpakketToevoegen.showOnClickDatum;
+import nl.saxion.ein1b2.ActivityVakkenpakketToevoegen.showOnFocusDatum;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.DatePickerDialog.OnDateSetListener;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -22,14 +34,14 @@ public class ToetsToevoegenActivity extends Activity {
 	static final int STARTDATUM_DIALOG_ID = 0; 
 	private CustomDate startDatum;
 	private EditText txtStartDatum;
-	
+	private long viewIdDialog = 0;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.toets_toevoegen);
-		
+
 		adapter = new DbAdapter(this);
-		
 		adapter.open();
 		ArrayList<TypeToets> types = adapter.selectTypeToetsen();
 		ArrayList<Vak> vakken = adapter.selectVakken(1);
@@ -42,15 +54,18 @@ public class ToetsToevoegenActivity extends Activity {
 		typeSpinner.setAdapter(vakAdapter);
 		typeToetsAdapter = new ArrayAdapter<TypeToets>(this, android.R.layout.simple_dropdown_item_1line, types);
 		vakSpinner.setAdapter(typeToetsAdapter);
-		
+
 		//Datum
 		txtStartDatum = (EditText) findViewById(R.id.txtStartDatum);
 		startDatum = new CustomDate();
 		txtStartDatum.setText(startDatum.toString());
-		
-		
+		txtStartDatum.setOnFocusChangeListener(new showOnFocusDatum());
+		txtStartDatum.setOnClickListener(new showOnClickDatum());
+
+
+
 	}
-	
+
 	public void finish()	{
 		this.finish();
 	}
@@ -69,22 +84,68 @@ public class ToetsToevoegenActivity extends Activity {
 	}
 
 
-	
-//	Wordt aan gewerkt!, Datum ed.
+
+
 //	class VoegToetsToeOnClickListener implements OnClickListener {
-//		
-//	public void onClick(View v) {
-//					ArrayList<TypeToets> types = adapter.selectTypeToetsen();
-//					Spinner vakSpinner = (Spinner)findViewById(R.id.spinnerVakNaam);
-//					Spinner typeSpinner = (Spinner)findViewById(R.id.spinnerToetsType);
-//					Vak vak = (Vak)vakSpinner.getAdapter().getItem(vakSpinner.getSelectedItemPosition());
-//					TypeToets typetoets = (TypeToets)typeSpinner.getAdapter().getItem(typeSpinner.getSelectedItemPosition());
-//					Toets toets = new Toets(vak.getVakID(), typetoets.getToetsID() );
-//					adapter.open();
-//					adapter.insertToetsToevoegen(toets);
-//					adapter.close();	
-//					finish();	
+//
+//		public void onClick(View v) {
+//			ArrayList<TypeToets> types = adapter.selectTypeToetsen();
+//			Spinner vakSpinner = (Spinner)findViewById(R.id.spinnerVakNaam);
+//			Spinner typeSpinner = (Spinner)findViewById(R.id.spinnerToetsType);
+//			Vak vak = (Vak)vakSpinner.getAdapter().getItem(vakSpinner.getSelectedItemPosition());
+//			TypeToets typetoets = (TypeToets)typeSpinner.getAdapter().getItem(typeSpinner.getSelectedItemPosition());
+//			Toets toets = new Toets(vak.getVakID(), typetoets.getToetsID() );
+//			adapter.open();
+//			adapter.insertToetsToevoegen(toets);
+//			adapter.close();	
+//			finish();	
 //		}	
 //	}
 
-}
+	//Datum methodes
+
+
+	protected Dialog onCreateDialog(int id) {  
+		switch (id) {  
+		case STARTDATUM_DIALOG_ID:  
+			return new DatePickerDialog(this, new setDatumListener(), startDatum.get(GregorianCalendar.YEAR), startDatum.get(GregorianCalendar.MONTH), startDatum.get(GregorianCalendar.DAY_OF_MONTH));
+		}; return null;  
+		
+	}
+		class setDatumListener implements OnDateSetListener{
+
+			public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+				CustomDate tmpDate = new CustomDate(dayOfMonth, monthOfYear, year);
+
+				if (viewIdDialog == txtStartDatum.getId()){				
+					startDatum.set(year, monthOfYear, dayOfMonth);
+					txtStartDatum.setText(startDatum.toString());			
+				}
+			}
+		}
+
+
+		class showOnFocusDatum implements OnFocusChangeListener{
+
+			public void onFocusChange(View view, boolean hasFocus) {	
+				viewIdDialog = view.getId();
+				if (hasFocus){
+					if (view.getId() == txtStartDatum.getId()){
+						showDialog(STARTDATUM_DIALOG_ID);
+					}
+
+				}
+			}
+		}
+
+		class showOnClickDatum implements OnClickListener{
+
+			public void onClick(View view) {
+				viewIdDialog = view.getId();
+				if (view.getId() == txtStartDatum.getId()){
+					showDialog(STARTDATUM_DIALOG_ID);
+				}
+			}
+		}
+	}
+

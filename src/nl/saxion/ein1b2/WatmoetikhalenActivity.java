@@ -12,8 +12,9 @@ public class WatmoetikhalenActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //TODO: Toets overzicht layout, geen vakkenpakket
-        //setContentView(R.layout.main);
+//        setContentView(R.layout.main);
        startVakkenpakketToevoegenActivity();
+//        startToetsToevoegenActivity();
         
         dbHelper = new DbAdapter(this);
         dbHelper.open();
@@ -24,4 +25,10 @@ public class WatmoetikhalenActivity extends Activity {
     	Intent i = new Intent(this, ActivityVakkenpakketToevoegen.class);
 		startActivity(i);
     }
+    
+//    private void startToetsToevoegenActivity()	{
+//    	Intent i = new Intent(this, ToetsToevoegenActivity.class);
+//    	startActivity(i);
+//    	
+//    }
 }
