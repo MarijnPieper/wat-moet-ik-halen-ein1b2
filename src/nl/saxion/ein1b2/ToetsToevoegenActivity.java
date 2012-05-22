@@ -18,7 +18,7 @@ public class ToetsToevoegenActivity extends Activity {
 	private ArrayAdapter<TypeToets> typeToetsAdapter;	
 	private int currentItem=-1;
 	private DbAdapter adapter;
-
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,6 +41,11 @@ public class ToetsToevoegenActivity extends Activity {
 		typeToetsAdapter = new ArrayAdapter<TypeToets>(this, android.R.layout.simple_dropdown_item_1line, types);
 		vakSpinner.setAdapter(typeToetsAdapter);
 		
+		
+	}
+	
+	public void finish()	{
+		this.finish();
 	}
 
 	class MySpinnerListener implements OnItemSelectedListener {
@@ -54,14 +59,18 @@ public class ToetsToevoegenActivity extends Activity {
 			// TODO Auto-generated method stub
 		}
 	}
-	
-	class MyOnClickListener implements OnClickListener {
 
+//	Wordt nog aan gewerkt, niet werkend...
+	class MyOnClickListener implements OnClickListener {
+//
 		public void onClick(View v) {
-			
-			
-		}
-		
+//			
+//					Toets toets = new Toets(vak_id, toetstype_id, beschrijving, datum);
+//					adapter.open();
+//					adapter.insertToetsToevoegen(toets);
+//					adapter.close();	
+//					finish();	
+		}	
 	}
 
 }

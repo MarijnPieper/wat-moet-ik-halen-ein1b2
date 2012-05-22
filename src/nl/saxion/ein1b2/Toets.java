@@ -4,53 +4,51 @@ import java.util.GregorianCalendar;
 
 public class Toets {
 	
-	private Vak vak;
-	private String type;
-	private GregorianCalendar datum;
-	private int aantalToetsen;
-
 	
-	public Toets(Vak vak, String type, GregorianCalendar datum, int aantalToetsen) {
+	private int vak_id;
+	private int toetstype_id;
+	private String beschrijving;
+	private CustomDate datum;
+	
+	
+	public Toets(int vak_id, int toetstype_id, String beschrijving, CustomDate datum) {
 		
-		this.vak = vak;
-		this.type = type;
+		this.vak_id = vak_id;
+		this.toetstype_id = toetstype_id;
+		this.beschrijving = beschrijving;
 		this.datum = datum;
-		this.aantalToetsen = aantalToetsen;
 	}
 
-	public Vak getVak() {
-		return vak;
+	public int getVak_id() {
+		return vak_id;
 	}
 
-	public void setVak(Vak vak) {
-		this.vak = vak;
+	public void setVak_id(int vak_id) {
+		this.vak_id = vak_id;
 	}
 
-	public String getType() {
-		return type;
+	public int getToetstype_id() {
+		return toetstype_id;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setToetstype_id(int toetstype_id) {
+		this.toetstype_id = toetstype_id;
 	}
 
-	public GregorianCalendar getDatum() {
+	public String getBeschrijving() {
+		return beschrijving;
+	}
+
+	public void setBeschrijving(String beschrijving) {
+		this.beschrijving = beschrijving;
+	}
+
+	public CustomDate getDatum() {
 		return datum;
 	}
 
-	public void setDatum(GregorianCalendar datum) {
+	public void setDatum(CustomDate datum) {
 		this.datum = datum;
 	}
-	
-	public int getAantalToetsen() {
-		return aantalToetsen;
-	}
-	
-	public void setAantalToetsen(int aantalToetsen) {
-		this.aantalToetsen = aantalToetsen;
-	}
-	
-	
 
-	
 }
