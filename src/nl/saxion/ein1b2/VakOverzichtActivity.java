@@ -1,6 +1,7 @@
 package nl.saxion.ein1b2;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,21 +12,43 @@ import android.widget.Button;
 import android.widget.ListView;
 
 public class VakOverzichtActivity extends Activity {
-	private int nID;
 	private ArrayList<Vak> vakken;	
 	private DbAdapter db;
 	private VakOverzichtAdapter adapter;
+	private ArrayList<Periode> Periodes;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.vakken);
-
+		checkFirstTime();
+	}
+	
+	private void checkFirstTime() {
 		db = new DbAdapter(this);
-
+		db.open();
+		Periodes = new ArrayList<Periode>();
+		Periodes = db.selectVakkenpakketten();
+		db.close();
+		
+		if (!Periodes.isEmpty()){
+			GregorianCalendar curDate = new GregorianCalendar();
+			
+			for (Periode periode : Periodes) {
+				if (curDate.after(periode.getStartDatum()) && curDate.before(periode.getEindDatum())) {
+					//Intent i = new Intent(this,VakOverzichtActivity.class);
+					//i.putExtra("ID", periode.getID());
+					//startActivity(i);
+				}
+			}
+			
+			Intent i = new Intent(this, PeriodeActivity.class);
+			startActivity(i);
+		}
+	}
+	
+	private void initOverzicht(int nID) {
 		vakken = new ArrayList<Vak>();
-		Bundle b = getIntent().getExtras();
-		nID = b.getInt("ID");
 
 		db.open();
 		vakken = db.selectVakken(nID);
