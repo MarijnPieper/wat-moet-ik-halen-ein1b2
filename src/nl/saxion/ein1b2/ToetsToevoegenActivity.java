@@ -48,7 +48,7 @@ public class ToetsToevoegenActivity extends Activity {
 		adapter.close();
 		Spinner vakSpinner = (Spinner)findViewById(R.id.spinnerVakNaam);
 		Spinner typeSpinner = (Spinner)findViewById(R.id.spinnerToetsType);
-		Button voegToetsToeButton = (Button)findViewById(R.id.buttonToetsToevoegen);
+//		Button voegToetsToeButton = (Button)findViewById(R.id.buttonToetsToevoegen);
 //		voegToetsToeButton.setOnClickListener(new VoegToetsToeOnClickListener());
 		vakAdapter = new ArrayAdapter<Vak>(this, android.R.layout.simple_dropdown_item_1line, vakken);
 		typeSpinner.setAdapter(vakAdapter);
@@ -92,6 +92,7 @@ public class ToetsToevoegenActivity extends Activity {
 //			ArrayList<TypeToets> types = adapter.selectTypeToetsen();
 //			Spinner vakSpinner = (Spinner)findViewById(R.id.spinnerVakNaam);
 //			Spinner typeSpinner = (Spinner)findViewById(R.id.spinnerToetsType);
+//			
 //			Vak vak = (Vak)vakSpinner.getAdapter().getItem(vakSpinner.getSelectedItemPosition());
 //			TypeToets typetoets = (TypeToets)typeSpinner.getAdapter().getItem(typeSpinner.getSelectedItemPosition()); 
 //			Toets toets = new Toets(vak.getVakID(), typetoets.getToetsID() );
