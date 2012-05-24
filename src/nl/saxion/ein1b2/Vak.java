@@ -17,6 +17,12 @@ public class Vak {
 		this.setDoelCijfer(doelCijfer);
 	}
 	
+	@Override
+	public String toString(){
+		return naam;
+		
+	}
+	
 	public String getNaam() {
 		return naam;
 	}

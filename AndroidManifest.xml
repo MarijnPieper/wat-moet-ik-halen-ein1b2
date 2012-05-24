@@ -19,7 +19,8 @@
             </intent-filter>
         </activity>
         <activity android:name="ActivityVakkenpakketToevoegen" ></activity>
-        <activity android:name=".VakOverzichtActivity" ></activity>
+        <activity android:name="VakOverzichtActivity" ></activity>
+        <activity android:name="ToetsToevoegenActivity" ></activity>
         
     </application>
 </manifest>

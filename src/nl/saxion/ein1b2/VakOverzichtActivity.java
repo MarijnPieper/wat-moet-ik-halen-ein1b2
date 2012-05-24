@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.ListView;
 
 public class VakOverzichtActivity extends Activity implements OnItemClickListener  {
@@ -36,6 +37,9 @@ public class VakOverzichtActivity extends Activity implements OnItemClickListene
        	adapter = new VakOverzichtAdapter(this, R.layout.vakadapter, vakken);
        	lvVakken.setOnItemClickListener(this);
        	lvVakken.setAdapter(adapter);
+       	
+       	Button voegToetsToe = (Button)findViewById(R.id.buttonVoegToetsToe);
+		voegToetsToe.setOnClickListener(new ToetsToevoegenClickListener());
     }
 
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -45,4 +49,20 @@ public class VakOverzichtActivity extends Activity implements OnItemClickListene
 		startActivity(i);
 	}
 
+
+	private void startToetsToevoegen() {
+		Intent i = new Intent(this, ToetsToevoegenActivity.class);
+		startActivity(i);
+
+	}
+
+	public class ToetsToevoegenClickListener implements OnClickListener {
+
+		public void onClick(View v) {
+			
+			startToetsToevoegen();
+
+		}
+
+	}
 }
