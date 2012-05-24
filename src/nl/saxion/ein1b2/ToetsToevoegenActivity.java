@@ -72,10 +72,6 @@ public class ToetsToevoegenActivity extends Activity {
 
 	}
 
-//	public void finish()	{
-//		this.finish();
-//	}
-
 	class MySpinnerListener implements OnItemSelectedListener {
 
 		public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
