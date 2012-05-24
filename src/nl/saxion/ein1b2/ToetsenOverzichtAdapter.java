@@ -19,6 +19,7 @@ public class ToetsenOverzichtAdapter extends ArrayAdapter<Toets>{
 		super(context, textViewResourceId, objects);
 		inflater = LayoutInflater.from(context);
 		this.context = context;
+		this.vaknaam = vaknaam;
 	}
 	
 	@Override
@@ -34,7 +35,7 @@ public class ToetsenOverzichtAdapter extends ArrayAdapter<Toets>{
 			TextView beschrijving = (TextView) convertView.findViewById(R.id.lblBeschrijving);
 			
 			vak.setText(vaknaam);
-			soort.setText(toets.getToetstype_id());
+			soort.setText(Integer.toString(toets.getToetstype_id()));
 			cijfer.setText(Double.toString(toets.getCijfer()));
 			beschrijving.setText(toets.getBeschrijving());
 			

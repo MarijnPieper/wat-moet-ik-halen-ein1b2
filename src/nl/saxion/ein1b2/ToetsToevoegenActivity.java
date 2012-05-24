@@ -32,7 +32,6 @@ public class ToetsToevoegenActivity extends Activity {
 	static final int STARTDATUM_DIALOG_ID = 0;
 	static final int STARTTIJD_DIALOG_ID = 1;
 	private CustomDate startDatum;
-	private Time startTijd;
 	private EditText txtStartDatum;
 	private EditText txtStartTijd;
 	private long viewIdDialog = 0;
@@ -90,16 +89,16 @@ public class ToetsToevoegenActivity extends Activity {
 	class VoegToetsToeOnClickListener implements OnClickListener {
 		public void onClick(View v) {
 			
-			ArrayList<TypeToets> types = adapter.selectTypeToetsen();
 			Spinner vakSpinner = (Spinner)findViewById(R.id.spinnerVakNaam);
 			Spinner typeSpinner = (Spinner)findViewById(R.id.spinnerToetsType);
 			EditText cijfertxt = (EditText)findViewById(R.id.EditTextCijfer);
-			double cijfer = Double.parseDouble(cijfertxt.getText().toString());
+			double cijfer = 0;
+			if (!cijfertxt.getText().toString().equals("")) cijfer = Double.parseDouble(cijfertxt.getText().toString());
 			Vak vak = (Vak)vakSpinner.getAdapter().getItem(vakSpinner.getSelectedItemPosition());
 			TypeToets typetoets = (TypeToets)typeSpinner.getAdapter().getItem(typeSpinner.getSelectedItemPosition()); 
 
 			//TODO beschrijving toevoegen			
-			if (cijfertxt.getText().toString() != ""){
+			if (cijfer != 0){
 				Toets toets = new Toets(typetoets.getToetsID(), "", startDatum, cijfer);
 				adapter.open();
 				adapter.insertToetsToevoegen(toets, vak.getVakID());

@@ -117,6 +117,7 @@ public class DbAdapter {
 		while (cursor.isAfterLast() == false) {
 			TotalCijfer = TotalCijfer + Double.parseDouble(cursor.getString(5));
 			Count++;
+			cursor.moveToNext();
 		}
 
 		return TotalCijfer / Count;
