@@ -89,6 +89,18 @@ public class DbAdapter {
 		return types;
 	}
 	
+	public String selectTypeToets(int id){
+		String[] args = new String[]{String.valueOf(id)};
+		Cursor cursor = mydb.rawQuery("SELECT naam FROM toetstype WHERE id=?", args);
+		boolean gevonden = cursor.moveToFirst();
+		
+		String resultaat = "";
+		if (gevonden) resultaat = cursor.getString(0);
+		
+		return resultaat;
+	}
+	
+	
 	
 	public ArrayList<Toets> selectToetsen(int vakid){
 		ArrayList<Toets> toetsen = new ArrayList<Toets>();

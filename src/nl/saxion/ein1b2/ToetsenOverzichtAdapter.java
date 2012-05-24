@@ -35,7 +35,11 @@ public class ToetsenOverzichtAdapter extends ArrayAdapter<Toets>{
 			TextView beschrijving = (TextView) convertView.findViewById(R.id.lblBeschrijving);
 			
 			vak.setText(vaknaam);
-			soort.setText(Integer.toString(toets.getToetstype_id()));
+			db = new DbAdapter(context);
+			db.open();
+			String typetoetsNaam = db.selectTypeToets(toets.getToetstype_id());
+			db.close();
+			soort.setText(typetoetsNaam);
 			cijfer.setText(Double.toString(toets.getCijfer()));
 			beschrijving.setText(toets.getBeschrijving());
 			
