@@ -6,6 +6,7 @@ public class Toets {
 						
 	private int vak_id;
 	private int toetstype_id;
+	private int cijfer;
 	private String beschrijving;
 	private CustomDate datum;
 	
@@ -21,6 +22,15 @@ public class Toets {
 		this.beschrijving = beschrijving;
 	}
 
+	public Toets(int vak_id, int toetstype_id, String beschrijving, CustomDate datum, int cijfer) {
+		
+		this.vak_id = vak_id;
+		this.toetstype_id = toetstype_id;
+		this.beschrijving = beschrijving;
+		this.datum = datum;
+		this.cijfer = cijfer;
+	}
+	
 	public int getVak_id() {
 		return vak_id;
 	}
@@ -51,6 +61,14 @@ public class Toets {
 
 	public void setDatum(CustomDate datum) {
 		this.datum = datum;
+	}
+
+	public int getCijfer() {
+		return cijfer;
+	}
+
+	public void setCijfer(int cijfer) {
+		this.cijfer = cijfer;
 	}
 
 }
