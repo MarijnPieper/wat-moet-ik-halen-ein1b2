@@ -53,6 +53,7 @@ public class VakOverzichtActivity extends Activity implements OnItemClickListene
 
 	private void startToetsToevoegen() {
 		Intent i = new Intent(this, ToetsToevoegenActivity.class);
+		i.putExtra("periodeid", nID);
 		startActivity(i);
 
 	}

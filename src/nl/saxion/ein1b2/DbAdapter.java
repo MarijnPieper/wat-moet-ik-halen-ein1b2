@@ -81,7 +81,7 @@ public class DbAdapter {
 		cursor.moveToFirst();
 
 		while (cursor.isAfterLast() == false) {
-			TypeToets type = new TypeToets(cursor.getString(1), Integer.parseInt(cursor.getString(0)));
+			TypeToets type = new TypeToets(cursor.getInt(0), cursor.getString(1), cursor.getInt(2));
 			types.add(type);
 			cursor.moveToNext();
 		}
@@ -224,12 +224,12 @@ public class DbAdapter {
 
 			db.execSQL(SET_PRAGMA);
 
-			db.execSQL("");
+			db.execSQL(INSERT_TOETSTYPE);
 		}
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-			// TODO Auto-generated method stub
+			
 
 		}
 

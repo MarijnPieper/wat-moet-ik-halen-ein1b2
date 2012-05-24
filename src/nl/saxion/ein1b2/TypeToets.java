@@ -3,10 +3,20 @@ package nl.saxion.ein1b2;
 public class TypeToets {
 	private String naam;
 	private int toetsID;
+	int som;
 	
-	public TypeToets(String naam, int toetsID) {
-		this.naam = naam;
-		this.setToetsID(toetsID);
+	public TypeToets(int id, String naam, int som) {
+		setNaam(naam);
+		setToetsID(id);
+		setSom(som);
+	}
+
+	public int getSom() {
+		return som;
+	}
+
+	public void setSom(int som) {
+		this.som = som;
 	}
 
 	@Override

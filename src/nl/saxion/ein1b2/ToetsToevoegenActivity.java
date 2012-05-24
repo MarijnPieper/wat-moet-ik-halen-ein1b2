@@ -41,12 +41,13 @@ public class ToetsToevoegenActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.toets_toevoegen);
+		Bundle extras = getIntent().getExtras();
+		int periodeid = extras.getInt("periodeid");
 
 		adapter = new DbAdapter(this);
 		adapter.open();
 		ArrayList<TypeToets> types = adapter.selectTypeToetsen();
-		//TODO Juiste periode ID meegeven!!
-		ArrayList<Vak> vakken = adapter.selectVakken(1);
+		ArrayList<Vak> vakken = adapter.selectVakken(periodeid);
 		adapter.close();
 		Spinner vakSpinner = (Spinner)findViewById(R.id.spinnerVakNaam);
 		Spinner typeSpinner = (Spinner)findViewById(R.id.spinnerToetsType);
