@@ -93,28 +93,26 @@ public class ToetsToevoegenActivity extends Activity {
 			Spinner vakSpinner = (Spinner)findViewById(R.id.spinnerVakNaam);
 			Spinner typeSpinner = (Spinner)findViewById(R.id.spinnerToetsType);
 			EditText cijfertxt = (EditText)findViewById(R.id.EditTextCijfer);
-			int cijfer = Integer.parseInt(cijfertxt.getText().toString());
+			double cijfer = Double.parseDouble(cijfertxt.getText().toString());
 			Vak vak = (Vak)vakSpinner.getAdapter().getItem(vakSpinner.getSelectedItemPosition());
 			TypeToets typetoets = (TypeToets)typeSpinner.getAdapter().getItem(typeSpinner.getSelectedItemPosition()); 
 
-			//TODO beschrijving toevoegen
-			
+			//TODO beschrijving toevoegen			
 			if (cijfertxt.getText().toString() != ""){
-				Toets toets = new Toets(vak.getVakID(), typetoets.getToetsID(), "", startDatum, cijfer);
+				Toets toets = new Toets(typetoets.getToetsID(), "", startDatum, cijfer);
 				adapter.open();
-				adapter.insertToetsToevoegen(toets);
+				adapter.insertToetsToevoegen(toets, vak.getVakID());
 				adapter.close();	
 				finish();
 			}
 			else {
-				Toets toets = new Toets(vak.getVakID(), typetoets.getToetsID(), "", startDatum);
+				Toets toets = new Toets(typetoets.getToetsID(), "", startDatum);
 				adapter.open();
-				adapter.insertToetsToevoegen(toets);
+				adapter.insertToetsToevoegen(toets, vak.getVakID());
 				adapter.close();	
 				finish();
 			}
 			
-
 		}	
 	}
 

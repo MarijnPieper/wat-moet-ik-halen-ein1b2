@@ -1,54 +1,75 @@
 package nl.saxion.ein1b2;
 
-import java.util.GregorianCalendar;
 
 public class Toets {
-						
-	private int vak_id;
+					
+	private int id;
 	private int toetstype_id;
-	private int cijfer;
 	private String beschrijving;
-	private CustomDate datum;
+	private CustomDate datumtijd;
+	private double cijfer;
 	
-	public Toets(int vak_id, int toetstype_id, String beschrijving, CustomDate datum) {
-		
-		this.vak_id = vak_id;
-		this.toetstype_id = toetstype_id;
-		this.beschrijving = beschrijving;
-		this.datum = datum;
+	
+	public Toets(int toetstype_id, String beschrijving, CustomDate datum) {		
+		setToetstype_id(toetstype_id);
+		setBeschrijving(beschrijving);
+		setDatum(datum);
 	}
 	
-	public Toets(String beschrijving) {
+	public Toets(int toetstype_id, String beschrijving, CustomDate datum, double cijfer) {		
+		setToetstype_id(toetstype_id);
+		setBeschrijving(beschrijving);
+		setDatum(datum);
+		setCijfer(cijfer);
+	}
+	
+	public Toets(int id, int toetstype_id, String beschrijving, CustomDate datum, double cijfer) {		
+		setId(id);
+		setToetstype_id(toetstype_id);
+		setBeschrijving(beschrijving);
+		setDatum(datum);
+		setCijfer(cijfer);
+	}
+	
+	protected Toets(String beschrijving) {
 		this.beschrijving = beschrijving;
 	}
 
-	public Toets(int vak_id, int toetstype_id, String beschrijving, CustomDate datum, int cijfer) {
-		
-		this.vak_id = vak_id;
-		this.toetstype_id = toetstype_id;
-		this.beschrijving = beschrijving;
-		this.datum = datum;
-		this.cijfer = cijfer;
-	}
-	
-	public int getVak_id() {
-		return vak_id;
-	}
-
-	public void setVak_id(int vak_id) {
-		this.vak_id = vak_id;
-	}
-
-	public int getToetstype_id() {
+	protected int getToetstype_id() {
 		return toetstype_id;
 	}
+	
 
-	public void setToetstype_id(int toetstype_id) {
+	protected void setToetstype_id(int toetstype_id) {
 		this.toetstype_id = toetstype_id;
 	}
 
-	public String getBeschrijving() {
+	protected String getBeschrijving() {
 		return beschrijving;
+	}
+
+	protected int getId() {
+		return id;
+	}
+
+	protected void setId(int id) {
+		this.id = id;
+	}
+
+	protected CustomDate getDatumtijd() {
+		return datumtijd;
+	}
+
+	protected void setDatumtijd(CustomDate datumtijd) {
+		this.datumtijd = datumtijd;
+	}
+
+	protected double getCijfer() {
+		return cijfer;
+	}
+
+	protected void setCijfer(double cijfer) {
+		this.cijfer = cijfer;
 	}
 
 	public void setBeschrijving(String beschrijving) {
@@ -56,19 +77,11 @@ public class Toets {
 	}
 
 	public CustomDate getDatum() {
-		return datum;
+		return datumtijd;
 	}
 
 	public void setDatum(CustomDate datum) {
-		this.datum = datum;
-	}
-
-	public int getCijfer() {
-		return cijfer;
-	}
-
-	public void setCijfer(int cijfer) {
-		this.cijfer = cijfer;
+		this.datumtijd = datum;
 	}
 
 }

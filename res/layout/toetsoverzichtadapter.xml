@@ -36,4 +36,11 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/lblBeschrijving"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Small Text"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
 </LinearLayout>
