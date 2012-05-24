@@ -43,12 +43,8 @@ public class VakOverzichtAdapter extends ArrayAdapter<Vak>{
 			else {
 				cijfer.setText(Double.toString(huidigCijfer));
 			}
-			
-			
 		}
 		
 		return convertView;
-		
-		
 	}
 }
