@@ -46,6 +46,7 @@ public class VakOverzichtActivity extends Activity implements OnItemClickListene
 		Vak vak = (Vak) parent.getItemAtPosition(position);
 		Intent i = new Intent(this, ToetsenOverzichtActivity.class);
 		i.putExtra("vakid", vak.getVakID());
+		i.putExtra("periodeid", nID);
 		startActivity(i);
 	}
 

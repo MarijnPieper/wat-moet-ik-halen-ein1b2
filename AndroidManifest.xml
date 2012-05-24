@@ -21,6 +21,6 @@
         <activity android:name="ActivityVakkenpakketToevoegen" ></activity>
         <activity android:name="VakOverzichtActivity" ></activity>
         <activity android:name="ToetsToevoegenActivity" ></activity>
-        
+        <activity android:name="ToetsenOverzichtActivity" ></activity>
     </application>
 </manifest>
