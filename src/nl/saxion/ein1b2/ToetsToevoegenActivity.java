@@ -48,8 +48,8 @@ public class ToetsToevoegenActivity extends Activity {
 		adapter.close();
 		Spinner vakSpinner = (Spinner)findViewById(R.id.spinnerVakNaam);
 		Spinner typeSpinner = (Spinner)findViewById(R.id.spinnerToetsType);
-//		Button voegToetsToeButton = (Button)findViewById(R.id.buttonToetsToevoegen);
-//		voegToetsToeButton.setOnClickListener(new VoegToetsToeOnClickListener());
+		Button voegToetsToeButton = (Button)findViewById(R.id.buttonToetsToevoegen);
+		voegToetsToeButton.setOnClickListener(new VoegToetsToeOnClickListener());
 		vakAdapter = new ArrayAdapter<Vak>(this, android.R.layout.simple_dropdown_item_1line, vakken);
 		typeSpinner.setAdapter(vakAdapter);
 		typeToetsAdapter = new ArrayAdapter<TypeToets>(this, android.R.layout.simple_dropdown_item_1line, types);
@@ -61,8 +61,7 @@ public class ToetsToevoegenActivity extends Activity {
 		txtStartDatum.setText(startDatum.toString());
 		txtStartDatum.setOnFocusChangeListener(new showOnFocusDatum());
 		txtStartDatum.setOnClickListener(new showOnClickDatum());
-
-		String datum = txtStartDatum.getText().toString();
+		
 
 
 	}
@@ -86,26 +85,28 @@ public class ToetsToevoegenActivity extends Activity {
 
 
 
-//	class VoegToetsToeOnClickListener implements OnClickListener {
-//
-//		public void onClick(View v) {
-//			ArrayList<TypeToets> types = adapter.selectTypeToetsen();
-//			Spinner vakSpinner = (Spinner)findViewById(R.id.spinnerVakNaam);
-//			Spinner typeSpinner = (Spinner)findViewById(R.id.spinnerToetsType);
-//			
-//			Vak vak = (Vak)vakSpinner.getAdapter().getItem(vakSpinner.getSelectedItemPosition());
-//			TypeToets typetoets = (TypeToets)typeSpinner.getAdapter().getItem(typeSpinner.getSelectedItemPosition()); 
-//			Toets toets = new Toets(vak.getVakID(), typetoets.getToetsID() );
-//			adapter.open();
+	class VoegToetsToeOnClickListener implements OnClickListener {
+		String datum = txtStartDatum.getText().toString();
+		public void onClick(View v) {
+			ArrayList<TypeToets> types = adapter.selectTypeToetsen();
+			Spinner vakSpinner = (Spinner)findViewById(R.id.spinnerVakNaam);
+			Spinner typeSpinner = (Spinner)findViewById(R.id.spinnerToetsType);
+			
+			Vak vak = (Vak)vakSpinner.getAdapter().getItem(vakSpinner.getSelectedItemPosition());
+			TypeToets typetoets = (TypeToets)typeSpinner.getAdapter().getItem(typeSpinner.getSelectedItemPosition()); 
+//			Toets toets = new Toets(vak.getVakID(), typetoets.getToetsID(), convertStringtoDate(datum));
+			adapter.open();
 //			adapter.insertToetsToevoegen(toets);
-//			adapter.close();	
-//			finish();	
-//		}	
-//	}
+			adapter.close();	
+			finish();	
+		}	
+	}
 
 	//Datum methodes
 
 	private CustomDate convertStringtoDate(String Date ) {
+		
+
 		String[] splitDate = Date.split("-");
 		String[] splitDay = splitDate[2].split(" ");
 		CustomDate newDate = new CustomDate(Integer.parseInt(splitDay[0]), Integer.parseInt(splitDate[1]),Integer.parseInt(splitDate[0]));
