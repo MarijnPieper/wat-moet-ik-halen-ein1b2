@@ -36,7 +36,7 @@ public class ToetsToevoegenActivity extends Activity {
 	private EditText txtStartDatum;
 	private EditText txtStartTijd;
 	private long viewIdDialog = 0;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -45,16 +45,17 @@ public class ToetsToevoegenActivity extends Activity {
 		adapter = new DbAdapter(this);
 		adapter.open();
 		ArrayList<TypeToets> types = adapter.selectTypeToetsen();
+		//TODO Juiste periode ID meegeven!!
 		ArrayList<Vak> vakken = adapter.selectVakken(1);
 		adapter.close();
 		Spinner vakSpinner = (Spinner)findViewById(R.id.spinnerVakNaam);
 		Spinner typeSpinner = (Spinner)findViewById(R.id.spinnerToetsType);
 		Button voegToetsToeButton = (Button)findViewById(R.id.buttonToetsToevoegen);
 		voegToetsToeButton.setOnClickListener(new VoegToetsToeOnClickListener());
-		vakAdapter = new ArrayAdapter<Vak>(this, android.R.layout.simple_dropdown_item_1line, vakken);
-		typeSpinner.setAdapter(vakAdapter);
-		typeToetsAdapter = new ArrayAdapter<TypeToets>(this, android.R.layout.simple_dropdown_item_1line, types);
-		vakSpinner.setAdapter(typeToetsAdapter);
+		vakAdapter = new ArrayAdapter<Vak>(this, android.R.layout.simple_spinner_item, vakken);
+		vakSpinner.setAdapter(vakAdapter);
+		typeToetsAdapter = new ArrayAdapter<TypeToets>(this, android.R.layout.simple_spinner_item, types);
+		typeSpinner.setAdapter(typeToetsAdapter);
 
 		//Datum
 		txtStartDatum = (EditText) findViewById(R.id.txtStartDatum);
@@ -62,17 +63,13 @@ public class ToetsToevoegenActivity extends Activity {
 		txtStartDatum.setText(startDatum.toString());
 		txtStartDatum.setOnFocusChangeListener(new showOnFocusDatum());
 		txtStartDatum.setOnClickListener(new showOnClickDatum());
-		
+
 		//Tijd		
 		txtStartTijd = (EditText)findViewById(R.id.txtStartTijd);
 		txtStartTijd.setText(startDatum.getTimeAsString());
 		txtStartTijd.setOnFocusChangeListener(new showOnFocusTijd());
 		txtStartTijd.setOnClickListener(new showOnClickDatum());
-				
-	}
 
-	public void finish()	{
-		this.finish();
 	}
 
 	class MySpinnerListener implements OnItemSelectedListener {
@@ -91,18 +88,31 @@ public class ToetsToevoegenActivity extends Activity {
 
 	class VoegToetsToeOnClickListener implements OnClickListener {
 		public void onClick(View v) {
+			
 			ArrayList<TypeToets> types = adapter.selectTypeToetsen();
 			Spinner vakSpinner = (Spinner)findViewById(R.id.spinnerVakNaam);
 			Spinner typeSpinner = (Spinner)findViewById(R.id.spinnerToetsType);
-			
+			EditText cijfertxt = (EditText)findViewById(R.id.EditTextCijfer);
+			double cijfer = Double.parseDouble(cijfertxt.getText().toString());
 			Vak vak = (Vak)vakSpinner.getAdapter().getItem(vakSpinner.getSelectedItemPosition());
 			TypeToets typetoets = (TypeToets)typeSpinner.getAdapter().getItem(typeSpinner.getSelectedItemPosition()); 
-			//TODO beschrijving toevoegen
-			Toets toets = new Toets(typetoets.getToetsID(), "", startDatum);
-			adapter.open();
-			adapter.insertToetsToevoegen(toets, vak.getVakID());
-			adapter.close();	
-			finish();	
+
+			//TODO beschrijving toevoegen			
+			if (cijfertxt.getText().toString() != ""){
+				Toets toets = new Toets(typetoets.getToetsID(), "", startDatum, cijfer);
+				adapter.open();
+				adapter.insertToetsToevoegen(toets, vak.getVakID());
+				adapter.close();	
+				finish();
+			}
+			else {
+				Toets toets = new Toets(typetoets.getToetsID(), "", startDatum);
+				adapter.open();
+				adapter.insertToetsToevoegen(toets, vak.getVakID());
+				adapter.close();	
+				finish();
+			}
+			
 		}	
 	}
 
@@ -116,74 +126,74 @@ public class ToetsToevoegenActivity extends Activity {
 		case STARTTIJD_DIALOG_ID:
 			return new TimePickerDialog(this, new setTimeListener(), startDatum.get(GregorianCalendar.HOUR), startDatum.get(GregorianCalendar.MINUTE), true);
 		}; return null;  
-		
+
 	}
-		class setDatumListener implements OnDateSetListener{
+	class setDatumListener implements OnDateSetListener{
 
-			public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-				if (viewIdDialog == txtStartDatum.getId()){				
-					startDatum.set(year, monthOfYear, dayOfMonth);
-					txtStartDatum.setText(startDatum.toString());			
-				}
+		public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+			if (viewIdDialog == txtStartDatum.getId()){				
+				startDatum.set(year, monthOfYear, dayOfMonth);
+				txtStartDatum.setText(startDatum.toString());			
 			}
 		}
-		
-		class showOnFocusDatum implements OnFocusChangeListener{
+	}
 
-			public void onFocusChange(View view, boolean hasFocus) {	
-				viewIdDialog = view.getId();
-				if (hasFocus){
-					if (view.getId() == txtStartDatum.getId()){
-						showDialog(STARTDATUM_DIALOG_ID);
-					}
+	class showOnFocusDatum implements OnFocusChangeListener{
 
-				}
-			}
-		}
-
-		class showOnClickDatum implements OnClickListener{
-
-			public void onClick(View view) {
-				viewIdDialog = view.getId();
+		public void onFocusChange(View view, boolean hasFocus) {	
+			viewIdDialog = view.getId();
+			if (hasFocus){
 				if (view.getId() == txtStartDatum.getId()){
 					showDialog(STARTDATUM_DIALOG_ID);
 				}
+
 			}
 		}
-	
-		//Tijd		
-		class showOnFocusTijd implements OnFocusChangeListener{
+	}
 
-			public void onFocusChange(View view, boolean hasFocus) {	
-				viewIdDialog = view.getId();
-				if (hasFocus){
-					if (view.getId() == txtStartTijd.getId()){
-						showDialog(STARTTIJD_DIALOG_ID);
-					}
+	class showOnClickDatum implements OnClickListener{
 
-				}
+		public void onClick(View view) {
+			viewIdDialog = view.getId();
+			if (view.getId() == txtStartDatum.getId()){
+				showDialog(STARTDATUM_DIALOG_ID);
 			}
 		}
-		
-		class showOnClickTijd implements OnClickListener{
+	}
 
-			public void onClick(View view) {
-				viewIdDialog = view.getId();
-				if (view.getId() == txtStartDatum.getId()){
+	//Tijd		
+	class showOnFocusTijd implements OnFocusChangeListener{
+
+		public void onFocusChange(View view, boolean hasFocus) {	
+			viewIdDialog = view.getId();
+			if (hasFocus){
+				if (view.getId() == txtStartTijd.getId()){
 					showDialog(STARTTIJD_DIALOG_ID);
 				}
-			}
-		}
-		
-		class setTimeListener implements OnTimeSetListener{
 
-			public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-				if (viewIdDialog == txtStartTijd.getId()){						
-					startDatum.setTime(hourOfDay, minute);
-					txtStartTijd.setText(startDatum.getTimeAsString());
-				}
 			}
 		}
-		
+	}
+
+	class showOnClickTijd implements OnClickListener{
+
+		public void onClick(View view) {
+			viewIdDialog = view.getId();
+			if (view.getId() == txtStartDatum.getId()){
+				showDialog(STARTTIJD_DIALOG_ID);
+			}
+		}
+	}
+
+	class setTimeListener implements OnTimeSetListener{
+
+		public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+			if (viewIdDialog == txtStartTijd.getId()){						
+				startDatum.setTime(hourOfDay, minute);
+				txtStartTijd.setText(startDatum.getTimeAsString());
+			}
+		}
+	}
+
 }
 

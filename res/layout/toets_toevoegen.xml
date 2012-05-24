@@ -31,12 +31,14 @@
             <Spinner
                 android:id="@+id/spinnerVakNaam"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="35dp"
+                android:gravity="center" />
 
             <Spinner
                 android:id="@+id/spinnerToetsType"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="35dp"
+                 />
 
             <LinearLayout
                 android:id="@+id/linearLayout2"
@@ -66,15 +68,44 @@
                 android:id="@+id/LinearLayout01"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
-
-                <EditText
-                    android:id="@+id/txtStartTijd"
+                
+                <TextView
+                    android:id="@+id/lblStartTijd"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".40"
                     android:text="Tijd:"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
+                <EditText
+                    android:id="@+id/txtStartTijd"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".60"
+                    android:text="Tijd:"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/LinearLayout02"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/TextViewCijfer"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".40"
+                    android:text="Cijfer:"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <EditText
+                    android:id="@+id/EditTextCijfer"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".60" 
+                    android:inputType="numberDecimal"/>
             </LinearLayout>
 
 </LinearLayout>

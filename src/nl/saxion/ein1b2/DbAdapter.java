@@ -34,6 +34,7 @@ public class DbAdapter {
 		values.put("vak_id", vakid);
 		values.put("toetstype_id", t.getToetstype_id());
 		values.put("datumtijd" , t.getDatum().toStringForDB());
+		values.put("cijfer", t.getCijfer());
 		long newToetsToevoegen = mydb.insert("Toets" , null, values);
 		
 		

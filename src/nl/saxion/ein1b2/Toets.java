@@ -9,10 +9,18 @@ public class Toets {
 	private CustomDate datumtijd;
 	private double cijfer;
 	
+	
 	public Toets(int toetstype_id, String beschrijving, CustomDate datum) {		
 		setToetstype_id(toetstype_id);
 		setBeschrijving(beschrijving);
 		setDatum(datum);
+	}
+	
+	public Toets(int toetstype_id, String beschrijving, CustomDate datum, double cijfer) {		
+		setToetstype_id(toetstype_id);
+		setBeschrijving(beschrijving);
+		setDatum(datum);
+		setCijfer(cijfer);
 	}
 	
 	public Toets(int id, int toetstype_id, String beschrijving, CustomDate datum, double cijfer) {		
@@ -30,6 +38,7 @@ public class Toets {
 	protected int getToetstype_id() {
 		return toetstype_id;
 	}
+	
 
 	protected void setToetstype_id(int toetstype_id) {
 		this.toetstype_id = toetstype_id;
