@@ -16,6 +16,11 @@ public class CustomDate extends GregorianCalendar {
 		super(year, month, day, hours, minuts);
 	}
 	
+	public void setTime(int hour, int minute){
+		this.set(GregorianCalendar.HOUR, hour);
+		this.set(GregorianCalendar.MINUTE, minute);
+	}
+	
 	public String toString(){
 		String result = this.get(GregorianCalendar.DAY_OF_MONTH) + "-" + this.get(GregorianCalendar.MONTH) + "-" + this.get(GregorianCalendar.YEAR);
 		return result;
@@ -27,6 +32,11 @@ public class CustomDate extends GregorianCalendar {
 				+ "-" + this.get(GregorianCalendar.DAY_OF_MONTH)
 				+ " " + this.get(GregorianCalendar.HOUR)
 				+ ":" + this.get(GregorianCalendar.MINUTE);
+		return result;
+	}
+	
+	public String getTimeAsString(){
+		String result = this.get(GregorianCalendar.HOUR) + ":" + this.get(GregorianCalendar.MINUTE);
 		return result;
 	}
 

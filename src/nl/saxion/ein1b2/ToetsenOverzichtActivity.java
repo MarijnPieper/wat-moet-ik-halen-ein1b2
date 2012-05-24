@@ -11,5 +11,6 @@ public class ToetsenOverzichtActivity extends Activity {
 		 setContentView(R.layout.toetsenoverzicht);
 		 Bundle extras = getIntent().getExtras();
 		 int vakid = extras.getInt("vakid");
+		 
 	 }
 }
