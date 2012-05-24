@@ -87,6 +87,7 @@ public class DbAdapter {
 		return types;
 	}
 
+	// TODO : Proefwerk / SO
 	public double selectGemCijferVak(int VakID) {
 		Double TotalCijfer = new Double(0);
 		Double Count = new Double(0);

@@ -39,20 +39,15 @@ public class VakOverzichtActivity extends Activity {
 		voegToetsToe.setOnClickListener(new ToetsToevoegenClickListener());
 	}
 
-
 	private void startToetsToevoegen() {
 		Intent i = new Intent(this, ToetsToevoegenActivity.class);
 		startActivity(i);
-
 	}
 
 	public class ToetsToevoegenClickListener implements OnClickListener {
 
 		public void onClick(View v) {
-			
 			startToetsToevoegen();
-
 		}
-
 	}
 }

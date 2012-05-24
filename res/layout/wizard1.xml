@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="right"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Welkom!"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.78"
+        android:text="\r\nIn WatMoetIkHalen kun je al je toetsen bijhouden! Voordat je dit kunt doen moet je eerst een periode toevoegen. In het volgende scherm kun je dit doen." />
+
+    <Button
+        android:id="@+id/btnWizardVolgende"
+        android:layout_width="158dp"
+        android:layout_height="wrap_content"
+        android:text="Volgende" />
+
+</LinearLayout>

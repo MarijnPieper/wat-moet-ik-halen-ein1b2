@@ -9,6 +9,7 @@ import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -79,11 +80,10 @@ public class ActivityVakkenpakketToevoegen extends Activity implements OnClickLi
 			dbHelper.open();
 			dbHelper.insertVakkenpakket(pakket);
 			dbHelper.close();	
-			this.finish();
+			Intent i = new Intent(this, PeriodeActivity.class);
+			startActivity(i);
 		}
-		
 	}
-	
 	
 	private void vakToevoegenInstellen(){
 		//Vak toevoegen
