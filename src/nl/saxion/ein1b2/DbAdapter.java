@@ -82,6 +82,7 @@ public class DbAdapter {
 		while (cursor.isAfterLast() == false) {
 			TypeToets type = new TypeToets(cursor.getString(1), Integer.parseInt(cursor.getString(0)));
 			types.add(type);
+			cursor.moveToNext();
 		}
 
 		return types;

@@ -12,8 +12,10 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DatePickerDialog.OnDateSetListener;
+import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.format.Time;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
@@ -24,6 +26,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 
 public class ToetsToevoegenActivity extends Activity {
 
@@ -31,11 +34,14 @@ public class ToetsToevoegenActivity extends Activity {
 	private ArrayAdapter<TypeToets> typeToetsAdapter;		
 	private int currentItem=-1;
 	private DbAdapter adapter;
-	static final int STARTDATUM_DIALOG_ID = 0; 
+	static final int STARTDATUM_DIALOG_ID = 0;
+	static final int STARTTIJD_DIALOG_ID = 0;
 	private CustomDate startDatum;
+	private Time startTijd;
 	private EditText txtStartDatum;
+	private EditText txtStartTijd;
 	private long viewIdDialog = 0;
-
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -62,8 +68,11 @@ public class ToetsToevoegenActivity extends Activity {
 		txtStartDatum.setOnFocusChangeListener(new showOnFocusDatum());
 		txtStartDatum.setOnClickListener(new showOnClickDatum());
 		
-
-
+		//Tijd
+		
+//		txtStartTijd = (EditText)findViewById(R.id.txtStartTijd);
+		
+				
 	}
 
 	public void finish()	{
@@ -131,8 +140,7 @@ public class ToetsToevoegenActivity extends Activity {
 				}
 			}
 		}
-
-
+		
 		class showOnFocusDatum implements OnFocusChangeListener{
 
 			public void onFocusChange(View view, boolean hasFocus) {	
@@ -155,5 +163,42 @@ public class ToetsToevoegenActivity extends Activity {
 				}
 			}
 		}
-	}
+	
+		//Tijd
+		
+		protected Dialog onCreateDialogTijd(int id) {  
+			switch (id) {  
+			case STARTTIJD_DIALOG_ID:  
+
+			}; return null;  
+			
+		}
+		
+		class setTimeListener implements OnTimeSetListener{
+
+			public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+				CustomDate tmpDate = new CustomDate(dayOfMonth, monthOfYear, year);
+
+				if (viewIdDialog == txtStartTijd.getId()){				
+					
+					txtStartDatum.setText(startDatum.toString());			
+				}
+			}
+
+			public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+				// TODO Auto-generated method stub
+				
+			}
+		}
+		
+		class showOnClickTime implements OnClickListener{
+
+			public void onClick(View view) {
+				viewIdDialog = view.getId();
+				if (view.getId() == txtStartTijd.getId()){
+					showDialog(STARTTIJD_DIALOG_ID);
+				}
+			}
+		}
+}
 
