@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Spinner;
 
 public class ToetsenOverzichtActivity extends Activity {
@@ -22,8 +23,10 @@ public class ToetsenOverzichtActivity extends Activity {
 		 dbHelper = new DbAdapter(this);
          dbHelper.open();
          ArrayList<Vak> vakken = dbHelper.selectVakken(periodeid);
+         ArrayList<Toets> toetsen = dbHelper.selectToetsen(vakid);
          dbHelper.close();
 		 
+         //Spinner Vakken
 		 Spinner sprVakken = (Spinner) findViewById(R.id.sprVakken);
 		 ArrayAdapter<Vak> vakAdapter = new ArrayAdapter<Vak>(this, android.R.layout.simple_spinner_item, vakken);
 		 Vak vak = null;
@@ -36,5 +39,10 @@ public class ToetsenOverzichtActivity extends Activity {
 		 int thisVak = vakAdapter.getPosition(vak);
 		 sprVakken.setAdapter(vakAdapter);		 
 		 sprVakken.setSelection(thisVak);
+		 
+		 //Listview Toetsen
+		 ListView lvwToetsen = (ListView) findViewById(R.id.lvwToetsen);
+		 ToetsenOverzichtAdapter toetsAdapter = new ToetsenOverzichtAdapter(this, R.layout.toetsenoverzicht, toetsen, vak.getNaam());
+		 lvwToetsen.setAdapter(toetsAdapter);
 	 }
 }

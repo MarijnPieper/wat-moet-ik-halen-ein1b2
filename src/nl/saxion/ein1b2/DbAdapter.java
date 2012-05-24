@@ -29,9 +29,9 @@ public class DbAdapter {
 		}
 	}
 
-	public long insertToetsToevoegen(Toets t){
+	public long insertToetsToevoegen(Toets t, int vakid){
 		ContentValues values = new ContentValues();
-		values.put("vak_id", t.getVak_id());
+		values.put("vak_id", vakid);
 		values.put("toetstype_id", t.getToetstype_id());
 		values.put("datumtijd" , t.getDatum().toStringForDB());
 		long newToetsToevoegen = mydb.insert("Toets" , null, values);
@@ -86,6 +86,24 @@ public class DbAdapter {
 		}
 
 		return types;
+	}
+	
+	
+	public ArrayList<Toets> selectToetsen(int vakid){
+		ArrayList<Toets> toetsen = new ArrayList<Toets>();
+		String[] args = new String[]{String.valueOf(vakid)};
+		
+
+		Cursor cursor = mydb.rawQuery("SELECT id, toetstype_id, beschrijving, datumtijd, cijfer"
+				+ " FROM toets WHERE vak_id=?", args);
+		cursor.moveToFirst();
+
+		while (cursor.isAfterLast() == false) {
+			Toets toets = new Toets(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), new CustomDate(cursor.getString(3)), cursor.getInt(4));
+			toetsen.add(toets);
+			cursor.moveToNext();
+		}
+		return toetsen;
 	}
 
 	public double selectGemCijferVak(int VakID) {

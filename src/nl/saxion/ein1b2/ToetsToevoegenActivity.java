@@ -98,9 +98,9 @@ public class ToetsToevoegenActivity extends Activity {
 			Vak vak = (Vak)vakSpinner.getAdapter().getItem(vakSpinner.getSelectedItemPosition());
 			TypeToets typetoets = (TypeToets)typeSpinner.getAdapter().getItem(typeSpinner.getSelectedItemPosition()); 
 			//TODO beschrijving toevoegen
-			Toets toets = new Toets(vak.getVakID(), typetoets.getToetsID(), "", startDatum);
+			Toets toets = new Toets(typetoets.getToetsID(), "", startDatum);
 			adapter.open();
-			adapter.insertToetsToevoegen(toets);
+			adapter.insertToetsToevoegen(toets, vak.getVakID());
 			adapter.close();	
 			finish();	
 		}	
