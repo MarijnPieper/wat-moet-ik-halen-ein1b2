@@ -195,7 +195,7 @@ public class DbAdapter {
 				+ ", beschrijving varchar(255)"
 				+ ", afgerond TINYINT);";
 
-		private static final String INSERT_TOETSTYPE= "INSERT INTO toetstype (naam, som) SELECT ('Proefwerk', 3) UNION ALL SELECT ('Schiftelijke Overhoring', 1);";
+		private static final String INSERT_TOETSTYPE= "INSERT INTO toetstype (naam, som) SELECT 'Proefwerk', 3 UNION ALL SELECT 'Schiftelijke Overhoring', 1s;";
 
 		//		private static final String CREATE_TBL_ACHIEVEMENTS = "CREATE TABLE achievements ("
 		//				+ "id INTEGER PRIMARY KEY AUTOINCREMENT"
