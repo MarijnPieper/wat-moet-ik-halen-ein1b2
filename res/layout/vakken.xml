@@ -33,26 +33,37 @@
     <ListView
         android:id="@+id/lvVakken"
         android:layout_width="match_parent"
-        android:layout_height="284dp" >
+        android:layout_height="wrap_content" >
 
     </ListView>
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="148dp"
-            android:layout_height="wrap_content"
-            android:text="Geschiedenis" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"  >
 
-        <Button
-            android:id="@+id/buttonVoegToetsToe"
-            android:layout_width="fill_parent"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Toets Toevoegen" />
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true" >
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:text="Geschiedenis" />
+
+            <Button
+                android:id="@+id/buttonVoegToetsToe"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:text="Toets Toevoegen" />
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </LinearLayout>
