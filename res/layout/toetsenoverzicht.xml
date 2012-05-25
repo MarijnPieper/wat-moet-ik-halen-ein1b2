@@ -16,14 +16,14 @@
         android:layout_height="wrap_content" >
 
         <RadioButton
-            android:id="@+id/radio0"
+            android:id="@+id/rbnAankomend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
             android:text="Aankomend" />
 
         <RadioButton
-            android:id="@+id/radio1"
+            android:id="@+id/rbnGeschiedenis"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Geschiedenis" />
