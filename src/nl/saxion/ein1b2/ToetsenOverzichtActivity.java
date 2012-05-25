@@ -5,14 +5,19 @@ import java.util.Comparator;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Spinner;
 
-public class ToetsenOverzichtActivity extends Activity implements OnCheckedChangeListener {
+public class ToetsenOverzichtActivity extends Activity implements OnCheckedChangeListener, OnItemSelectedListener {
 	private DbAdapter dbHelper;
 	RadioButton rbnAankomend;
 	RadioButton rbnGeschiedenis;
@@ -37,6 +42,7 @@ public class ToetsenOverzichtActivity extends Activity implements OnCheckedChang
 		 
          //Spinner Vakken
 		 Spinner sprVakken = (Spinner) findViewById(R.id.sprVakken);
+		 sprVakken.setOnItemSelectedListener(this);
 		 ArrayAdapter<Vak> vakAdapter = new ArrayAdapter<Vak>(this, android.R.layout.simple_spinner_item, vakken);
 		 Vak vakAlles = new Vak("Alles", true);
 		 vakAdapter.add(vakAlles);
@@ -77,6 +83,7 @@ public class ToetsenOverzichtActivity extends Activity implements OnCheckedChang
 		 
 	 }
 
+	 //Radiobuttons aankomend en geschiedenis
 	public void onCheckedChanged(RadioGroup group, int checkedId) {
 		ArrayList<Toets> toetsen;
 		dbHelper.open();
@@ -89,5 +96,22 @@ public class ToetsenOverzichtActivity extends Activity implements OnCheckedChang
 		dbHelper.close();
 		toetsAdapter.clear();
 		toetsAdapter.addAll(toetsen);		
+	}
+
+	// Spinner voor vak
+	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+		Vak vak = (Vak) parent.getItemAtPosition(position);
+		vakid = vak.getVakID();
+		toetsAdapter.clear();
+		dbHelper.open();
+		toetsAdapter.addAll(dbHelper.selectToetsen(vakid, true, false));
+		dbHelper.close();
+		rbnAankomend.setChecked(true);
+		
+	}
+
+	public void onNothingSelected(AdapterView<?> arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }

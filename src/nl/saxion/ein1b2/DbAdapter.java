@@ -106,29 +106,37 @@ public class DbAdapter {
 	
 	public ArrayList<Toets> selectToetsen(int vakid, boolean aankomend, boolean geschiedenis){
 		ArrayList<Toets> toetsen = new ArrayList<Toets>();
-		String[] args = new String[]{String.valueOf(vakid)};
-		String query = "SELECT id, toetstype_id, beschrijving, datumtijd, cijfer FROM toets WHERE vak_id=? ";
-		String and = "";
-		
+		String[] args = null;
+		String query = "SELECT t.id, t.toetstype_id, t.beschrijving, t.datumtijd, t.cijfer, v.naam FROM toets t LEFT OUTER JOIN vak v ON v.id = t.vak_id ";
+		String where = "";
+		if (vakid != 0) {
+			where = "WHERE t.vak_id=? ";
+			args = new String[]{String.valueOf(vakid)};
+		}
 		if (aankomend == true){
 			CustomDate nu = new CustomDate();
-			and = "AND datumtijd > '" + nu.toStringForDB() + "'";
+			if (vakid == 0) where = "where ";
+			else where += "AND ";
+			where += "t.datumtijd > '" + nu.toStringForDB() + "'";
 		}
 		else if (geschiedenis == true){
 			CustomDate nu = new CustomDate();
-			and = "AND datumtijd < '" + nu.toStringForDB() + "'";
+			if (vakid == 0) where = "where ";
+			else where += "AND ";
+			where += "t.datumtijd < '" + nu.toStringForDB() + "'";
 		}
 		
-		Cursor cursor = mydb.rawQuery(query + and, args);
+		Cursor cursor = mydb.rawQuery(query + where, args);
 		cursor.moveToFirst();
 
 		while (cursor.isAfterLast() == false) {
-			Toets toets = new Toets(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), new CustomDate(cursor.getString(3)), cursor.getInt(4));
+			Toets toets = new Toets(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), new CustomDate(cursor.getString(3)), cursor.getInt(4), cursor.getString(5));
 			toetsen.add(toets);
 			cursor.moveToNext();
 		}
 		return toetsen;
 	}
+	
 
 	public double selectGemCijferVak(int VakID) {
 		Double TotalCijfer = new Double(0);
