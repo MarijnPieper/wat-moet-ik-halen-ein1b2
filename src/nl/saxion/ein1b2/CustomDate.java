@@ -1,5 +1,6 @@
 package nl.saxion.ein1b2;
 
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class CustomDate extends GregorianCalendar {
@@ -16,6 +17,22 @@ public class CustomDate extends GregorianCalendar {
 		super(year, month, day, hours, minuts);
 	}
 	
+	public CustomDate(String Date) {
+		super();
+		String[] splitDate = Date.split("-");
+		String[] splitDay = splitDate[2].split(" ");
+		add(GregorianCalendar.DAY_OF_MONTH, Integer.parseInt(splitDay[0]));
+		add(GregorianCalendar.MONTH, Integer.parseInt(splitDate[1]));
+		add(GregorianCalendar.YEAR, Integer.parseInt(splitDate[0]));
+	}
+	
+	
+	
+	public void setTime(int hour, int minute){
+		this.set(GregorianCalendar.HOUR, hour);
+		this.set(GregorianCalendar.MINUTE, minute);
+	}
+	
 	public String toString(){
 		String result = this.get(GregorianCalendar.DAY_OF_MONTH) + "-" + this.get(GregorianCalendar.MONTH) + "-" + this.get(GregorianCalendar.YEAR);
 		return result;
@@ -27,6 +44,11 @@ public class CustomDate extends GregorianCalendar {
 				+ "-" + this.get(GregorianCalendar.DAY_OF_MONTH)
 				+ " " + this.get(GregorianCalendar.HOUR)
 				+ ":" + this.get(GregorianCalendar.MINUTE);
+		return result;
+	}
+	
+	public String getTimeAsString(){
+		String result = this.get(GregorianCalendar.HOUR) + ":" + this.get(GregorianCalendar.MINUTE);
 		return result;
 	}
 

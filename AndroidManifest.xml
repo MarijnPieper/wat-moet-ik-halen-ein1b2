@@ -22,5 +22,6 @@
         <activity android:name="VakOverzichtActivity" ></activity>
         <activity android:name="ToetsToevoegenActivity" ></activity>
         <activity android:name="PeriodeActivity"></activity>
+        <activity android:name="ToetsenOverzichtActivity" ></activity>
     </application>
 </manifest>

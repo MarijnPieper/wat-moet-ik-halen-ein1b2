@@ -25,6 +25,7 @@ public class Periode {
 		this.setEindDatum(convertStringtoDate(eindDatum));
 	}
 	
+	//TODO: zit in custom date
 	// Zet string om naar CustomDate. Zet alleen Datum om, niet de tijd!
 	private CustomDate convertStringtoDate(String Date) {
 		String[] splitDate = Date.split("-");

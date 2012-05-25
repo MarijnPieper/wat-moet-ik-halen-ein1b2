@@ -29,11 +29,12 @@ public class DbAdapter {
 		}
 	}
 
-	public long insertToetsToevoegen(Toets t){
+	public long insertToetsToevoegen(Toets t, int vakid){
 		ContentValues values = new ContentValues();
-		values.put("vak_id", t.getVak_id());
+		values.put("vak_id", vakid);
 		values.put("toetstype_id", t.getToetstype_id());
 		values.put("datumtijd" , t.getDatum().toStringForDB());
+		values.put("cijfer", t.getCijfer());
 		long newToetsToevoegen = mydb.insert("Toets" , null, values);
 		
 		
@@ -80,11 +81,30 @@ public class DbAdapter {
 		cursor.moveToFirst();
 
 		while (cursor.isAfterLast() == false) {
-			TypeToets type = new TypeToets(cursor.getString(1), Integer.parseInt(cursor.getString(0)));
+			TypeToets type = new TypeToets(cursor.getInt(0), cursor.getString(1), cursor.getInt(2));
 			types.add(type);
+			cursor.moveToNext();
 		}
 
 		return types;
+	}
+	
+	
+	public ArrayList<Toets> selectToetsen(int vakid){
+		ArrayList<Toets> toetsen = new ArrayList<Toets>();
+		String[] args = new String[]{String.valueOf(vakid)};
+		
+
+		Cursor cursor = mydb.rawQuery("SELECT id, toetstype_id, beschrijving, datumtijd, cijfer"
+				+ " FROM toets WHERE vak_id=?", args);
+		cursor.moveToFirst();
+
+		while (cursor.isAfterLast() == false) {
+			Toets toets = new Toets(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), new CustomDate(cursor.getString(3)), cursor.getInt(4));
+			toetsen.add(toets);
+			cursor.moveToNext();
+		}
+		return toetsen;
 	}
 
 	// TODO : Proefwerk / SO
@@ -98,6 +118,7 @@ public class DbAdapter {
 		while (cursor.isAfterLast() == false) {
 			TotalCijfer = TotalCijfer + Double.parseDouble(cursor.getString(5));
 			Count++;
+			cursor.moveToNext();
 		}
 
 		return TotalCijfer / Count;
@@ -176,7 +197,7 @@ public class DbAdapter {
 				+ ", beschrijving varchar(255)"
 				+ ", afgerond TINYINT);";
 
-		private static final String INSERT_TOETSTYPE= "INSERT INTO toetstype (naam, som) SELECT ('Proefwerk', 3) UNION ALL SELECT ('Schiftelijke Overhoring', 1);";
+		private static final String INSERT_TOETSTYPE= "INSERT INTO toetstype (naam, som) SELECT 'Proefwerk', 3 UNION ALL SELECT 'Schiftelijke Overhoring', 1;";
 
 		//		private static final String CREATE_TBL_ACHIEVEMENTS = "CREATE TABLE achievements ("
 		//				+ "id INTEGER PRIMARY KEY AUTOINCREMENT"
@@ -205,12 +226,12 @@ public class DbAdapter {
 
 			db.execSQL(SET_PRAGMA);
 
-			db.execSQL("");
+			db.execSQL(INSERT_TOETSTYPE);
 		}
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-			// TODO Auto-generated method stub
+			
 
 		}
 

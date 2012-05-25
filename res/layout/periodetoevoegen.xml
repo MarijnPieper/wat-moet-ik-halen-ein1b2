@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.70"
             android:gravity="center"
-            android:text="Pakket Toevoegen"
+            android:text="Periode Toevoegen"
             android:textAppearance="?android:attr/textAppearanceMedium" />
         
         <Button
