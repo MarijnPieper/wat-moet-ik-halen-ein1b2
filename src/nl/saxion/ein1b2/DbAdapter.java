@@ -1,7 +1,7 @@
 package nl.saxion.ein1b2;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -35,7 +35,7 @@ public class DbAdapter {
 		ContentValues values = new ContentValues();
 		values.put("vak_id", vakid);
 		values.put("toetstype_id", t.getToetstype_id());
-		values.put("datumtijd" , t.getDatum().toStringForDB());
+		values.put("datumtijd" , t.getDatumtijd().toStringForDB());
 		values.put("cijfer", t.getCijfer());
 		long newToetsToevoegen = mydb.insert("Toets" , null, values);
 		
@@ -140,19 +140,25 @@ public class DbAdapter {
 	
 
 	public double selectGemCijferVak(int VakID) {
-		Double TotalCijfer = new Double(0);
-		Double Count = new Double(0);
-		String[] args = new String[]{String.valueOf(VakID)};
-		Cursor cursor = mydb.rawQuery("SELECT * FROM toets WHERE vak_id=?", args);
-		cursor.moveToFirst();
+		  Double TotalCijfer = new Double(0);
+		  Double Count = new Double(0);
+		  Double gemCijfer = new Double(0);
+		  String[] args = new String[]{String.valueOf(VakID)};
+		  Cursor cursor = mydb.rawQuery("SELECT * FROM toets WHERE vak_id=?", args);
+		  cursor.moveToFirst();
 
-		while (cursor.isAfterLast() == false) {
-			TotalCijfer = TotalCijfer + Double.parseDouble(cursor.getString(5));
-			Count++;
-			cursor.moveToNext();
-		}
-
-		return TotalCijfer / Count;
+		  while (cursor.isAfterLast() == false) {
+		   TotalCijfer = TotalCijfer + Double.parseDouble(cursor.getString(5));
+		   Count++;
+		   cursor.moveToNext();
+		  }
+		  
+		  gemCijfer = TotalCijfer / Count;
+		  
+		  BigDecimal bd = new BigDecimal(gemCijfer);
+		  bd = bd.setScale(1,BigDecimal.ROUND_HALF_UP);
+		  
+		  return bd.doubleValue();
 	}
 
 	public ArrayList<Vak> selectVakken(int pakketID) {

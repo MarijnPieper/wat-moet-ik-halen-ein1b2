@@ -42,7 +42,7 @@ public class ToetsenOverzichtAdapter extends ArrayAdapter<Toets>{
 			db.close();
 			soort.setText(typetoetsNaam);
 			cijfer.setText(Double.toString(toets.getCijfer()));
-			datumtijd.setText(toets.getDatumtijd().toString());
+			datumtijd.setText(toets.getDatumtijd().toStringDatumTijd());
 			beschrijving.setText(toets.getBeschrijving());
 			
 		}
