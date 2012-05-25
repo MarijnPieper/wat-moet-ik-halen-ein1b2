@@ -7,24 +7,32 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Spinner;
 
-public class ToetsenOverzichtActivity extends Activity {
+public class ToetsenOverzichtActivity extends Activity implements OnCheckedChangeListener {
 	private DbAdapter dbHelper;
+	RadioButton rbnAankomend;
+	RadioButton rbnGeschiedenis;
+	ToetsenOverzichtAdapter toetsAdapter;
+	int vakid;
+	
 	
 	 @Override
 	 public void onCreate(Bundle savedInstanceState) {
 		 super.onCreate(savedInstanceState);
 		 setContentView(R.layout.toetsenoverzicht);
 		 Bundle extras = getIntent().getExtras();
-		 int vakid = extras.getInt("vakid");
+		 vakid = extras.getInt("vakid");
 		 int periodeid = extras.getInt("periodeid");
 		 
 		 //Database connectie
 		 dbHelper = new DbAdapter(this);
          dbHelper.open();
          ArrayList<Vak> vakken = dbHelper.selectVakken(periodeid);
-         ArrayList<Toets> toetsen = dbHelper.selectToetsen(vakid);
+         ArrayList<Toets> toetsen = dbHelper.selectToetsen(vakid, true, false);
          dbHelper.close();
 		 
          //Spinner Vakken
@@ -56,9 +64,30 @@ public class ToetsenOverzichtActivity extends Activity {
 		 sprVakken.setAdapter(vakAdapter);		 
 		 sprVakken.setSelection(thisVak);
 		 
+		 //Radiobuttons
+		 RadioGroup rgbTijd = (RadioGroup) findViewById(R.id.rgbTijd);
+		 rbnAankomend = (RadioButton) findViewById(R.id.rbnAankomend);
+		 rbnGeschiedenis = (RadioButton) findViewById(R.id.rbnGeschiedenis);
+		 rgbTijd.setOnCheckedChangeListener(this);
+		 
 		 //Listview Toetsen
 		 ListView lvwToetsen = (ListView) findViewById(R.id.lvwToetsen);
-		 ToetsenOverzichtAdapter toetsAdapter = new ToetsenOverzichtAdapter(this, R.layout.toetsenoverzicht, toetsen, vak.getNaam());
+		 toetsAdapter = new ToetsenOverzichtAdapter(this, R.layout.toetsenoverzicht, toetsen, vak.getNaam());
 		 lvwToetsen.setAdapter(toetsAdapter);
+		 
 	 }
+
+	public void onCheckedChanged(RadioGroup group, int checkedId) {
+		ArrayList<Toets> toetsen;
+		dbHelper.open();
+		if (checkedId == rbnAankomend.getId()){
+			toetsen = dbHelper.selectToetsen(vakid, true, false);
+		}
+		else {
+			toetsen = dbHelper.selectToetsen(vakid, false, true);
+		}
+		dbHelper.close();
+		toetsAdapter.clear();
+		toetsAdapter.addAll(toetsen);		
+	}
 }

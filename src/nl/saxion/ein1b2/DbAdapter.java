@@ -1,6 +1,8 @@
 package nl.saxion.ein1b2;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -102,13 +104,22 @@ public class DbAdapter {
 	
 	
 	
-	public ArrayList<Toets> selectToetsen(int vakid){
+	public ArrayList<Toets> selectToetsen(int vakid, boolean aankomend, boolean geschiedenis){
 		ArrayList<Toets> toetsen = new ArrayList<Toets>();
 		String[] args = new String[]{String.valueOf(vakid)};
+		String query = "SELECT id, toetstype_id, beschrijving, datumtijd, cijfer FROM toets WHERE vak_id=? ";
+		String and = "";
 		
-
-		Cursor cursor = mydb.rawQuery("SELECT id, toetstype_id, beschrijving, datumtijd, cijfer"
-				+ " FROM toets WHERE vak_id=?", args);
+		if (aankomend == true){
+			CustomDate nu = new CustomDate();
+			and = "AND datumtijd > '" + nu.toStringForDB() + "'";
+		}
+		else if (geschiedenis == true){
+			CustomDate nu = new CustomDate();
+			and = "AND datumtijd < '" + nu.toStringForDB() + "'";
+		}
+		
+		Cursor cursor = mydb.rawQuery(query + and, args);
 		cursor.moveToFirst();
 
 		while (cursor.isAfterLast() == false) {
