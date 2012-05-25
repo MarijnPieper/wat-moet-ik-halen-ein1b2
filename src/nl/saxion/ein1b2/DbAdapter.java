@@ -1,6 +1,8 @@
 package nl.saxion.ein1b2;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -89,23 +91,52 @@ public class DbAdapter {
 		return types;
 	}
 	
-	
-	public ArrayList<Toets> selectToetsen(int vakid){
-		ArrayList<Toets> toetsen = new ArrayList<Toets>();
-		String[] args = new String[]{String.valueOf(vakid)};
+	public String selectTypeToets(int id){
+		String[] args = new String[]{String.valueOf(id)};
+		Cursor cursor = mydb.rawQuery("SELECT naam FROM toetstype WHERE id=?", args);
+		boolean gevonden = cursor.moveToFirst();
 		
-
-		Cursor cursor = mydb.rawQuery("SELECT id, toetstype_id, beschrijving, datumtijd, cijfer"
-				+ " FROM toets WHERE vak_id=?", args);
+		String resultaat = "";
+		if (gevonden) resultaat = cursor.getString(0);
+		
+		return resultaat;
+	}
+	
+	
+	
+	public ArrayList<Toets> selectToetsen(int vakid, boolean aankomend, boolean geschiedenis){
+		ArrayList<Toets> toetsen = new ArrayList<Toets>();
+		String[] args = null;
+		String query = "SELECT t.id, t.toetstype_id, t.beschrijving, t.datumtijd, t.cijfer, v.naam FROM toets t LEFT OUTER JOIN vak v ON v.id = t.vak_id ";
+		String where = "";
+		if (vakid != 0) {
+			where = "WHERE t.vak_id=? ";
+			args = new String[]{String.valueOf(vakid)};
+		}
+		if (aankomend == true){
+			CustomDate nu = new CustomDate();
+			if (vakid == 0) where = "where ";
+			else where += "AND ";
+			where += "t.datumtijd > '" + nu.toStringForDB() + "'";
+		}
+		else if (geschiedenis == true){
+			CustomDate nu = new CustomDate();
+			if (vakid == 0) where = "where ";
+			else where += "AND ";
+			where += "t.datumtijd < '" + nu.toStringForDB() + "'";
+		}
+		
+		Cursor cursor = mydb.rawQuery(query + where, args);
 		cursor.moveToFirst();
 
 		while (cursor.isAfterLast() == false) {
-			Toets toets = new Toets(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), new CustomDate(cursor.getString(3)), cursor.getInt(4));
+			Toets toets = new Toets(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), new CustomDate(cursor.getString(3)), cursor.getInt(4), cursor.getString(5));
 			toetsen.add(toets);
 			cursor.moveToNext();
 		}
 		return toetsen;
 	}
+	
 
 	// TODO : Proefwerk / SO
 	public double selectGemCijferVak(int VakID) {

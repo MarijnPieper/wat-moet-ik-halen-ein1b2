@@ -72,19 +72,6 @@ public class ToetsToevoegenActivity extends Activity {
 
 	}
 
-	class MySpinnerListener implements OnItemSelectedListener {
-
-		public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-			currentItem = arg2;
-			Vak vak = vakAdapter.getItem(currentItem);
-		}
-
-		public void onNothingSelected(AdapterView<?> arg0) {
-		}
-	}
-
-
-
 
 	class VoegToetsToeOnClickListener implements OnClickListener {
 		public void onClick(View v) {

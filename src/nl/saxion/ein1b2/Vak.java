@@ -1,16 +1,41 @@
 package nl.saxion.ein1b2;
 
+import java.util.ArrayList;
+
 public class Vak {
 	private String naam;
 	private int vakID;
 	private boolean iscijfer;
 	private double doelCijfer;
+	private ArrayList<Toets> toetsen;
 	
 	public Vak(String vakNaam, boolean iscijfer) {
 		this.setNaam(vakNaam);
 		this.setIscijfer(iscijfer);
 	}
 	
+	public Vak(String naam, int vakID) {
+		super();
+		setNaam(naam);
+		setVakID(vakID);
+		setToetsen(toetsen);
+	}
+
+	protected ArrayList<Toets> getToetsen() {
+		return toetsen;
+	}
+
+	protected void setToetsen(ArrayList<Toets> toetsen) {
+		this.toetsen = toetsen;
+	}
+	
+	protected void setToets(Toets toets){
+		if (this.toetsen == null){
+			this.toetsen = new ArrayList<Toets>();
+		}
+		this.toetsen.add(toets);
+	}
+
 	public Vak(String vakNaam, int vakID, double doelCijfer) {
 		this.setVakID(vakID);
 		this.setNaam(vakNaam);
