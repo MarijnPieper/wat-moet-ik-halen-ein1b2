@@ -130,6 +130,7 @@ public class DbAdapter {
 		cursor.moveToFirst();
 
 		while (cursor.isAfterLast() == false) {
+			String tmp = cursor.getString(3);
 			Toets toets = new Toets(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), new CustomDate(cursor.getString(3)), cursor.getInt(4), cursor.getString(5));
 			toetsen.add(toets);
 			cursor.moveToNext();
