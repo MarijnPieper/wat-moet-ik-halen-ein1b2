@@ -1,6 +1,7 @@
 package nl.saxion.ein1b2;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -29,6 +30,21 @@ public class ToetsenOverzichtActivity extends Activity {
          //Spinner Vakken
 		 Spinner sprVakken = (Spinner) findViewById(R.id.sprVakken);
 		 ArrayAdapter<Vak> vakAdapter = new ArrayAdapter<Vak>(this, android.R.layout.simple_spinner_item, vakken);
+		 Vak vakAlles = new Vak("Alles", true);
+		 vakAdapter.add(vakAlles);
+		 vakAdapter.sort(new Comparator<Vak>() {
+
+			public int compare(Vak vak1, Vak vak2) {
+				if (vak1.getNaam().equals("Alles")){
+					return -1;
+				} else if (vak2.getNaam().equals("Alles")){
+					return 1;
+				} else {
+					return vak1.getNaam().compareTo(vak2.getNaam());
+				}
+			}
+			 
+		});		 
 		 Vak vak = null;
 		 for (Vak tmpVak : vakken){
 			 if (tmpVak.getVakID() == vakid){
