@@ -26,6 +26,12 @@ public class VakOverzichtActivity extends Activity implements OnItemClickListene
     	setContentView(R.layout.vakken);
     	
     	db = new DbAdapter(this);
+    	
+    	Bundle b = getIntent().getExtras();
+    	if (b != null) {
+    		nID = b.getInt("ID");
+    	}
+    	
     	checkFirstTime();
     }
     
