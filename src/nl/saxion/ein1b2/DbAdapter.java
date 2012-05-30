@@ -2,7 +2,6 @@ package nl.saxion.ein1b2;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -36,7 +35,7 @@ public class DbAdapter {
 		ContentValues values = new ContentValues();
 		values.put("vak_id", vakid);
 		values.put("toetstype_id", t.getToetstype_id());
-		values.put("datumtijd" , t.getDatum().toStringForDB());
+		values.put("datumtijd" , t.getDatumtijd().toStringForDB());
 		values.put("cijfer", t.getCijfer());
 		long newToetsToevoegen = mydb.insert("Toets" , null, values);
 		
@@ -131,6 +130,7 @@ public class DbAdapter {
 		cursor.moveToFirst();
 
 		while (cursor.isAfterLast() == false) {
+			String tmp = cursor.getString(3);
 			Toets toets = new Toets(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), new CustomDate(cursor.getString(3)), cursor.getInt(4), cursor.getString(5));
 			toetsen.add(toets);
 			cursor.moveToNext();
@@ -156,10 +156,15 @@ public class DbAdapter {
 		
 		gemCijfer = TotalCijfer / Count;
 		
-		BigDecimal bd = new BigDecimal(gemCijfer);
-		bd = bd.setScale(1,BigDecimal.ROUND_HALF_UP);
-		
-		return bd.doubleValue();
+		if (!gemCijfer.equals(Double.NaN)) {
+			BigDecimal bd = new BigDecimal(gemCijfer);
+			bd = bd.setScale(1,BigDecimal.ROUND_HALF_UP);
+			
+			return bd.doubleValue();
+		}
+		else {
+			return gemCijfer;
+		}
 	}
 
 	public ArrayList<Vak> selectVakken(int pakketID) {

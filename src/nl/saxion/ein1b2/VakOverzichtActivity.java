@@ -18,39 +18,50 @@ public class VakOverzichtActivity extends Activity implements OnItemClickListene
 	private DbAdapter db;
 	private VakOverzichtAdapter adapter;
 	private ArrayList<Periode> Periodes;
-	private int nID;
+	private int nID = 0;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
     	setContentView(R.layout.vakken);
     	
-    	db = new DbAdapter(this);	
+    	db = new DbAdapter(this);
+    	checkFirstTime();
     }
     
     @Override
     public void onResume(){
+    	super.onResume();
     	initVakOverzicht();
     }
  
     // Check of er al een Periode bestaat, zo niet Wizard starten.
  	private void checkFirstTime() {
- 		db = new DbAdapter(this);
  		db.open();
  		Periodes = new ArrayList<Periode>();
  		Periodes = db.selectVakkenpakketten();
  		db.close();
- 		
- 		if (!Periodes.isEmpty()){
- 			GregorianCalendar curDate = new GregorianCalendar();
  			
+		if (Periodes.isEmpty()) {
+			Intent i = new Intent(this, WizardActivity.class); 
+			startActivity(i);
+		} 
+		else {
+			GregorianCalendar curDate = new GregorianCalendar();
+			
  			for (Periode periode : Periodes) {
  				if (curDate.after(periode.getStartDatum()) && curDate.before(periode.getEindDatum())) {
  					this.nID = periode.getID();
  					initVakOverzicht();
+ 					break;
  				}
  			}
- 		}
+ 			
+ 			if (nID == 0) {
+ 				Intent i = new Intent(this, PeriodeActivity.class);
+ 				startActivity(i);
+ 			}
+		}
  	}
  	
  	private void initVakOverzicht() {

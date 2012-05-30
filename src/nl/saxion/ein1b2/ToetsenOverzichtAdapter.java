@@ -32,6 +32,7 @@ public class ToetsenOverzichtAdapter extends ArrayAdapter<Toets>{
 			TextView vak = (TextView) convertView.findViewById(R.id.lblVak);			
 			TextView soort = (TextView) convertView.findViewById(R.id.lblSoort);
 			TextView cijfer = (TextView) convertView.findViewById(R.id.lblCijfer);
+			TextView datumtijd = (TextView) convertView.findViewById(R.id.lblDatumTijd);
 			TextView beschrijving = (TextView) convertView.findViewById(R.id.lblBeschrijving);
 			
 			vak.setText(toets.getVaknaam());
@@ -41,6 +42,7 @@ public class ToetsenOverzichtAdapter extends ArrayAdapter<Toets>{
 			db.close();
 			soort.setText(typetoetsNaam);
 			cijfer.setText(Double.toString(toets.getCijfer()));
+			datumtijd.setText(toets.getDatumtijd().toStringDatumTijd());
 			beschrijving.setText(toets.getBeschrijving());
 			
 		}

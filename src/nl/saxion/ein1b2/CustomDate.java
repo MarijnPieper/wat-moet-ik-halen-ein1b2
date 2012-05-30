@@ -1,6 +1,6 @@
 package nl.saxion.ein1b2;
 
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 
 public class CustomDate extends GregorianCalendar {
@@ -17,13 +17,14 @@ public class CustomDate extends GregorianCalendar {
 		super(year, month, day, hours, minuts);
 	}
 	
+	
 	public CustomDate(String Date) {
 		super();
 		String[] splitDate = Date.split("-");
 		String[] splitDay = splitDate[2].split(" ");
-		add(GregorianCalendar.DAY_OF_MONTH, Integer.parseInt(splitDay[0]));
-		add(GregorianCalendar.MONTH, Integer.parseInt(splitDate[1]));
-		add(GregorianCalendar.YEAR, Integer.parseInt(splitDate[0]));
+		String[] splitTime = splitDay[1].split(":");
+		set(Integer.parseInt(splitDate[0]), Integer.parseInt(splitDate[1]), Integer.parseInt(splitDay[0]), Integer.parseInt(splitTime[1]), Integer.parseInt(splitTime[0]));
+		
 	}
 	
 	
@@ -34,9 +35,16 @@ public class CustomDate extends GregorianCalendar {
 	}
 	
 	public String toString(){
-		String result = this.get(GregorianCalendar.DAY_OF_MONTH) + "-" + this.get(GregorianCalendar.MONTH) + "-" + this.get(GregorianCalendar.YEAR);
-		return result;
+		String DATE_FORMAT = "dd-MM-yyyy";
+	    SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+	    return sdf.format(this.getTime());
 	}
+	public String toStringDatumTijd(){
+		String DATE_FORMAT = "dd-MM-yyyy h:mm";
+	    SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+	    return sdf.format(this.getTime());
+	}
+	
 	
 	public String toStringForDB(){
 		String result = this.get(GregorianCalendar.YEAR)  
