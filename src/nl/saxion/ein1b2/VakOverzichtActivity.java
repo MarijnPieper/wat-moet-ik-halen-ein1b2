@@ -28,6 +28,11 @@ public class VakOverzichtActivity extends Activity implements OnItemClickListene
     	db = new DbAdapter(this);	
     }
     
+    @Override
+    public void onResume(){
+    	initVakOverzicht();
+    }
+ 
     // Check of er al een Periode bestaat, zo niet Wizard starten.
  	private void checkFirstTime() {
  		db = new DbAdapter(this);
