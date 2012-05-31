@@ -1,5 +1,6 @@
 package nl.saxion.ein1b2;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -108,7 +109,7 @@ public class ToetsToevoegenActivity extends Activity {
 		case STARTDATUM_DIALOG_ID:  
 			return new DatePickerDialog(this, new setDatumListener(), startDatum.get(GregorianCalendar.YEAR), startDatum.get(GregorianCalendar.MONTH), startDatum.get(GregorianCalendar.DAY_OF_MONTH));
 		case STARTTIJD_DIALOG_ID:
-			return new TimePickerDialog(this, new setTimeListener(), startDatum.get(GregorianCalendar.HOUR), startDatum.get(GregorianCalendar.MINUTE), true);
+			return new TimePickerDialog(this, new setTimeListener(), startDatum.get(GregorianCalendar.HOUR_OF_DAY), startDatum.get(GregorianCalendar.MINUTE), true);
 		}; return null;  
 
 	}
