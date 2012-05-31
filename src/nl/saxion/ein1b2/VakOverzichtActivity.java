@@ -1,11 +1,11 @@
 package nl.saxion.ein1b2;
 
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -24,19 +24,26 @@ public class VakOverzichtActivity extends Activity implements OnItemClickListene
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
     	setContentView(R.layout.vakken);
+    	Button btnTerug = (Button) findViewById(R.id.buttonTerugPeriode);
+    	btnTerug.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				startPeriodeOverzicht();
+			}
+		});
     	
     	db = new DbAdapter(this);
     	
     	Bundle b = getIntent().getExtras();
     	if (b != null) {
     		nID = b.getInt("ID");
+    		Log.w("pID", Integer.toString(nID));
     	}
     	
     	checkFirstTime();
     }
     
     @Override
-    public void onResume(){
+    public void onResume() {
     	super.onResume();
     	initVakOverzicht();
     }
@@ -53,19 +60,25 @@ public class VakOverzichtActivity extends Activity implements OnItemClickListene
 			startActivity(i);
 		} 
 		else {
-			GregorianCalendar curDate = new GregorianCalendar();
+			CustomDate curDate = new CustomDate();
 			
- 			for (Periode periode : Periodes) {
- 				if (curDate.after(periode.getStartDatum()) && curDate.before(periode.getEindDatum())) {
- 					this.nID = periode.getID();
- 					initVakOverzicht();
- 					break;
- 				}
- 			}
+			if (this.nID == 0){
+	 			for (Periode periode : Periodes) {
+	 				if (curDate.after(periode.getStartDatum()) && curDate.before(periode.getEindDatum())
+	 						|| curDate.equals(periode.getStartDatum()) 
+							|| curDate.equals(periode.getEindDatum()) ) {
+	 					this.nID = periode.getID();
+	 					break;
+	 				}
+	 			}
+			}
  			
  			if (nID == 0) {
  				Intent i = new Intent(this, PeriodeActivity.class);
  				startActivity(i);
+ 			}
+ 			else {
+ 				initVakOverzicht();
  			}
 		}
  	}
@@ -82,7 +95,11 @@ public class VakOverzichtActivity extends Activity implements OnItemClickListene
        	lvVakken.setAdapter(adapter);
        	
        	Button voegToetsToe = (Button)findViewById(R.id.buttonVoegToetsToe);
-		voegToetsToe.setOnClickListener(new ToetsToevoegenClickListener());
+		voegToetsToe.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				startToetsToevoegen();
+			}
+		});
  	}
 
 
@@ -99,11 +116,11 @@ public class VakOverzichtActivity extends Activity implements OnItemClickListene
 		i.putExtra("periodeid", nID);
 		startActivity(i);
 	}
-
-	public class ToetsToevoegenClickListener implements OnClickListener {
-
-		public void onClick(View v) {
-			startToetsToevoegen();
-		}
+	
+	private void startPeriodeOverzicht() {
+		Intent i = new Intent(this, PeriodeActivity.class);
+		startActivity(i);
 	}
+
+	
 }

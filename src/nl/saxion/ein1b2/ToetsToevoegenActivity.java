@@ -1,5 +1,6 @@
 package nl.saxion.ein1b2;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -10,24 +11,21 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
 import android.os.Bundle;
-import android.text.format.Time;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 public class ToetsToevoegenActivity extends Activity {
 
 	private ArrayAdapter<Vak> vakAdapter;
 	private ArrayAdapter<TypeToets> typeToetsAdapter;		
-	private int currentItem=-1;
 	private DbAdapter adapter;
 	static final int STARTDATUM_DIALOG_ID = 0;
 	static final int STARTTIJD_DIALOG_ID = 1;
@@ -35,6 +33,7 @@ public class ToetsToevoegenActivity extends Activity {
 	private EditText txtStartDatum;
 	private EditText txtStartTijd;
 	private long viewIdDialog = 0;
+	private boolean startUp = true;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -98,8 +97,7 @@ public class ToetsToevoegenActivity extends Activity {
 				adapter.insertToetsToevoegen(toets, vak.getVakID());
 				adapter.close();	
 				finish();
-			}
-			
+			}	
 		}	
 	}
 
@@ -111,7 +109,7 @@ public class ToetsToevoegenActivity extends Activity {
 		case STARTDATUM_DIALOG_ID:  
 			return new DatePickerDialog(this, new setDatumListener(), startDatum.get(GregorianCalendar.YEAR), startDatum.get(GregorianCalendar.MONTH), startDatum.get(GregorianCalendar.DAY_OF_MONTH));
 		case STARTTIJD_DIALOG_ID:
-			return new TimePickerDialog(this, new setTimeListener(), startDatum.get(GregorianCalendar.HOUR), startDatum.get(GregorianCalendar.MINUTE), true);
+			return new TimePickerDialog(this, new setTimeListener(), startDatum.get(GregorianCalendar.HOUR_OF_DAY), startDatum.get(GregorianCalendar.MINUTE), true);
 		}; return null;  
 
 	}
@@ -129,11 +127,15 @@ public class ToetsToevoegenActivity extends Activity {
 
 		public void onFocusChange(View view, boolean hasFocus) {	
 			viewIdDialog = view.getId();
-			if (hasFocus){
-				if (view.getId() == txtStartDatum.getId()){
-					showDialog(STARTDATUM_DIALOG_ID);
+			if (!startUp){
+				if (hasFocus){
+					if (view.getId() == txtStartDatum.getId()){
+						showDialog(STARTDATUM_DIALOG_ID);
+					}
 				}
-
+			}
+			else {
+				startUp = false;
 			}
 		}
 	}

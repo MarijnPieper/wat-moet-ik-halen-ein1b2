@@ -18,22 +18,13 @@ public class Periode {
 	}
 	
 	// Alleen gebruiken i.c.m. Database
-	public Periode(int id, String naam, String startDatum, String eindDatum) {
+	public Periode(int id, String naam, CustomDate startDatum, CustomDate eindDatum) {
 		this.setID(id);
 		this.setNaam(naam);
-		this.setStartDatum(convertStringtoDate(startDatum));
-		this.setEindDatum(convertStringtoDate(eindDatum));
+		this.setStartDatum(startDatum);
+		this.setEindDatum(eindDatum);
 	}
-	
-	//TODO: zit in custom date
-	// Zet string om naar CustomDate. Zet alleen Datum om, niet de tijd!
-	private CustomDate convertStringtoDate(String Date) {
-		String[] splitDate = Date.split("-");
-		String[] splitDay = splitDate[2].split(" ");
-		CustomDate newDate = new CustomDate(Integer.parseInt(splitDay[0]), Integer.parseInt(splitDate[1]),Integer.parseInt(splitDate[0]));
-		return newDate;
-	}
-	
+
 	protected String getNaam() {
 		return naam;
 	}
