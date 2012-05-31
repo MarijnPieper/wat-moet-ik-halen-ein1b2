@@ -1,6 +1,7 @@
 package nl.saxion.ein1b2;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 
 import android.app.Activity;
@@ -38,6 +39,7 @@ public class ToetsenOverzichtActivity extends Activity implements OnCheckedChang
          dbHelper.open();
          ArrayList<Vak> vakken = dbHelper.selectVakken(periodeid);
          ArrayList<Toets> toetsen = dbHelper.selectToetsen(vakid, true, false);
+         //Collections.sort(toetsen, new CompareToets());
          dbHelper.close();
 		 
          //Spinner Vakken
@@ -78,7 +80,7 @@ public class ToetsenOverzichtActivity extends Activity implements OnCheckedChang
 		 
 		 //Listview Toetsen
 		 ListView lvwToetsen = (ListView) findViewById(R.id.lvwToetsen);
-		 toetsAdapter = new ToetsenOverzichtAdapter(this, R.layout.toetsenoverzicht, toetsen, vak.getNaam());
+		 toetsAdapter = new ToetsenOverzichtAdapter(this, R.layout.toetsenoverzicht, toetsen);
 		 lvwToetsen.setAdapter(toetsAdapter);
 		 
 	 }
@@ -114,4 +116,5 @@ public class ToetsenOverzichtActivity extends Activity implements OnCheckedChang
 		// TODO Auto-generated method stub
 		
 	}
+	
 }

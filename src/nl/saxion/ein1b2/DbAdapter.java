@@ -109,24 +109,24 @@ public class DbAdapter {
 		String[] args = null;
 		String query = "SELECT t.id, t.toetstype_id, t.beschrijving, t.datumtijd, t.cijfer, v.naam FROM toets t LEFT OUTER JOIN vak v ON v.id = t.vak_id ";
 		String where = "";
+		String orderby = "";
 		if (vakid != 0) {
 			where = "WHERE t.vak_id=? ";
 			args = new String[]{String.valueOf(vakid)};
 		}
 		if (aankomend == true){
-			CustomDate nu = new CustomDate();
 			if (vakid == 0) where = "where ";
 			else where += "AND ";
-			where += "t.datumtijd > '" + nu.toStringForDB() + "'";
+			where += "t.datumtijd > datetime()";
+			orderby = " ORDER BY t.datumtijd ASC";
 		}
 		else if (geschiedenis == true){
-			CustomDate nu = new CustomDate();
 			if (vakid == 0) where = "where ";
 			else where += "AND ";
-			where += "t.datumtijd < '" + nu.toStringForDB() + "'";
+			where += "t.datumtijd < datetime()";
+			orderby = " ORDER BY t.datumtijd DESC";
 		}
-		
-		Cursor cursor = mydb.rawQuery(query + where, args);
+		Cursor cursor = mydb.rawQuery(query + where + orderby, args);
 		cursor.moveToFirst();
 
 		while (cursor.isAfterLast() == false) {
@@ -154,8 +154,38 @@ public class DbAdapter {
 		  }
 		  
 		  gemCijfer = TotalCijfer / Count;
+		  if (!gemCijfer.equals(Double.NaN)){
+			  BigDecimal bd = new BigDecimal(gemCijfer);
+			  bd = bd.setScale(1,BigDecimal.ROUND_HALF_UP);
+			  
+			  return bd.doubleValue();
+		  }
+		  else return gemCijfer;
 		  
-		  BigDecimal bd = new BigDecimal(gemCijfer);
+		  
+	}
+	
+	public double selectMinCijferVak(int toetsid, double minimaleCijfer, int wegingDezeToets) {
+		  double totaalCijfers = new Double(0);
+		  int totaalWegingen = 0;
+		  double teBehalen = new Double(0);
+		  
+		  String[] args = new String[]{String.valueOf(toetsid)};
+		  String query = "SELECT sum(toets.cijfer) as totaal_cijfers, count(toetstype.som) as totaal_wegingen FROM toets LEFT OUTER JOIN toetstype ON toets.toetstype_id = toetstype.id " 
+				  + "WHERE toets.vak_id=(select vak_id from toets where id=? limit 1)"
+				  + "AND toets.cijfer is not NULL " +
+				  "AND toets.cijfer != '0.0'";
+		  Cursor cursor = mydb.rawQuery(query, args);
+		  cursor.moveToFirst();
+		  
+		  while (cursor.isFirst()) {
+			  totaalCijfers = cursor.getDouble(0);   
+			  totaalWegingen = cursor.getInt(1);
+			  cursor.moveToNext();
+		  }
+		  
+		  teBehalen = ((minimaleCijfer * (totaalWegingen + wegingDezeToets)) - totaalCijfers) / wegingDezeToets;
+		  BigDecimal bd = new BigDecimal(teBehalen);
 		  bd = bd.setScale(1,BigDecimal.ROUND_HALF_UP);
 		  
 		  return bd.doubleValue();
