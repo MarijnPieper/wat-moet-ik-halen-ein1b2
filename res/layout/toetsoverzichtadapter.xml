@@ -12,7 +12,6 @@
         <TextView
             android:id="@+id/lblVak"
             android:layout_height="wrap_content"
-            android:text="Medium Text"
             android:textAppearance="?android:attr/textAppearanceMedium" 
             android:layout_width="0dp"
             android:layout_weight="0.40" />
@@ -20,7 +19,6 @@
         <TextView
             android:id="@+id/lblSoort"
             android:layout_height="wrap_content"
-            android:text="Small Text"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:layout_width="0dp"
             android:layout_weight="0.50" />
@@ -28,7 +26,6 @@
         <TextView
             android:id="@+id/lblCijfer"
             android:layout_height="wrap_content"
-            android:text="Small Text"
             android:textAppearance="?android:attr/textAppearanceSmall" 
             android:layout_width="0dp"
             android:layout_weight="0.10"/>
@@ -36,18 +33,31 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/lblDatumTijd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Small Text"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/lblDatumTijd"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall" 
+            android:layout_width="0dp"
+            android:layout_weight="0.50"/>
+
+        <TextView
+            android:id="@+id/lblDoelcijfer"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_width="0dp"
+            android:layout_weight="0.50" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/lblBeschrijving"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Small Text"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </LinearLayout>
