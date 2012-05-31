@@ -47,7 +47,6 @@ public class ToetsenOverzichtActivity extends Activity implements OnCheckedChang
 		 Vak vakAlles = new Vak("Alles", true);
 		 vakAdapter.add(vakAlles);
 		 vakAdapter.sort(new Comparator<Vak>() {
-
 			public int compare(Vak vak1, Vak vak2) {
 				if (vak1.getNaam().equals("Alles")){
 					return -1;

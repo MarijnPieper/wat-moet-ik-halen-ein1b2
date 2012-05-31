@@ -24,6 +24,8 @@ public class VakOverzichtActivity extends Activity implements OnItemClickListene
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
     	setContentView(R.layout.vakken);
+    	Button btnTerug = (Button) findViewById(R.id.buttonTerugPeriode);
+    	btnTerug.setOnClickListener(new ClickListener());
     	
     	db = new DbAdapter(this);
     	
@@ -36,7 +38,7 @@ public class VakOverzichtActivity extends Activity implements OnItemClickListene
     }
     
     @Override
-    public void onResume(){
+    public void onResume() {
     	super.onResume();
     	initVakOverzicht();
     }
@@ -82,7 +84,7 @@ public class VakOverzichtActivity extends Activity implements OnItemClickListene
        	lvVakken.setAdapter(adapter);
        	
        	Button voegToetsToe = (Button)findViewById(R.id.buttonVoegToetsToe);
-		voegToetsToe.setOnClickListener(new ToetsToevoegenClickListener());
+		voegToetsToe.setOnClickListener(new ClickListener());
  	}
 
 
@@ -99,11 +101,21 @@ public class VakOverzichtActivity extends Activity implements OnItemClickListene
 		i.putExtra("periodeid", nID);
 		startActivity(i);
 	}
+	
+	private void startPeriodeOverzicht() {
+		Intent i = new Intent(this, PeriodeActivity.class);
+		startActivity(i);
+	}
 
-	public class ToetsToevoegenClickListener implements OnClickListener {
+	public class ClickListener implements OnClickListener {
 
 		public void onClick(View v) {
-			startToetsToevoegen();
+			if (v.getId() == R.id.buttonToetsToevoegen) {
+				startToetsToevoegen();
+			}
+			else {
+				startPeriodeOverzicht();
+			}
 		}
 	}
 }
