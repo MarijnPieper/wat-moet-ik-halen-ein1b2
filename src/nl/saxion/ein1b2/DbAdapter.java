@@ -152,8 +152,9 @@ public class DbAdapter {
 			if (cursor.getDouble(5) != 0.0) {
 				TotalCijfer = TotalCijfer + Double.parseDouble(cursor.getString(5));
 				Count++;
-				cursor.moveToNext();
 			}
+			
+			cursor.moveToNext();
 		}
 		
 		gemCijfer = TotalCijfer / Count;
