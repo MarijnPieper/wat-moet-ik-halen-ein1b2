@@ -68,7 +68,7 @@ public class DbAdapter {
 		cursor.moveToFirst();
 
 		while (cursor.isAfterLast() == false) {
-			Periode p = new Periode(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2),cursor.getString(3));
+			Periode p = new Periode(Integer.parseInt(cursor.getString(0)), cursor.getString(1), new CustomDate(cursor.getString(2)), new CustomDate(cursor.getString(3)));
 			periode.add(p);
 			cursor.moveToNext();
 		}

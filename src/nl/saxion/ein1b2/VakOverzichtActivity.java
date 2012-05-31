@@ -6,6 +6,7 @@ import java.util.GregorianCalendar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -30,6 +31,7 @@ public class VakOverzichtActivity extends Activity implements OnItemClickListene
     	Bundle b = getIntent().getExtras();
     	if (b != null) {
     		nID = b.getInt("ID");
+    		Log.w("pID", Integer.toString(nID));
     	}
     	
     	checkFirstTime();
@@ -53,12 +55,13 @@ public class VakOverzichtActivity extends Activity implements OnItemClickListene
 			startActivity(i);
 		} 
 		else {
-			GregorianCalendar curDate = new GregorianCalendar();
+			CustomDate curDate = new CustomDate();
 			
  			for (Periode periode : Periodes) {
- 				if (curDate.after(periode.getStartDatum()) && curDate.before(periode.getEindDatum())) {
+ 				if (curDate.after(periode.getStartDatum()) && curDate.before(periode.getEindDatum())
+ 						|| curDate.equals(periode.getStartDatum()) 
+						|| curDate.equals(periode.getEindDatum()) ) {
  					this.nID = periode.getID();
- 					initVakOverzicht();
  					break;
  				}
  			}
@@ -66,6 +69,9 @@ public class VakOverzichtActivity extends Activity implements OnItemClickListene
  			if (nID == 0) {
  				Intent i = new Intent(this, PeriodeActivity.class);
  				startActivity(i);
+ 			}
+ 			else {
+ 				initVakOverzicht();
  			}
 		}
  	}
