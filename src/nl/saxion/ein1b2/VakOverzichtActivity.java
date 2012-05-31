@@ -28,7 +28,7 @@ public class VakOverzichtActivity extends Activity implements OnItemClickListene
     	Button btnTerug = (Button) findViewById(R.id.buttonTerugPeriode);
     	btnTerug.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				startToetsToevoegen();
+				startPeriodeOverzicht();
 			}
 		});
     	
