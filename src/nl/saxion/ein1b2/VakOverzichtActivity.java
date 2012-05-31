@@ -1,7 +1,6 @@
 package nl.saxion.ein1b2;
 
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -63,14 +62,16 @@ public class VakOverzichtActivity extends Activity implements OnItemClickListene
 		else {
 			CustomDate curDate = new CustomDate();
 			
- 			for (Periode periode : Periodes) {
- 				if (curDate.after(periode.getStartDatum()) && curDate.before(periode.getEindDatum())
- 						|| curDate.equals(periode.getStartDatum()) 
-						|| curDate.equals(periode.getEindDatum()) ) {
- 					this.nID = periode.getID();
- 					break;
- 				}
- 			}
+			if (this.nID == 0){
+	 			for (Periode periode : Periodes) {
+	 				if (curDate.after(periode.getStartDatum()) && curDate.before(periode.getEindDatum())
+	 						|| curDate.equals(periode.getStartDatum()) 
+							|| curDate.equals(periode.getEindDatum()) ) {
+	 					this.nID = periode.getID();
+	 					break;
+	 				}
+	 			}
+			}
  			
  			if (nID == 0) {
  				Intent i = new Intent(this, PeriodeActivity.class);

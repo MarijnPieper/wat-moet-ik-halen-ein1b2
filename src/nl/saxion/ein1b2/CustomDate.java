@@ -31,7 +31,7 @@ public class CustomDate extends GregorianCalendar {
 	
 	
 	public void setTime(int hour, int minute){
-		this.set(GregorianCalendar.HOUR, hour);
+		this.set(GregorianCalendar.HOUR_OF_DAY, hour);
 		this.set(GregorianCalendar.MINUTE, minute);
 	}
 	
@@ -55,8 +55,9 @@ public class CustomDate extends GregorianCalendar {
 	}
 	
 	public String getTimeAsString(){
-		String result = this.get(GregorianCalendar.HOUR) + ":" + this.get(GregorianCalendar.MINUTE);
-		return result;
+		String DATE_FORMAT = "HH:mm";
+	    SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+		return sdf.format(this.getTime());
 	}
 
 }
