@@ -139,30 +139,34 @@ public class DbAdapter {
 	}
 	
 
+	// TODO : Proefwerk / SO
 	public double selectGemCijferVak(int VakID) {
-		  Double TotalCijfer = new Double(0);
-		  Double Count = new Double(0);
-		  Double gemCijfer = new Double(0);
-		  String[] args = new String[]{String.valueOf(VakID)};
-		  Cursor cursor = mydb.rawQuery("SELECT * FROM toets WHERE vak_id=?", args);
-		  cursor.moveToFirst();
+		Double TotalCijfer = new Double(0);
+		Double Count = new Double(0);
+		Double gemCijfer = new Double(0);
+		String[] args = new String[]{String.valueOf(VakID)};
+		Cursor cursor = mydb.rawQuery("SELECT * FROM toets WHERE vak_id=?", args);
+		cursor.moveToFirst();
 
-		  while (cursor.isAfterLast() == false) {
-		   TotalCijfer = TotalCijfer + Double.parseDouble(cursor.getString(5));
-		   Count++;
-		   cursor.moveToNext();
-		  }
-		  
-		  gemCijfer = TotalCijfer / Count;
-		  if (!gemCijfer.equals(Double.NaN)){
-			  BigDecimal bd = new BigDecimal(gemCijfer);
-			  bd = bd.setScale(1,BigDecimal.ROUND_HALF_UP);
-			  
-			  return bd.doubleValue();
-		  }
-		  else return gemCijfer;
-		  
-		  
+		while (cursor.isAfterLast() == false) {
+			if (cursor.getDouble(5) != 0.0) {
+				TotalCijfer = TotalCijfer + Double.parseDouble(cursor.getString(5));
+				Count++;
+				cursor.moveToNext();
+			}
+		}
+		
+		gemCijfer = TotalCijfer / Count;
+		
+		if (!gemCijfer.equals(Double.NaN)) {
+			BigDecimal bd = new BigDecimal(gemCijfer);
+			bd = bd.setScale(1,BigDecimal.ROUND_HALF_UP);
+			
+			return bd.doubleValue();
+		}
+		else {
+			return gemCijfer;
+		}
 	}
 	
 	public double selectMinCijferVak(int toetsid, double minimaleCijfer, int wegingDezeToets) {
@@ -189,6 +193,7 @@ public class DbAdapter {
 		  bd = bd.setScale(1,BigDecimal.ROUND_HALF_UP);
 		  
 		  return bd.doubleValue();
+
 	}
 
 	public ArrayList<Vak> selectVakken(int pakketID) {

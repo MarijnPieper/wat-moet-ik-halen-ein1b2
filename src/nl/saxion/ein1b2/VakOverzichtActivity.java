@@ -1,6 +1,7 @@
 package nl.saxion.ein1b2;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,10 +14,11 @@ import android.widget.Button;
 import android.widget.ListView;
 
 public class VakOverzichtActivity extends Activity implements OnItemClickListener  {
-	private int nID;
 	private ArrayList<Vak> vakken;	
 	private DbAdapter db;
 	private VakOverzichtAdapter adapter;
+	private ArrayList<Periode> Periodes;
+	private int nID = 0;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -25,11 +27,52 @@ public class VakOverzichtActivity extends Activity implements OnItemClickListene
     	
     	db = new DbAdapter(this);
     	
-    	vakken = new ArrayList<Vak>();
     	Bundle b = getIntent().getExtras();
-    	nID = b.getInt("ID");
+    	if (b != null) {
+    		nID = b.getInt("ID");
+    	}
     	
-    	db.open();
+    	checkFirstTime();
+    }
+    
+    @Override
+    public void onResume(){
+    	super.onResume();
+    	initVakOverzicht();
+    }
+ 
+    // Check of er al een Periode bestaat, zo niet Wizard starten.
+ 	private void checkFirstTime() {
+ 		db.open();
+ 		Periodes = new ArrayList<Periode>();
+ 		Periodes = db.selectVakkenpakketten();
+ 		db.close();
+ 			
+		if (Periodes.isEmpty()) {
+			Intent i = new Intent(this, WizardActivity.class); 
+			startActivity(i);
+		} 
+		else {
+			GregorianCalendar curDate = new GregorianCalendar();
+			
+ 			for (Periode periode : Periodes) {
+ 				if (curDate.after(periode.getStartDatum()) && curDate.before(periode.getEindDatum())) {
+ 					this.nID = periode.getID();
+ 					initVakOverzicht();
+ 					break;
+ 				}
+ 			}
+ 			
+ 			if (nID == 0) {
+ 				Intent i = new Intent(this, PeriodeActivity.class);
+ 				startActivity(i);
+ 			}
+		}
+ 	}
+ 	
+ 	private void initVakOverzicht() {
+ 		vakken = new ArrayList<Vak>();
+ 		db.open();
     	vakken = db.selectVakken(nID);
     	db.close();
     	
@@ -40,7 +83,8 @@ public class VakOverzichtActivity extends Activity implements OnItemClickListene
        	
        	Button voegToetsToe = (Button)findViewById(R.id.buttonVoegToetsToe);
 		voegToetsToe.setOnClickListener(new ToetsToevoegenClickListener());
-    }
+ 	}
+
 
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		Vak vak = (Vak) parent.getItemAtPosition(position);
@@ -50,21 +94,16 @@ public class VakOverzichtActivity extends Activity implements OnItemClickListene
 		startActivity(i);
 	}
 
-
 	private void startToetsToevoegen() {
 		Intent i = new Intent(this, ToetsToevoegenActivity.class);
 		i.putExtra("periodeid", nID);
 		startActivity(i);
-
 	}
 
 	public class ToetsToevoegenClickListener implements OnClickListener {
 
 		public void onClick(View v) {
-			
 			startToetsToevoegen();
-
 		}
-
 	}
 }

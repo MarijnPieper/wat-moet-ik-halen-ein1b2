@@ -13,9 +13,8 @@ public class WatmoetikhalenActivity extends Activity {
         super.onCreate(savedInstanceState);
         //TODO: Toets overzicht layout, geen vakkenpakket
 //        setContentView(R.layout.main);
-       startVakkenpakketToevoegenActivity();
-
-        
+        startVakkenpakketToevoegenActivity();
+       
         dbHelper = new DbAdapter(this);
         dbHelper.open();
         dbHelper.close();
