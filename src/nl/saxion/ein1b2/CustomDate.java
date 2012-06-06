@@ -31,7 +31,7 @@ public class CustomDate extends GregorianCalendar {
 	
 	
 	public void setTime(int hour, int minute){
-		this.set(GregorianCalendar.HOUR_OF_DAY, hour);
+		this.set(GregorianCalendar.HOUR, hour);
 		this.set(GregorianCalendar.MINUTE, minute);
 	}
 	
