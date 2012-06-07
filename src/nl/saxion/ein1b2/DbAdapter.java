@@ -242,8 +242,8 @@ public class DbAdapter {
 
 		private static final String CREATE_TBL_TOETSTYPE = "CREATE TABLE toetstype ("
 				+ "id INTEGER PRIMARY KEY AUTOINCREMENT"
-				+ ", naam VARCHAR(255)"
-				+ ", som INTEGER);";
+				+ ", naam VARCHAR(255) NOT NULL"
+				+ ", som INTEGER NOT NULL);";
 
 		private static final String CREATE_TBL_DEELTOETS = "CREATE TABLE deeltoets ("
 				+ "id INTEGER PRIMARY KEY AUTOINCREMENT"
