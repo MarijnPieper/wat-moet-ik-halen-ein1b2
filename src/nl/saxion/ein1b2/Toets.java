@@ -9,9 +9,10 @@ public class Toets {
 	private CustomDate datumtijd;
 	private double cijfer;
 	private String vaknaam;
+	private String toetstypenaam;
 	
-	public Toets(int toetstype_id, String beschrijving, CustomDate datum) {		
-		setToetstype_id(toetstype_id);
+	public Toets(String toetstypenaam, String beschrijving, CustomDate datum) {		
+		setToetstypenaam(toetstypenaam);
 		setBeschrijving(beschrijving);
 		setDatumtijd(datum);
 	}
@@ -31,6 +32,12 @@ public class Toets {
 		setDatumtijd(datum);
 		setCijfer(cijfer);
 		setVaknaam(vaknaam);
+	}
+	
+	public Toets(CustomDate datum, String vakNaam, String toetsType) {
+		setDatumtijd(datum);
+		setVaknaam(vakNaam);
+		setToetstypenaam(toetsType);
 	}
 	
 	protected String getVaknaam() {
@@ -85,6 +92,13 @@ public class Toets {
 	public void setBeschrijving(String beschrijving) {
 		this.beschrijving = beschrijving;
 	}
+	
+	protected String getToetstypenaam() {
+		return toetstypenaam;
+	}
 
 
+	protected void setToetstypenaam(String toetstypenaam) {
+		this.toetstypenaam = toetstypenaam;
+	}
 }

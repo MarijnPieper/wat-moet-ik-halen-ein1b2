@@ -63,7 +63,7 @@ public class DbAdapter {
 
 	public ArrayList<Periode> selectVakkenpakketten(){
 		ArrayList<Periode> periode = new ArrayList<Periode>();
-
+		
 		Cursor cursor = mydb.rawQuery("SELECT * FROM Periode", null);
 		cursor.moveToFirst();
 
@@ -136,6 +136,30 @@ public class DbAdapter {
 			cursor.moveToNext();
 		}
 		return toetsen;
+	}
+	
+	public Toets selectAankomendeToets(int periodeId) {
+		String ids = "";
+		String[] args = new String[]{String.valueOf(periodeId)};
+		String query = "SELECT id from Vak WHERE periode_id=?";
+		
+		Cursor cursor = mydb.rawQuery(query, args);
+		
+		while (!cursor.isAfterLast()) {
+			ids = ids + cursor.getString(0) + ",";
+			cursor.moveToNext();
+		}
+		
+		ids = ids.substring(0, ids.length() - 1);
+		
+		query = "SELECT t.datumtijd, v.naam, o.naam FROM toets t LEFT OUTER JOIN vak v ON v.id = t.vak_ID LEFT OUTER JOIN toetstype o ON o.id = t.toetstype_id WHERE t.vak_ID IN (?) AND t.datumtijd > datetime() ORDER BY t.datumtijd ASC";
+		args = new String[]{ids};
+		
+		cursor = mydb.rawQuery(query, args);
+		
+		Toets t = new Toets(cursor.getString(0), cursor.getString(1), new CustomDate(cursor.getString(2)));
+		
+		return t;
 	}
 	
 
