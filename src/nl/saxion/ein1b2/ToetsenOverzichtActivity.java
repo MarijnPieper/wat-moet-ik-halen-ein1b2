@@ -112,7 +112,7 @@ public class ToetsenOverzichtActivity extends Activity implements OnCheckedChang
 	}
 
 	public void onNothingSelected(AdapterView<?> arg0) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 	
