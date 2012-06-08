@@ -107,21 +107,21 @@
             android:layout_alignParentBottom="true" >
         
 	        <Button
-	            android:id="@+id/buttonPerioden"
+	            android:id="@+id/btnPerioden"
 	            android:layout_width="0dp"
 	            android:layout_height="wrap_content"
 	            android:layout_weight="0.33"
 	            android:text="Perioden" />
 	
 	        <Button
-	            android:id="@+id/buttonVakken"
+	            android:id="@+id/btnVakken"
 	            android:layout_width="0dp"
 	            android:layout_height="wrap_content"
 	            android:layout_weight="0.33"
 	            android:text="Vakken" />
 	
 	        <Button
-	            android:id="@+id/buttonToetsen"
+	            android:id="@+id/btnToetsen"
 	            android:layout_width="0dp"
 	            android:layout_height="wrap_content"
 	            android:layout_weight="0.33"

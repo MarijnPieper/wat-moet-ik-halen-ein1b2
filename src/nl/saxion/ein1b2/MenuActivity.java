@@ -1,17 +1,14 @@
 package nl.saxion.ein1b2;
 import java.util.ArrayList;
 
-import nl.saxion.ein1b2.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.storage.OnObbStateChangeListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ListView;
 
 
 public class MenuActivity extends Activity {
@@ -34,13 +31,13 @@ public class MenuActivity extends Activity {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.menu);
 		
-		periodeButton = (Button)findViewById(R.id.buttonPerioden);
+		periodeButton = (Button)findViewById(R.id.btnPerioden);
 		periodeButton.setOnClickListener(new StartPeriodenActivity());
 		
-		vakOverzichtButton = (Button)findViewById(R.id.buttonVakken);
+		vakOverzichtButton = (Button)findViewById(R.id.btnVakken);
 		vakOverzichtButton.setOnClickListener(new StartVakkenOverzichtActivity());
 		
-		toetsOverzichtButton = (Button)findViewById(R.id.buttonToetsen);
+		toetsOverzichtButton = (Button)findViewById(R.id.btnToetsen);
 		toetsOverzichtButton.setOnClickListener(new startToetsenOverzichtActivity());
 		
 		checkFirstTime();
