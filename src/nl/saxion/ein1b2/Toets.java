@@ -16,6 +16,12 @@ public class Toets {
 		setBeschrijving(beschrijving);
 		setDatumtijd(datum);
 	}
+	
+	public Toets(int id, String beschrijving, CustomDate datum) {
+		setId(id);
+		setBeschrijving(beschrijving);
+		setDatumtijd(datum);
+	}
 
 
 	public Toets(int toetstype_id, String beschrijving, CustomDate datum, double cijfer) {		
