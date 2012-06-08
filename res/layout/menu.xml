@@ -10,104 +10,124 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:paddingBottom="50dp"
-        android:text="Wat Moet Ik Halen"
+        android:text="Yes we can!"
+        android:paddingBottom="20dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="35dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Minimale cijfer te behalen"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
         android:id="@+id/textViewCijfer"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_weight="0.63"
         android:text="6.1"
         android:textSize="75dp"
-        android:textStyle="bold|italic" />
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="0.20"
-        android:text="Eerst Volgende Toets"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="25dp" />
+        android:textStyle="bold|italic" 
+        android:textColor="#C0C0C0"/>
+
+
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
+    
+    
+	<RelativeLayout
+        android:id="@+id/relativeLayout1"
         android:layout_width="match_parent"
-        android:layout_height="49dp" >
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"  >
 
-        <TextView
-            android:id="@+id/textViewTempVak"
-            android:layout_width="0dp"
-            android:layout_height="92dp"
-            android:layout_weight="1"
-            android:paddingLeft="25dp"
-            android:text="Wiskunde"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        <TextView
-            android:id="@+id/textViewTempProefWerk"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Proefwerk"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-    </LinearLayout>
-
-    <LinearLayout
+	    
+        <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
-        android:layout_height="126dp" >
-
-        <TextView
-            android:id="@+id/textViewTempDatum"
-            android:layout_width="wrap_content"
-            android:layout_height="145dp"
-            android:layout_weight="0.06"
-            android:paddingLeft="25dp"
-            android:text="10-07-2012"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        <TextView
-            android:id="@+id/textViewTempTijd"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.65"
-            android:text="10:45"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical" >
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom" >
+	        <TextView
+	            android:id="@+id/textView1"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:gravity="center"
+	            android:paddingBottom="20dp"
+	            android:text="Eerst Volgende Toets"
+	            android:textAppearance="?android:attr/textAppearanceLarge"
+	            android:textSize="25dp" />
 
-        <Button
-            android:id="@+id/buttonPerioden"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Perioden" />
+	        <LinearLayout
+		        android:id="@+id/linearLayout2"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content" >
+		
+		        <TextView
+		            android:id="@+id/textViewTempVak"
+		            android:layout_width="0dp"
+		            android:layout_height="wrap_content"
+		            android:layout_weight="0.5"
+		            android:paddingLeft="25dp"
+		            android:text="Wiskunde"
+		            android:textAppearance="?android:attr/textAppearanceLarge" />
+		
+		        <TextView
+		            android:id="@+id/textViewTempProefWerk"
+		            android:layout_width="0dp"
+		            android:layout_height="wrap_content"
+		            android:layout_weight="0.5"
+		            android:text="Proefwerk"
+		            android:textAppearance="?android:attr/textAppearanceLarge" />
+		    </LinearLayout>
 
-        <Button
-            android:id="@+id/buttonVakken"
-            android:layout_width="wrap_content"
+		    <TextView
+		        android:id="@+id/textViewTempDatum"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:gravity="center"            
+		        android:paddingRight="10dp"
+		        android:text="10-07-2012 10:15"
+		        android:textAppearance="?android:attr/textAppearanceLarge" />   
+    	</LinearLayout>
+	    
+	    
+	    
+	    
+	    
+	    
+	    <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Vakken" />
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true" >
+        
+	        <Button
+	            android:id="@+id/buttonPerioden"
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="0.33"
+	            android:text="Perioden" />
+	
+	        <Button
+	            android:id="@+id/buttonVakken"
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="0.33"
+	            android:text="Vakken" />
+	
+	        <Button
+	            android:id="@+id/buttonToetsen"
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="0.33"
+	            android:text="Toetsen" />
 
-        <Button
-            android:id="@+id/buttonToetsen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Toetsen" />
-    </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>
