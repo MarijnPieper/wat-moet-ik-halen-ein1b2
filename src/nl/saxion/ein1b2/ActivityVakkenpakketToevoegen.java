@@ -37,7 +37,6 @@ public class ActivityVakkenpakketToevoegen extends Activity implements OnClickLi
 	static final int ERROR_STARTDATUM_KLEINERDAN_EINDDATUM_DIALOG_ID = 2;  
 	private long viewIdDialog = 0;
 	private DbAdapter dbHelper;
-	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
