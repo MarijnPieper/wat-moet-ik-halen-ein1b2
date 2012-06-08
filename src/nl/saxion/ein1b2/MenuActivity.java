@@ -33,22 +33,20 @@ public class MenuActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.menu);
-		
+// 		Geeft de buttons in het menu de juiste onclickListeners
 		periodeButton = (Button)findViewById(R.id.buttonPerioden);
 		periodeButton.setOnClickListener(new StartPeriodenActivity());
-		
 		vakOverzichtButton = (Button)findViewById(R.id.buttonVakken);
 		vakOverzichtButton.setOnClickListener(new StartVakkenOverzichtActivity());
-		
 		toetsOverzichtButton = (Button)findViewById(R.id.buttonToetsen);
 		toetsOverzichtButton.setOnClickListener(new startToetsenOverzichtActivity());
-		
+
 		checkFirstTime();
 	}
 
 	// Check of er al een Periode bestaat, zo niet Wizard starten.
 	private void checkFirstTime() {
-		
+
 		db = new DbAdapter(this);
 		db.open();
 		Periodes = new ArrayList<Periode>();
@@ -82,37 +80,32 @@ public class MenuActivity extends Activity {
 			}
 		}
 	}
-	
-	
+
+
 	public class StartPeriodenActivity implements OnClickListener {
 
 		public void onClick(View v) {
 			Intent i = new Intent(MenuActivity.this, PeriodeActivity.class);
-			startActivity(i);
-			
-		}
-		
+			startActivity(i);			
+		}	
 	}
-	
+
 	public class StartVakkenOverzichtActivity implements OnClickListener {
 
 		public void onClick(View v) {
 			Intent i = new Intent(MenuActivity.this, VakOverzichtActivity.class);
-			startActivity(i);
-			
-		}
-		
+			startActivity(i);		
+		}	
 	}
-	
+
 	public class startToetsenOverzichtActivity implements OnClickListener {
 
 		public void onClick(View v) {
 			Intent i = new Intent(MenuActivity.this, ToetsenOverzichtActivity.class);
 			i.putExtra("periodeid", nID);
-			startActivity(i);
-			
+			startActivity(i);	
 		}
-		
+
 	}
 
 
