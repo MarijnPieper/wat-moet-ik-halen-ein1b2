@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
+import android.widget.ImageButton;
 
 
 public class MenuActivity extends Activity {
@@ -18,9 +18,9 @@ public class MenuActivity extends Activity {
 	private VakOverzichtAdapter adapter;
 	private ArrayList<Periode> Periodes;
 	private int nID = 0;
-	private Button periodeButton;
-	private Button vakOverzichtButton;
-	private Button toetsOverzichtButton;
+	private ImageButton periodeButton;
+	private ImageButton vakOverzichtButton;
+	private ImageButton toetsOverzichtButton;
 
 
 
@@ -31,13 +31,13 @@ public class MenuActivity extends Activity {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.menu);
 		
-		periodeButton = (Button)findViewById(R.id.btnPerioden);
+		periodeButton = (ImageButton)findViewById(R.id.btnPerioden);
 		periodeButton.setOnClickListener(new StartPeriodenActivity());
 		
-		vakOverzichtButton = (Button)findViewById(R.id.btnVakken);
+		vakOverzichtButton = (ImageButton)findViewById(R.id.btnVakken);
 		vakOverzichtButton.setOnClickListener(new StartVakkenOverzichtActivity());
 		
-		toetsOverzichtButton = (Button)findViewById(R.id.btnToetsen);
+		toetsOverzichtButton = (ImageButton)findViewById(R.id.btnToetsen);
 		toetsOverzichtButton.setOnClickListener(new startToetsenOverzichtActivity());
 		
 		checkFirstTime();
