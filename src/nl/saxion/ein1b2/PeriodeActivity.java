@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 public class PeriodeActivity extends Activity {
@@ -21,7 +21,7 @@ public class PeriodeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.periodes);
          
-        Button Plus = (Button) findViewById(R.id.PeriodeAddVak);
+        ImageButton Plus = (ImageButton) findViewById(R.id.PeriodeAddVak);
 
         Plus.setOnClickListener(new ClickListener());
                 
@@ -66,7 +66,7 @@ public class PeriodeActivity extends Activity {
     class ClickListener implements OnClickListener {
     	
 		public void onClick(View v) {
-			Button btnToevoegen = (Button) findViewById(R.id.PeriodeAddVak);
+			ImageButton btnToevoegen = (ImageButton) findViewById(R.id.PeriodeAddVak);
 			
 			if (v.getId() == btnToevoegen.getId()) {
 		    	startPeriodeToevoegen();

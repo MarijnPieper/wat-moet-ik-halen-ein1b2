@@ -19,14 +19,14 @@
             android:gravity="center"
             android:text="Periode Toevoegen"
             android:textAppearance="?android:attr/textAppearanceMedium" />
-        
-        <Button
+
+        <ImageButton
             android:id="@+id/btnToevoegen"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.30"           
-            android:text="+"
-             />
+            android:src="@drawable/save"
+            android:background="@null" />
+ 
 
     </LinearLayout>
 
@@ -120,12 +120,13 @@
             android:text="Vakken"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <Button
+        <ImageButton
             android:id="@+id/btnAddVak"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight=".30"
-            android:text="+" />
+            android:src="@drawable/vak_add" 
+            android:background="@null"/>
+
     </LinearLayout>
 
     <ListView

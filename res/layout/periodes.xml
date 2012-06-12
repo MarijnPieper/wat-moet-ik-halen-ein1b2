@@ -21,13 +21,14 @@
                 android:layout_weight="0.81"
                 android:text="@string/Periodes"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            <Button
+
+            <ImageButton
                 android:id="@+id/PeriodeAddVak"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="+" />
-            
+                android:src="@drawable/periode_add" 
+                android:background="@null"/>
+
         </LinearLayout>
 
     </LinearLayout>

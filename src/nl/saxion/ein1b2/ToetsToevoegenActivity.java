@@ -1,6 +1,5 @@
 package nl.saxion.ein1b2;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -15,11 +14,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.TimePicker;
 
 public class ToetsToevoegenActivity extends Activity {
@@ -49,7 +47,7 @@ public class ToetsToevoegenActivity extends Activity {
 		adapter.close();
 		Spinner vakSpinner = (Spinner)findViewById(R.id.spinnerVakNaam);
 		Spinner typeSpinner = (Spinner)findViewById(R.id.spinnerToetsType);
-		Button voegToetsToeButton = (Button)findViewById(R.id.buttonToetsToevoegen);
+		ImageButton voegToetsToeButton = (ImageButton)findViewById(R.id.buttonToetsToevoegen);
 		voegToetsToeButton.setOnClickListener(new VoegToetsToeOnClickListener());
 		vakAdapter = new ArrayAdapter<Vak>(this, android.R.layout.simple_spinner_item, vakken);
 		vakSpinner.setAdapter(vakAdapter);

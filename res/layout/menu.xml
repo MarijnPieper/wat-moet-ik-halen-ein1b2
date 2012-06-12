@@ -3,14 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-     >
+    android:padding="5dp" >
 
     <TextView
         android:id="@+id/textViewTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Yes we can!"
+        android:text="Yes I Can!"
         android:paddingBottom="20dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="35dp" />
@@ -105,27 +105,31 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentBottom="true" >
-        
-	        <Button
+
+	        <ImageButton
 	            android:id="@+id/btnPerioden"
 	            android:layout_width="0dp"
 	            android:layout_height="wrap_content"
 	            android:layout_weight="0.33"
-	            android:text="Perioden" />
-	
-	        <Button
+	            android:src="@drawable/periode_64x"
+	            android:background="@null" />
+        
+	        <ImageButton
 	            android:id="@+id/btnVakken"
 	            android:layout_width="0dp"
 	            android:layout_height="wrap_content"
 	            android:layout_weight="0.33"
-	            android:text="Vakken" />
-	
-	        <Button
+	            android:src="@drawable/vak_64x"
+	            android:background="@null" />
+			
+			<ImageButton
 	            android:id="@+id/btnToetsen"
 	            android:layout_width="0dp"
 	            android:layout_height="wrap_content"
 	            android:layout_weight="0.33"
-	            android:text="Toetsen" />
+	            android:src="@drawable/toets_64x"
+	            android:background="@null" />
+	
 
         </LinearLayout>
     </RelativeLayout>
