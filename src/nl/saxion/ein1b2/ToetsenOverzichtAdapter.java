@@ -76,7 +76,12 @@ public class ToetsenOverzichtAdapter extends ArrayAdapter<Toets>{
 						// dus nu moet het verdeeld worden.			
 						double nuBijCijfer = 10 - MININALECIJFER;	
 						bijvolgendCijfer = (teBehalen - MININALECIJFER);
-						doelcijfer.setText("Minimaal:" + Double.toString(teBehalen));
+						if (!doelcijfer.equals(Double.NaN)) {
+							doelcijfer.setText("Minimaal:" + Double.toString(teBehalen));
+						}
+						else {
+							doelcijfer.setText("Minimaal: -");
+						}
 					}
 					else doelcijfer.setText("Minimaal:" + Double.toString(teBehalen));
 				} else {
