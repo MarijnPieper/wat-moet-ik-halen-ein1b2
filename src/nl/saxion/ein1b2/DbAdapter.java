@@ -149,7 +149,7 @@ public class DbAdapter {
 				"Limit 1";
 
 		Cursor cursor = mydb.rawQuery(query, args);
-		Toets toets = new Toets("");
+		Toets toets = null;
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()){
 			toets = new Toets(new CustomDate(cursor.getString(0)), cursor.getString(1), cursor.getString(2)); 
@@ -186,10 +186,9 @@ public class DbAdapter {
 			return gemCijfer;
 		}
 	}
-
-	public double selectMinCijferVak(int toetsid, double minimaleCijfer, int wegingDezeToets) {
-		
-		  double totaalCijfers = new Double(0);
+	
+	public Double selectMinCijferVak(int toetsid, double minimaleCijfer, int wegingDezeToets) {
+		  Double totaalCijfers = new Double(0);
 		  int totaalWegingen = 0;
 		  Double teBehalen = new Double(0);
 		  
@@ -208,16 +207,16 @@ public class DbAdapter {
 		  }
 		  
 		  teBehalen = ((minimaleCijfer * (totaalWegingen + wegingDezeToets)) - totaalCijfers) / wegingDezeToets;
-		  if (!teBehalen.equals(Double.NaN)) {
+
+		  if (!teBehalen.isNaN() && !teBehalen.isInfinite()){
 			  BigDecimal bd = new BigDecimal(teBehalen);
 			  bd = bd.setScale(1,BigDecimal.ROUND_HALF_UP);
-			  
+		  
 			  return bd.doubleValue();
 		  }
-		  return teBehalen;
-
-
-
+		  else {
+			  return teBehalen;
+		  }
 	}
 
 	public ArrayList<Vak> selectVakken(int pakketID) {
