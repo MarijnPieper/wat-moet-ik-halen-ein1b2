@@ -11,19 +11,14 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.method.KeyListener;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
-import android.view.View.OnKeyListener;
-import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 public class ActivityVakkenpakketToevoegen extends Activity implements OnClickListener {
@@ -31,7 +26,7 @@ public class ActivityVakkenpakketToevoegen extends Activity implements OnClickLi
 	private EditText txtNaam;
 	private EditText txtStartDatum;
 	private EditText txtEindDatum;
-	Button btnPakketToevoegen;
+	ImageButton btnPakketToevoegen;
 	private CustomDate startDatum;
 	private CustomDate eindDatum;
 	static final int STARTDATUM_DIALOG_ID = 0;  
@@ -54,7 +49,7 @@ public class ActivityVakkenpakketToevoegen extends Activity implements OnClickLi
 		setListVakken();
 		
         //Vakkenpakket toevoegen
-        btnPakketToevoegen = (Button)findViewById(R.id.btnToevoegen);
+        btnPakketToevoegen = (ImageButton)findViewById(R.id.btnToevoegen);
         btnPakketToevoegen.setOnClickListener(this);
         btnPakketToevoegen.setEnabled(false);
         txtStartDatum.setOnFocusChangeListener(new showOnFocusDatum());
@@ -95,7 +90,7 @@ public class ActivityVakkenpakketToevoegen extends Activity implements OnClickLi
 	
 	private void vakToevoegenInstellen(){
 		//Vak toevoegen
-        Button btnAddvak = (Button) findViewById(R.id.btnAddVak);
+        ImageButton btnAddvak = (ImageButton) findViewById(R.id.btnAddVak);
         btnAddvak.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View v) {

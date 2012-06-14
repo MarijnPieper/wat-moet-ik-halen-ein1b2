@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:padding="5dp" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,12 +20,15 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.91"
                 android:text="@string/Vakken"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-            <Button
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <ImageButton
                 android:id="@+id/button1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="+" />
+                android:src="@drawable/vak_add"
+                android:background="@null" />
+
 
         </LinearLayout>
 
@@ -49,19 +53,22 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentBottom="true" >
 
-            <Button
-                android:id="@+id/buttonTerugPeriode"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:text="Periodes" />
+            <ImageButton
+	        android:id="@+id/buttonTerugPeriode"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="0.5"
+	        android:src="@drawable/periode_64x" 
+	        android:background="@null" />
 
-            <Button
-                android:id="@+id/buttonVoegToetsToe"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:text="Toets Toevoegen" />
+            <ImageButton
+	        android:id="@+id/buttonVoegToetsToe"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="0.5"
+	        android:src="@drawable/toets_add_64x"
+	        android:background="@null" />
+
         </LinearLayout>
 
     </RelativeLayout>

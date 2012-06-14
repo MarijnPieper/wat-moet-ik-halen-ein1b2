@@ -12,7 +12,7 @@ import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 public class VakOverzichtActivity extends Activity implements OnItemClickListener  {
@@ -28,7 +28,7 @@ public class VakOverzichtActivity extends Activity implements OnItemClickListene
     	requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
     	setContentView(R.layout.vakken);
-    	Button btnTerug = (Button) findViewById(R.id.buttonTerugPeriode);
+    	ImageButton btnTerug = (ImageButton) findViewById(R.id.buttonTerugPeriode);
     	btnTerug.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				startPeriodeOverzicht();
@@ -98,7 +98,7 @@ public class VakOverzichtActivity extends Activity implements OnItemClickListene
        	lvVakken.setOnItemClickListener(this);
        	lvVakken.setAdapter(adapter);
        	
-       	Button voegToetsToe = (Button)findViewById(R.id.buttonVoegToetsToe);
+       	ImageButton voegToetsToe = (ImageButton)findViewById(R.id.buttonVoegToetsToe);
 		voegToetsToe.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				startToetsToevoegen();

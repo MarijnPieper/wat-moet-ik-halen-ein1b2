@@ -19,12 +19,14 @@
                 android:text="Toets Toevoegen"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
-           
-            <Button
+            <ImageButton
                 android:id="@+id/buttonToetsToevoegen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="+" />
+                android:src="@drawable/save" 
+                android:background="@null"/>
+           
+
             
         </LinearLayout>
 

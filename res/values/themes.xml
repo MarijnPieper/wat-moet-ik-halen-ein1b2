@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="custom_theme_color">#ffffff</color>
-    <style name="CustomTheme" parent="android:Theme">
-        <item name="android:windowBackground">@color/custom_theme_color</item>
-        <item name="android:colorBackground">@color/custom_theme_color</item>
-        <item name="android:textColor">#000000</item>
+
+    <style name="tmpTheme" parent="android:Theme.Holo.Light">
     </style>
 </resources>

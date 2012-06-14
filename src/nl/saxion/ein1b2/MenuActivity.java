@@ -1,6 +1,5 @@
 package nl.saxion.ein1b2;
 import java.util.ArrayList;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,9 +7,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.ImageButton;
+
 
 
 public class MenuActivity extends Activity {
@@ -21,14 +20,15 @@ public class MenuActivity extends Activity {
 	private ArrayList<Periode> periodes;
 	private Toets toets;
 	private int nID = 0;
-	private Button periodeButton;
-	private Button vakOverzichtButton;
-	private Button toetsOverzichtButton;
+	
 	private TextView vakNaam;
 	private TextView toetsType;
 	private TextView datumTijd;
-		
 	
+	private ImageButton periodeButton;
+	private ImageButton vakOverzichtButton;
+	private ImageButton toetsOverzichtButton;
+
 
 
 
@@ -39,14 +39,18 @@ public class MenuActivity extends Activity {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.menu);
 
+
 // 		Geeft de buttons in het menu de juiste onclickListeners
-		periodeButton = (Button)findViewById(R.id.btnPeriodes);
+
+
+		periodeButton = (ImageButton)findViewById(R.id.btnPeriodes);
+
 		periodeButton.setOnClickListener(new StartPeriodenActivity());
 		
-		vakOverzichtButton = (Button)findViewById(R.id.btnVakken);
+		vakOverzichtButton = (ImageButton)findViewById(R.id.btnVakken);
 		vakOverzichtButton.setOnClickListener(new StartVakkenOverzichtActivity());
 		
-		toetsOverzichtButton = (Button)findViewById(R.id.btnToetsen);
+		toetsOverzichtButton = (ImageButton)findViewById(R.id.btnToetsen);
 		toetsOverzichtButton.setOnClickListener(new startToetsenOverzichtActivity());
 		
 		vulAankomendeToets();
@@ -111,7 +115,6 @@ public class MenuActivity extends Activity {
 				}
 			}
 		}
-
 		db.open();
 		toets = db.selectAankomendeToets(nID);
 		vakNaam.setText(toets.getBeschrijving());
