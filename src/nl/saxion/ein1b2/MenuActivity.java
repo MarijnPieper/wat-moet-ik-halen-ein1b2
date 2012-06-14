@@ -45,13 +45,13 @@ public class MenuActivity extends Activity {
 
 		periodeButton = (ImageButton)findViewById(R.id.btnPeriodes);
 
-		periodeButton.setOnClickListener(new StartPeriodenActivity());
+//		periodeButton.setOnClickListener(new StartPeriodenActivity());
 		
 		vakOverzichtButton = (ImageButton)findViewById(R.id.btnVakken);
-		vakOverzichtButton.setOnClickListener(new StartVakkenOverzichtActivity());
+//		vakOverzichtButton.setOnClickListener(new StartVakkenOverzichtActivity());
 		
 		toetsOverzichtButton = (ImageButton)findViewById(R.id.btnToetsen);
-		toetsOverzichtButton.setOnClickListener(new startToetsenOverzichtActivity());
+//		toetsOverzichtButton.setOnClickListener(new startToetsenOverzichtActivity());
 		
 		vulAankomendeToets();
 		checkFirstTime();
