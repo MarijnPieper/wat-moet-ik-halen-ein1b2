@@ -16,7 +16,6 @@ import android.widget.ImageButton;
 
 public class MenuActivity extends Activity {
 
-
 	private DbAdapter db;
 	private ArrayList<Periode> periodes;
 	private Toets toets;
@@ -27,9 +26,6 @@ public class MenuActivity extends Activity {
 	private ImageButton periodeButton;
 	private ImageButton vakOverzichtButton;
 	private ImageButton toetsOverzichtButton;
-
-
-
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -117,12 +113,12 @@ public class MenuActivity extends Activity {
 		if (toets != null) {
 			vakNaam.setText(toets.getVaknaam());
 			toetsType.setText(toets.getToetstypenaam());
-			datumTijd.setText(toets.getDatumtijd().toStringDatumTijd());
+			//datumTijd.setText(toets.getDatumtijd().toStringDatumTijd());
 		}
 		else {
 			vakNaam.setText("");
 			toetsType.setText("");
-			datumTijd.setText("Geen aankomende toetsen");
+			//datumTijd.setText("Geen aankomende toetsen");
 		}
 		
 		db.close();
