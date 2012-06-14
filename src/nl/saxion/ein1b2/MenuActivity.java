@@ -1,17 +1,16 @@
 package nl.saxion.ein1b2;
 import java.util.ArrayList;
 
-import nl.saxion.ein1b2.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.storage.OnObbStateChangeListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 
 public class MenuActivity extends Activity {
@@ -19,11 +18,17 @@ public class MenuActivity extends Activity {
 	private ArrayList<Vak> vakken;	
 	private DbAdapter db;
 	private VakOverzichtAdapter adapter;
-	private ArrayList<Periode> Periodes;
+	private ArrayList<Periode> periodes;
+	private Toets toets;
 	private int nID = 0;
 	private Button periodeButton;
 	private Button vakOverzichtButton;
 	private Button toetsOverzichtButton;
+	private TextView vakNaam;
+	private TextView toetsType;
+	private TextView datumTijd;
+		
+	
 
 
 
@@ -33,15 +38,20 @@ public class MenuActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.menu);
-// 		Geeft de buttons in het menu de juiste onclickListeners
-		periodeButton = (Button)findViewById(R.id.buttonPerioden);
-		periodeButton.setOnClickListener(new StartPeriodenActivity());
-		vakOverzichtButton = (Button)findViewById(R.id.buttonVakken);
-		vakOverzichtButton.setOnClickListener(new StartVakkenOverzichtActivity());
-		toetsOverzichtButton = (Button)findViewById(R.id.buttonToetsen);
-		toetsOverzichtButton.setOnClickListener(new startToetsenOverzichtActivity());
 
+// 		Geeft de buttons in het menu de juiste onclickListeners
+		periodeButton = (Button)findViewById(R.id.btnPeriodes);
+		periodeButton.setOnClickListener(new StartPeriodenActivity());
+		
+		vakOverzichtButton = (Button)findViewById(R.id.btnVakken);
+		vakOverzichtButton.setOnClickListener(new StartVakkenOverzichtActivity());
+		
+		toetsOverzichtButton = (Button)findViewById(R.id.btnToetsen);
+		toetsOverzichtButton.setOnClickListener(new startToetsenOverzichtActivity());
+		
+		vulAankomendeToets();
 		checkFirstTime();
+		
 	}
 
 	// Check of er al een Periode bestaat, zo niet Wizard starten.
@@ -49,11 +59,11 @@ public class MenuActivity extends Activity {
 
 		db = new DbAdapter(this);
 		db.open();
-		Periodes = new ArrayList<Periode>();
-		Periodes = db.selectVakkenpakketten();
+		periodes = new ArrayList<Periode>();
+		periodes = db.selectVakkenpakketten();
 		db.close();
 
-		if (Periodes.isEmpty()) {
+		if (periodes.isEmpty()) {
 			Intent i = new Intent(this, WizardActivity.class); 
 			startActivity(i);
 		} 
@@ -61,7 +71,7 @@ public class MenuActivity extends Activity {
 			CustomDate curDate = new CustomDate();
 
 			if (this.nID == 0){
-				for (Periode periode : Periodes) {
+				for (Periode periode : periodes) {
 					if (curDate.after(periode.getStartDatum()) && curDate.before(periode.getEindDatum())
 							|| curDate.equals(periode.getStartDatum()) 
 							|| curDate.equals(periode.getEindDatum()) ) {
@@ -80,13 +90,45 @@ public class MenuActivity extends Activity {
 			}
 		}
 	}
+	
+	private void vulAankomendeToets() { 
+		vakNaam = (TextView)findViewById(R.id.lblMenuVakNaam);
+		toetsType = (TextView)findViewById(R.id.lblMenuType);
+		datumTijd = (TextView)findViewById(R.id.lblMenuDatum);
+		CustomDate curDate = new CustomDate();
+		db = new DbAdapter(this);
+		db.open();
+		periodes = new ArrayList<Periode>();
+		periodes = db.selectVakkenpakketten();
+		db.close();
+		if (this.nID == 0){
+			for (Periode periode : periodes) {
+				if (curDate.after(periode.getStartDatum()) && curDate.before(periode.getEindDatum())
+						|| curDate.equals(periode.getStartDatum()) 
+						|| curDate.equals(periode.getEindDatum()) ) {
+					this.nID = periode.getID();
+					break;
+				}
+			}
+		}
+
+		db.open();
+		toets = db.selectAankomendeToets(nID);
+		vakNaam.setText(toets.getBeschrijving());
+		toetsType.setText(toets.getToetstypenaam());
+		datumTijd.setText(toets.getDatumtijd().toStringDatumTijd());
+		db.close();
+
+	}
+	
+
 
 
 	public class StartPeriodenActivity implements OnClickListener {
 
 		public void onClick(View v) {
 			Intent i = new Intent(MenuActivity.this, PeriodeActivity.class);
-			startActivity(i);			
+			startActivity(i);
 		}	
 	}
 

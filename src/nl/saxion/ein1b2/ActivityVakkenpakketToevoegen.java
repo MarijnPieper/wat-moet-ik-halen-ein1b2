@@ -11,11 +11,16 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.method.KeyListener;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
+import android.view.View.OnKeyListener;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -95,6 +100,7 @@ public class ActivityVakkenpakketToevoegen extends Activity implements OnClickLi
 			
 			public void onClick(View v) {
 				AlertDialog.Builder alert = new AlertDialog.Builder(ActivityVakkenpakketToevoegen.this);
+				
 				alert.setTitle("Vak toevoegen");
 				alert.setMessage("Voer hieronder de naam van het vak:");
 				final EditText input = new EditText(ActivityVakkenpakketToevoegen.this);
@@ -103,13 +109,7 @@ public class ActivityVakkenpakketToevoegen extends Activity implements OnClickLi
 					
 					public void onClick(DialogInterface dialog, int which) {
 						String vaknaam = input.getText().toString();
-						if (vaknaam != null && !vaknaam.equals("")){
-							//TODO iscijfer toevoegen
-							Vak vak = new Vak(vaknaam, true);
-							arrVak.add(vak);
-							btnPakketToevoegen.setEnabled(true);
-							setListVakken();
-						}
+						vakToevoegen(vaknaam);
 						return;						
 					}
 				});
@@ -122,6 +122,17 @@ public class ActivityVakkenpakketToevoegen extends Activity implements OnClickLi
 				alert.show();
 			}
 		});
+	}
+	
+	private void vakToevoegen(String vaknaam){
+		if (vaknaam != null && !vaknaam.equals("")){
+			//TODO iscijfer toevoegen
+			Vak vak = new Vak(vaknaam, true);
+			arrVak.add(vak);
+			btnPakketToevoegen.setEnabled(true);
+			setListVakken();
+		}
+		return;	
 	}
 	
 	
