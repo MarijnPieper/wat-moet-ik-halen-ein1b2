@@ -111,9 +111,17 @@ public class MenuActivity extends Activity {
 		}
 		db.open();
 		toets = db.selectAankomendeToets(nID);
-		vakNaam.setText(toets.getBeschrijving());
-		toetsType.setText(toets.getToetstypenaam());
-		datumTijd.setText(toets.getDatumtijd().toStringDatumTijd());
+		if (toets.getId() != 0) {
+			vakNaam.setText(toets.getBeschrijving());
+			toetsType.setText(toets.getToetstypenaam());
+			datumTijd.setText(toets.getDatumtijd().toStringDatumTijd());
+		}
+		else {
+			vakNaam.setText("Geen aankomende toetsen");
+			toetsType.setText("Geen aankomende toetsen");
+			datumTijd.setText("Geen aankomende toetsen");
+		}
+		
 		db.close();
 
 	}

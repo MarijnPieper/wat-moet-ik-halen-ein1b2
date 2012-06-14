@@ -150,19 +150,28 @@ public class DbAdapter {
 			ids = ids + cursor.getString(0) + ",";
 			cursor.moveToNext();
 		}
+		
+		if (!ids.equals("")) {
+			ids = ids.substring(0, ids.length() - 1);
+		
+			query = "SELECT t.datumtijd, v.naam, o.naam FROM toets t LEFT OUTER JOIN vak v ON v.id = t.vak_ID LEFT OUTER JOIN toetstype o ON o.id = t.toetstype_id WHERE t.vak_ID IN (?) AND t.datumtijd > datetime() ORDER BY t.datumtijd ASC";
+			args = new String[]{ids};
 
-		ids = ids.substring(0, ids.length() - 1);
+			cursor = mydb.rawQuery(query, args);
+			cursor.moveToFirst();
+			
 
-		query = "SELECT t.datumtijd, v.naam, o.naam FROM toets t LEFT OUTER JOIN vak v ON v.id = t.vak_ID LEFT OUTER JOIN toetstype o ON o.id = t.toetstype_id WHERE t.vak_ID IN (?) AND t.datumtijd > datetime() ORDER BY t.datumtijd ASC";
-		args = new String[]{ids};
+			Toets t = new Toets(cursor.getString(2), cursor.getString(1), new CustomDate(cursor.getString(0)));
 
-		cursor = mydb.rawQuery(query, args);
-		cursor.moveToFirst();
+			return t;
+		}
+		else {  // Geen toets ingesteld, lege toets teruggeven
+			cursor.moveToFirst();
+			return new Toets(0, "", new CustomDate(31, 10, 1990));
+		}
 		
 
-		Toets t = new Toets(cursor.getString(2), cursor.getString(1), new CustomDate(cursor.getString(0)));
-
-		return t;
+		
 	}
 
 
