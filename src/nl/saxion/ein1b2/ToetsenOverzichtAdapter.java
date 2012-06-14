@@ -73,12 +73,17 @@ public class ToetsenOverzichtAdapter extends ArrayAdapter<Toets>{
 						//Te laag gemiddelde, waardoor het volgende cijfer hoger moet zijn dan een 10, 
 						// dus nu moet het verdeeld worden.			
 						double nuBijCijfer = 10 - MININALECIJFER;	
-						bijvolgendCijfer = (teBehalen - MININALECIJFER);						
-						doelcijfer.setText("Minimaal:" + Double.toString(teBehalen));
-						
-						
+						bijvolgendCijfer = (teBehalen - MININALECIJFER);
+						if (!teBehalen.equals(Double.NaN)) {
+							doelcijfer.setText("Minimaal:" + Double.toString(teBehalen));
+						}
+						else {
+							doelcijfer.setText("Minimaal: -");
+						}
 					}
-					else doelcijfer.setText("Minimaal:" + Double.toString(teBehalen));
+					else {
+						doelcijfer.setText("Minimaal: -");
+					}
 				} else {
 					if (bijvolgendCijfer <= (10 - MININALECIJFER)) {
 						doelcijfer.setText("Minimaal:" + Double.toString(MININALECIJFER + bijvolgendCijfer));

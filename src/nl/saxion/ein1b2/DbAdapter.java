@@ -38,8 +38,8 @@ public class DbAdapter {
 		values.put("datumtijd" , t.getDatumtijd().toStringForDB());
 		values.put("cijfer", t.getCijfer());
 		long newToetsToevoegen = mydb.insert("Toets" , null, values);
-		
-		
+
+
 		return newToetsToevoegen;
 	}
 
@@ -63,7 +63,7 @@ public class DbAdapter {
 
 	public ArrayList<Periode> selectVakkenpakketten(){
 		ArrayList<Periode> periode = new ArrayList<Periode>();
-		
+
 		Cursor cursor = mydb.rawQuery("SELECT * FROM Periode", null);
 		cursor.moveToFirst();
 
@@ -90,20 +90,20 @@ public class DbAdapter {
 
 		return types;
 	}
-	
+
 	public String selectTypeToets(int id){
 		String[] args = new String[]{String.valueOf(id)};
 		Cursor cursor = mydb.rawQuery("SELECT naam FROM toetstype WHERE id=?", args);
 		boolean gevonden = cursor.moveToFirst();
-		
+
 		String resultaat = "";
 		if (gevonden) resultaat = cursor.getString(0);
-		
+
 		return resultaat;
 	}
-	
-	
-	
+
+
+
 	public ArrayList<Toets> selectToetsen(int vakid, boolean aankomend, boolean geschiedenis){
 		ArrayList<Toets> toetsen = new ArrayList<Toets>();
 		String[] args = null;
@@ -137,31 +137,27 @@ public class DbAdapter {
 		}
 		return toetsen;
 	}
-	
+
 	public Toets selectAankomendeToets(int periodeId) {
-		String ids = "";
 		String[] args = new String[]{String.valueOf(periodeId)};
-		String query = "SELECT id from Vak WHERE periode_id=?";
-		
+
+		String query = "SELECT t.datumtijd, v.naam, o.naam " +
+				"FROM toets t " +
+				"INNER JOIN vak v ON v.id = t.vak_ID " +
+				"INNER JOIN toetstype o ON o.id = t.toetstype_id " +
+				"WHERE t.vak_ID IN (SELECT id FROM vak WHERE periode_id=?) AND t.datumtijd > datetime() ORDER BY t.datumtijd ASC " +
+				"Limit 1";
+
 		Cursor cursor = mydb.rawQuery(query, args);
-		
-		while (!cursor.isAfterLast()) {
-			ids = ids + cursor.getString(0) + ",";
+		Toets toets = null;
+		cursor.moveToFirst();
+		while (!cursor.isAfterLast()){
+			toets = new Toets(new CustomDate(cursor.getString(0)), cursor.getString(1), cursor.getString(2)); 
 			cursor.moveToNext();
 		}
-		
-		ids = ids.substring(0, ids.length() - 1);
-		
-		query = "SELECT t.datumtijd, v.naam, o.naam FROM toets t LEFT OUTER JOIN vak v ON v.id = t.vak_ID LEFT OUTER JOIN toetstype o ON o.id = t.toetstype_id WHERE t.vak_ID IN (?) AND t.datumtijd > datetime() ORDER BY t.datumtijd ASC";
-		args = new String[]{ids};
-		
-		cursor = mydb.rawQuery(query, args);
-		
-		Toets t = new Toets(cursor.getString(0), cursor.getString(1), new CustomDate(cursor.getString(2)));
-		
-		return t;
+		return toets;
 	}
-	
+
 
 	// TODO : Proefwerk / SO
 	public double selectGemCijferVak(int VakID) {
@@ -177,16 +173,13 @@ public class DbAdapter {
 				TotalCijfer = TotalCijfer + Double.parseDouble(cursor.getString(5));
 				Count++;
 			}
-			
+
 			cursor.moveToNext();
 		}
-		
-		gemCijfer = TotalCijfer / Count;
-		
+		gemCijfer = TotalCijfer / Count;	
 		if (!gemCijfer.equals(Double.NaN)) {
 			BigDecimal bd = new BigDecimal(gemCijfer);
-			bd = bd.setScale(1,BigDecimal.ROUND_HALF_UP);
-			
+			bd = bd.setScale(1,BigDecimal.ROUND_HALF_UP);	
 			return bd.doubleValue();
 		}
 		else {
@@ -214,6 +207,7 @@ public class DbAdapter {
 		  }
 		  
 		  teBehalen = ((minimaleCijfer * (totaalWegingen + wegingDezeToets)) - totaalCijfers) / wegingDezeToets;
+
 		  if (!teBehalen.isNaN() && !teBehalen.isInfinite()){
 			  BigDecimal bd = new BigDecimal(teBehalen);
 			  bd = bd.setScale(1,BigDecimal.ROUND_HALF_UP);
@@ -270,8 +264,8 @@ public class DbAdapter {
 
 		private static final String CREATE_TBL_TOETSTYPE = "CREATE TABLE toetstype ("
 				+ "id INTEGER PRIMARY KEY AUTOINCREMENT"
-				+ ", naam VARCHAR(255) NOT NULL"
-				+ ", som INTEGER NOT NULL);";
+				+ ", naam VARCHAR(255)"
+				+ ", som INTEGER);";
 
 		private static final String CREATE_TBL_DEELTOETS = "CREATE TABLE deeltoets ("
 				+ "id INTEGER PRIMARY KEY AUTOINCREMENT"
@@ -332,7 +326,7 @@ public class DbAdapter {
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-			
+
 
 		}
 
