@@ -14,17 +14,14 @@ import android.widget.ImageButton;
 
 public class MenuActivity extends Activity {
 
-	private ArrayList<Vak> vakken;	
+
 	private DbAdapter db;
-	private VakOverzichtAdapter adapter;
 	private ArrayList<Periode> periodes;
 	private Toets toets;
 	private int nID = 0;
-	
 	private TextView vakNaam;
 	private TextView toetsType;
 	private TextView datumTijd;
-	
 	private ImageButton periodeButton;
 	private ImageButton vakOverzichtButton;
 	private ImageButton toetsOverzichtButton;
@@ -39,19 +36,16 @@ public class MenuActivity extends Activity {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.menu);
 
-
 // 		Geeft de buttons in het menu de juiste onclickListeners
 
-
 		periodeButton = (ImageButton)findViewById(R.id.btnPeriodes);
-
-//		periodeButton.setOnClickListener(new StartPeriodenActivity());
+		periodeButton.setOnClickListener(new StartPeriodenActivity());
 		
 		vakOverzichtButton = (ImageButton)findViewById(R.id.btnVakken);
-//		vakOverzichtButton.setOnClickListener(new StartVakkenOverzichtActivity());
+		vakOverzichtButton.setOnClickListener(new StartVakkenOverzichtActivity());
 		
 		toetsOverzichtButton = (ImageButton)findViewById(R.id.btnToetsen);
-//		toetsOverzichtButton.setOnClickListener(new startToetsenOverzichtActivity());
+		toetsOverzichtButton.setOnClickListener(new startToetsenOverzichtActivity());
 		
 		vulAankomendeToets();
 		checkFirstTime();
