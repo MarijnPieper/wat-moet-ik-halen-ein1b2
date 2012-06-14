@@ -1,7 +1,6 @@
 package nl.saxion.ein1b2.tests;
 
 import nl.saxion.ein1b2.CustomDate;
-import nl.saxion.ein1b2.Periode;
 import nl.saxion.ein1b2.TypeToets;
 import nl.saxion.ein1b2.Vak;
 import android.test.AndroidTestCase;
