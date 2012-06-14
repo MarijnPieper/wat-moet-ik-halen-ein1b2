@@ -56,9 +56,6 @@ public class ToetsenOverzichtAdapter extends ArrayAdapter<Toets>{
 			soort.setText(typetoetsNaam);
 			
 			CustomDate tmpDate = new CustomDate();
-			Log.w("datum toets: ", toets.getDatumtijd().toStringDatumTijd());
-			Log.w("datum nu: ", tmpDate.toStringDatumTijd());
-			Log.w("isgeschiedenis", Boolean.toString(toets.getDatumtijd().before(tmpDate)));
 			if (toets.getDatumtijd().before(tmpDate)) {
 				cijfer.setText(Double.toString(toets.getCijfer()));
 				doelcijfer.setText("");
@@ -68,15 +65,18 @@ public class ToetsenOverzichtAdapter extends ArrayAdapter<Toets>{
 				//Wat te halen voor het minimale cijfer
 				if (position == 0) {
 					db.open();
-					double teBehalen = db.selectMinCijferVak(toets.getId(), MININALECIJFER, typetoets.getSom());
+					Double teBehalen = db.selectMinCijferVak(toets.getId(), MININALECIJFER, typetoets.getSom());
 					db.close();
-					if (teBehalen < 0) doelcijfer.setText("Minimaal:" + Double.toString(0));
+					if (teBehalen.isNaN() || teBehalen.isInfinite()) doelcijfer.setText("Minimaal: N.V.T.");
+					else if (teBehalen < 0) doelcijfer.setText("Minimaal:" + Double.toString(0));
 					else if (teBehalen > 10){
 						//Te laag gemiddelde, waardoor het volgende cijfer hoger moet zijn dan een 10, 
 						// dus nu moet het verdeeld worden.			
 						double nuBijCijfer = 10 - MININALECIJFER;	
-						bijvolgendCijfer = (teBehalen - MININALECIJFER);
+						bijvolgendCijfer = (teBehalen - MININALECIJFER);						
 						doelcijfer.setText("Minimaal:" + Double.toString(teBehalen));
+						
+						
 					}
 					else doelcijfer.setText("Minimaal:" + Double.toString(teBehalen));
 				} else {

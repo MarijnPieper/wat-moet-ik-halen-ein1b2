@@ -1,14 +1,15 @@
 package nl.saxion.ein1b2;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.TimeZone;
 
+@SuppressWarnings("serial")
 public class CustomDate extends GregorianCalendar {
-
+	
+		
 	public CustomDate(){
 		super();
+		
 	}
 	
 	public CustomDate(int day, int month, int year){
@@ -25,8 +26,8 @@ public class CustomDate extends GregorianCalendar {
 		String[] splitDate = Date.split("-");
 		String[] splitDay = splitDate[2].split(" ");
 		String[] splitTime = splitDay[1].split(":");
-		set(Integer.parseInt(splitDate[0]), Integer.parseInt(splitDate[1]) -1, Integer.parseInt(splitDay[0]), Integer.parseInt(splitTime[0]), Integer.parseInt(splitTime[1]));
 		
+		set(Integer.parseInt(splitDate[0]), Integer.parseInt(splitDate[1]) - 1, Integer.parseInt(splitDay[0]), Integer.parseInt(splitTime[0]), Integer.parseInt(splitTime[1]));
 	}
 	
 	public void setTime(int hour, int minute){
@@ -35,24 +36,30 @@ public class CustomDate extends GregorianCalendar {
 	}
 	
 	public String toString(){
-		return Integer.toString(this.get(Calendar.DAY_OF_MONTH)) + "-" + Integer.toString(this.get(Calendar.MONTH) + 1) + "-" + Integer.toString(this.get(Calendar.YEAR));
+		String DATE_FORMAT = "dd-MM-yyyy";
+	    SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+	    sdf.setTimeZone(this.getTimeZone());
+		return sdf.format(this.getTime());
 	}
 	
 	public String toStringDatumTijd(){
-		return Integer.toString(this.get(Calendar.DAY_OF_MONTH)) + "-" + Integer.toString(this.get(Calendar.MONTH) + 1) + "-" + Integer.toString(this.get(Calendar.YEAR)) + " " + Integer.toString(this.get(Calendar.HOUR)) + ":" + Integer.toString(this.get(Calendar.MINUTE));
-	 }
+		String DATE_FORMAT = "dd-MM-yyyy HH:mm";
+	    SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+	    sdf.setTimeZone(this.getTimeZone());
+		return sdf.format(this.getTime());
+	}
 
 	public String toStringForDB(){
-		return Integer.toString(this.get(Calendar.YEAR)) + "-" + Integer.toString(this.get(Calendar.MONTH) + 1) + "-" + Integer.toString(this.get(Calendar.DAY_OF_MONTH)) + " " + Integer.toString(this.get(Calendar.HOUR)) + ":" + Integer.toString(this.get(Calendar.MINUTE));
-//		String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
-//	    SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
-//		return sdf.format(this.getTime());
-		// Oude code voor format.
+		String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+	    SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+	    sdf.setTimeZone(this.getTimeZone());
+		return sdf.format(this.getTime());
 	}
 	
 	public String getTimeAsString(){
 		String DATE_FORMAT = "HH:mm";
 	    SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+	    sdf.setTimeZone(this.getTimeZone());
 		return sdf.format(this.getTime());
 	}
 

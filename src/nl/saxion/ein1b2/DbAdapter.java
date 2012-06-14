@@ -194,10 +194,10 @@ public class DbAdapter {
 		}
 	}
 	
-	public double selectMinCijferVak(int toetsid, double minimaleCijfer, int wegingDezeToets) {
-		  double totaalCijfers = new Double(0);
+	public Double selectMinCijferVak(int toetsid, double minimaleCijfer, int wegingDezeToets) {
+		  Double totaalCijfers = new Double(0);
 		  int totaalWegingen = 0;
-		  double teBehalen = new Double(0);
+		  Double teBehalen = new Double(0);
 		  
 		  String[] args = new String[]{String.valueOf(toetsid)};
 		  String query = "SELECT sum(toets.cijfer) as totaal_cijfers, count(toetstype.som) as totaal_wegingen FROM toets LEFT OUTER JOIN toetstype ON toets.toetstype_id = toetstype.id " 
@@ -214,11 +214,15 @@ public class DbAdapter {
 		  }
 		  
 		  teBehalen = ((minimaleCijfer * (totaalWegingen + wegingDezeToets)) - totaalCijfers) / wegingDezeToets;
-		  BigDecimal bd = new BigDecimal(teBehalen);
-		  bd = bd.setScale(1,BigDecimal.ROUND_HALF_UP);
+		  if (!teBehalen.isNaN() && !teBehalen.isInfinite()){
+			  BigDecimal bd = new BigDecimal(teBehalen);
+			  bd = bd.setScale(1,BigDecimal.ROUND_HALF_UP);
 		  
-		  return bd.doubleValue();
-
+			  return bd.doubleValue();
+		  }
+		  else {
+			  return teBehalen;
+		  }
 	}
 
 	public ArrayList<Vak> selectVakken(int pakketID) {
