@@ -139,39 +139,23 @@ public class DbAdapter {
 	}
 
 	public Toets selectAankomendeToets(int periodeId) {
-		String ids = "";
 		String[] args = new String[]{String.valueOf(periodeId)};
-		String query = "SELECT id FROM vak WHERE periode_id=?";
+
+		String query = "SELECT t.datumtijd, v.naam, o.naam " +
+				"FROM toets t " +
+				"INNER JOIN vak v ON v.id = t.vak_ID " +
+				"INNER JOIN toetstype o ON o.id = t.toetstype_id " +
+				"WHERE t.vak_ID IN (SELECT id FROM vak WHERE periode_id=?) AND t.datumtijd > datetime() ORDER BY t.datumtijd ASC " +
+				"Limit 1";
 
 		Cursor cursor = mydb.rawQuery(query, args);
+		Toets toets = new Toets("");
 		cursor.moveToFirst();
-
-		while (!cursor.isAfterLast()) {
-			ids = ids + cursor.getString(0) + ",";
+		while (!cursor.isAfterLast()){
+			toets = new Toets(new CustomDate(cursor.getString(0)), cursor.getString(1), cursor.getString(2)); 
 			cursor.moveToNext();
 		}
-		
-		if (!ids.equals("")) {
-			ids = ids.substring(0, ids.length() - 1);
-		
-			query = "SELECT t.datumtijd, v.naam, o.naam FROM toets t LEFT OUTER JOIN vak v ON v.id = t.vak_ID LEFT OUTER JOIN toetstype o ON o.id = t.toetstype_id WHERE t.vak_ID IN (?) AND t.datumtijd > datetime() ORDER BY t.datumtijd ASC";
-			args = new String[]{ids};
-
-			cursor = mydb.rawQuery(query, args);
-			cursor.moveToFirst();
-			
-
-			Toets t = new Toets(cursor.getString(2), cursor.getString(1), new CustomDate(cursor.getString(0)));
-
-			return t;
-		}
-		else {  // Geen toets ingesteld, lege toets teruggeven
-			cursor.moveToFirst();
-			return new Toets(0, "", new CustomDate(31, 10, 1990));
-		}
-		
-
-		
+		return toets;
 	}
 
 
@@ -204,30 +188,35 @@ public class DbAdapter {
 	}
 
 	public double selectMinCijferVak(int toetsid, double minimaleCijfer, int wegingDezeToets) {
-		double totaalCijfers = new Double(0);
-		int totaalWegingen = 0;
-		double teBehalen = new Double(0);
+		
+		  double totaalCijfers = new Double(0);
+		  int totaalWegingen = 0;
+		  Double teBehalen = new Double(0);
+		  
+		  String[] args = new String[]{String.valueOf(toetsid)};
+		  String query = "SELECT sum(toets.cijfer) as totaal_cijfers, count(toetstype.som) as totaal_wegingen FROM toets LEFT OUTER JOIN toetstype ON toets.toetstype_id = toetstype.id " 
+				  + "WHERE toets.vak_id=(select vak_id from toets where id=? limit 1)"
+				  + "AND toets.cijfer is not NULL " +
+				  "AND toets.cijfer != '0.0'";
+		  Cursor cursor = mydb.rawQuery(query, args);
+		  cursor.moveToFirst();
+		  
+		  while (cursor.isFirst()) {
+			  totaalCijfers = cursor.getDouble(0);   
+			  totaalWegingen = cursor.getInt(1);
+			  cursor.moveToNext();
+		  }
+		  
+		  teBehalen = ((minimaleCijfer * (totaalWegingen + wegingDezeToets)) - totaalCijfers) / wegingDezeToets;
+		  if (!teBehalen.equals(Double.NaN)) {
+			  BigDecimal bd = new BigDecimal(teBehalen);
+			  bd = bd.setScale(1,BigDecimal.ROUND_HALF_UP);
+			  
+			  return bd.doubleValue();
+		  }
+		  return teBehalen;
 
-		String[] args = new String[]{String.valueOf(toetsid)};
-		String query = "SELECT sum(toets.cijfer) as totaal_cijfers, count(toetstype.som) as totaal_wegingen FROM toets LEFT OUTER JOIN toetstype ON toets.toetstype_id = toetstype.id " 
-				+ "WHERE toets.vak_id=(select vak_id from toets where id=? limit 1)"
-				+ "AND toets.cijfer is not NULL " +
-				"AND toets.cijfer != '0.0'";
-		Cursor cursor = mydb.rawQuery(query, args);
-		cursor.moveToFirst();
 
-		while (cursor.isFirst()) {
-			totaalCijfers = cursor.getDouble(0);   
-			totaalWegingen = cursor.getInt(1);
-			cursor.moveToNext();
-		}
-
-		teBehalen = ((minimaleCijfer * (totaalWegingen + wegingDezeToets)) - totaalCijfers) / wegingDezeToets;
-//		if ()
-		BigDecimal bd = new BigDecimal(teBehalen);
-		bd = bd.setScale(1,BigDecimal.ROUND_HALF_UP);
-
-		return bd.doubleValue();
 
 	}
 

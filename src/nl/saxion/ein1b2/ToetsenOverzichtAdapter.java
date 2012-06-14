@@ -68,7 +68,7 @@ public class ToetsenOverzichtAdapter extends ArrayAdapter<Toets>{
 				//Wat te halen voor het minimale cijfer
 				if (position == 0) {
 					db.open();
-					double teBehalen = db.selectMinCijferVak(toets.getId(), MININALECIJFER, typetoets.getSom());
+					Double teBehalen = db.selectMinCijferVak(toets.getId(), MININALECIJFER, typetoets.getSom());
 					db.close();
 					if (teBehalen < 0) doelcijfer.setText("Minimaal:" + Double.toString(0));
 					else if (teBehalen > 10){
@@ -76,9 +76,19 @@ public class ToetsenOverzichtAdapter extends ArrayAdapter<Toets>{
 						// dus nu moet het verdeeld worden.			
 						double nuBijCijfer = 10 - MININALECIJFER;	
 						bijvolgendCijfer = (teBehalen - MININALECIJFER);
+						if (!teBehalen.equals(Double.NaN)) {
+							doelcijfer.setText("Minimaal:" + Double.toString(teBehalen));
+						}
+						else {
+							doelcijfer.setText("Minimaal: -");
+						}
+					}
+					else if (!teBehalen.equals(Double.NaN)) {
 						doelcijfer.setText("Minimaal:" + Double.toString(teBehalen));
 					}
-					else doelcijfer.setText("Minimaal:" + Double.toString(teBehalen));
+					else {
+						doelcijfer.setText("Minimaal: -");
+					}
 				} else {
 					if (bijvolgendCijfer <= (10 - MININALECIJFER)) {
 						doelcijfer.setText("Minimaal:" + Double.toString(MININALECIJFER + bijvolgendCijfer));

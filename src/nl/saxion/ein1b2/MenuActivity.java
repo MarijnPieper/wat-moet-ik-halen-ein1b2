@@ -3,6 +3,8 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -51,6 +53,7 @@ public class MenuActivity extends Activity {
 		checkFirstTime();
 		
 	}
+	
 
 	// Check of er al een Periode bestaat, zo niet Wizard starten.
 	private void checkFirstTime() {
@@ -111,20 +114,22 @@ public class MenuActivity extends Activity {
 		}
 		db.open();
 		toets = db.selectAankomendeToets(nID);
-		if (toets.getId() != 0) {
-			vakNaam.setText(toets.getBeschrijving());
+		if (toets != null) {
+			vakNaam.setText(toets.getVaknaam());
 			toetsType.setText(toets.getToetstypenaam());
 			datumTijd.setText(toets.getDatumtijd().toStringDatumTijd());
 		}
 		else {
-			vakNaam.setText("Geen aankomende toetsen");
-			toetsType.setText("Geen aankomende toetsen");
+			vakNaam.setText("");
+			toetsType.setText("");
 			datumTijd.setText("Geen aankomende toetsen");
 		}
 		
 		db.close();
 
 	}
+	
+	
 	
 
 
