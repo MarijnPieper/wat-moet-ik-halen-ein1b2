@@ -60,14 +60,14 @@ public class ToetsToevoegenActivity extends Activity {
 
 		//Datum
 		txtStartDatum = (EditText) findViewById(R.id.txtStartDatum);
-		startDatum = new CustomDate();
+		//startDatum = new CustomDate();
 		txtStartDatum.setText(startDatum.toString());
 		txtStartDatum.setOnFocusChangeListener(new showOnFocusDatum());
 		txtStartDatum.setOnClickListener(new showOnClickDatum());
 
 		//Tijd		
 		txtStartTijd = (EditText)findViewById(R.id.txtStartTijd);
-		txtStartTijd.setText(startDatum.getTimeAsString());
+		//txtStartTijd.setText(startDatum.getTimeAsString());
 		txtStartTijd.setOnFocusChangeListener(new showOnFocusTijd());
 		txtStartTijd.setOnClickListener(new showOnClickDatum());
 

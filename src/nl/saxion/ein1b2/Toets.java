@@ -1,7 +1,8 @@
 package nl.saxion.ein1b2;
 
+import java.io.Serializable;
 
-public class Toets {
+public class Toets implements Serializable {
 					
 	private int id;
 	private int toetstype_id;

@@ -62,6 +62,7 @@ public class MenuActivity extends Activity {
 
 		if (periodes.isEmpty()) {
 			Intent i = new Intent(this, WizardActivity.class); 
+			i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 			startActivity(i);
 		} 
 		else {
@@ -124,11 +125,6 @@ public class MenuActivity extends Activity {
 		db.close();
 
 	}
-	
-	
-	
-
-
 
 	public class StartPeriodenActivity implements OnClickListener {
 

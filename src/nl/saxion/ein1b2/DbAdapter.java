@@ -137,6 +137,11 @@ public class DbAdapter {
 		}
 		return toetsen;
 	}
+	
+	public void updateToets(Toets t) {
+		String[] args = null;
+		String query = "UPDATE Toets set Cijfer=? WHERE ";
+	}
 
 	public Toets selectAankomendeToets(int periodeId) {
 		String[] args = new String[]{String.valueOf(periodeId)};
@@ -218,6 +223,10 @@ public class DbAdapter {
 			  return teBehalen;
 		  }
 	}
+	
+	public void updateCijferToets(Toets t) {
+		Cursor cursor = mydb.rawQuery("SELECT * FROM ", null);
+	}
 
 	public ArrayList<Vak> selectVakken(int pakketID) {
 		ArrayList<Vak> vakken = new ArrayList<Vak>();
@@ -258,7 +267,7 @@ public class DbAdapter {
 				+ ", toetstype_id INTEGER NOT NULL"
 				+ ", beschrijving VARCHAR(255)"
 				+ ", datumtijd DATETIME"				
-				+ ", cijfer DOUBLE"				
+				+ ", cijfer DOUBLE"		
 				+ ", FOREIGN KEY(vak_id) REFERENCES vak(id)"
 				+ ", FOREIGN KEY(toetstype_id) REFERENCES toetstype(id));";
 

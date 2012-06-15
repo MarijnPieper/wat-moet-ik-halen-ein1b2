@@ -1,26 +1,28 @@
 package nl.saxion.ein1b2;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Spinner;
 
-public class ToetsenOverzichtActivity extends Activity implements OnCheckedChangeListener, OnItemSelectedListener {
+public class ToetsenOverzichtActivity extends Activity implements OnCheckedChangeListener, OnItemSelectedListener, OnItemClickListener {
 	private DbAdapter dbHelper;
 	RadioButton rbnAankomend;
 	RadioButton rbnGeschiedenis;
@@ -85,8 +87,10 @@ public class ToetsenOverzichtActivity extends Activity implements OnCheckedChang
 		 ListView lvwToetsen = (ListView) findViewById(R.id.lvwToetsen);
 		 toetsAdapter = new ToetsenOverzichtAdapter(this, R.layout.toetsenoverzicht, toetsen);
 		 lvwToetsen.setAdapter(toetsAdapter);
+		 lvwToetsen.setOnItemClickListener(this);
 		 
 	 }
+	 
 
 	 //Radiobuttons aankomend en geschiedenis
 	public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -119,5 +123,31 @@ public class ToetsenOverzichtActivity extends Activity implements OnCheckedChang
 		
 		
 	}
-	
+
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		
+		ListView lvwToetsen = (ListView) findViewById(R.id.lvwToetsen);
+		Toets t = (Toets) lvwToetsen.getAdapter().getItem(position);
+		
+		alert.setTitle("Cijfer toevoegen");
+		alert.setMessage("Voer hieronder het cijfer in:");
+		final EditText input = new EditText(this);
+		alert.setView(input);
+		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+			
+			public void onClick(DialogInterface dialog, int which) {
+				String vaknaam = input.getText().toString();
+				//vakToevoegen(vaknaam);
+				return;						
+			}
+		});
+		alert.setNegativeButton("Annuleren", new DialogInterface.OnClickListener() {
+			
+			public void onClick(DialogInterface dialog, int which) {
+				return;						
+			}
+		});
+		alert.show();
+	}
 }

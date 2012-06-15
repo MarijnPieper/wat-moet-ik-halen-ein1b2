@@ -82,9 +82,12 @@ public class ActivityVakkenpakketToevoegen extends Activity implements OnClickLi
 			Periode pakket = new Periode(naam, startDatum, eindDatum, arrVak);
 			dbHelper.open();
 			dbHelper.insertVakkenpakket(pakket);
-			dbHelper.close();	
+			dbHelper.close();
 			Intent i = new Intent(this, PeriodeActivity.class);
+			i.setFlags(0x04000000);
 			startActivity(i);
+//			Intent i = new Intent(this, PeriodeActivity.class);
+//			startActivity(i);
 		}
 	}
 	
