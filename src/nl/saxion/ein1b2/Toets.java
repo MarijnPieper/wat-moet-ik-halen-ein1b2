@@ -17,8 +17,8 @@ public class Toets {
 		setDatumtijd(datum);
 	}
 	
-	public Toets(int id, String beschrijving, CustomDate datum) {
-		setId(id);
+	public Toets(int toetstype_id, String beschrijving, CustomDate datum) {
+		setToetstype_id(toetstype_id);
 		setBeschrijving(beschrijving);
 		setDatumtijd(datum);
 	}
