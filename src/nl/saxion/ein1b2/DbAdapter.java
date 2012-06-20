@@ -105,7 +105,9 @@ public class DbAdapter {
 	public ArrayList<Toets> selectToetsen(int vakid, boolean aankomend, boolean geschiedenis){
 		ArrayList<Toets> toetsen = new ArrayList<Toets>();
 		String[] args = null;
-		String query = "SELECT t.id, t.toetstype_id, t.beschrijving, t.datumtijd, t.cijfer, v.naam FROM toets t LEFT OUTER JOIN vak v ON v.id = t.vak_id ";
+		String query = "SELECT t.id, t.toetstype_id, t.beschrijving, t.datumtijd, t.cijfer, v.naam " +
+				"FROM toets t " +
+				"LEFT OUTER JOIN vak v ON v.id = t.vak_id ";
 		String where = "";
 		String orderby = "";
 		if (vakid != 0) {
@@ -127,8 +129,7 @@ public class DbAdapter {
 		Cursor cursor = mydb.rawQuery(query + where + orderby, args);
 		cursor.moveToFirst();
 
-		while (cursor.isAfterLast() == false) {
-			String tmp = cursor.getString(3);
+		while (cursor.isAfterLast() == false) {			
 			Toets toets = new Toets(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), new CustomDate(cursor.getString(3)), cursor.getInt(4), cursor.getString(5));
 			toetsen.add(toets);
 			cursor.moveToNext();
@@ -197,7 +198,8 @@ public class DbAdapter {
 		  Double teBehalen = new Double(0);
 		  
 		  String[] args = new String[]{String.valueOf(toetsid)};
-		  String query = "SELECT sum(toets.cijfer) as totaal_cijfers, count(toetstype.som) as totaal_wegingen FROM toets LEFT OUTER JOIN toetstype ON toets.toetstype_id = toetstype.id " 
+		  String query = "SELECT (sum(toets.cijfer) * sum(toetstype.som)) as totaal_cijfers, sum(toetstype.som) as totaal_wegingen " +
+		  		"FROM toets LEFT OUTER JOIN toetstype ON toets.toetstype_id = toetstype.id " 
 				  + "WHERE toets.vak_id=(select vak_id from toets where id=? limit 1)"
 				  + "AND toets.cijfer is not NULL " +
 				  "AND toets.cijfer != '0.0'";

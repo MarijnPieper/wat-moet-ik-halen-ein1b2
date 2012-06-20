@@ -1,12 +1,13 @@
 package nl.saxion.ein1b2;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.GregorianCalendar;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,12 +51,35 @@ public class ToetsenOverzichtAdapter extends ArrayAdapter<Toets>{
 			String typetoetsNaam = "";
 			TypeToets typetoets = new TypeToets(0, "", 0);
 			for (TypeToets type : typeToetsen){
-				if (type.getToetsID() == toets.getToetstype_id()) typetoets = type;
+				if (type.getToetsID() == toets.getToetstype_id()) {
+					typetoets = type;
+					break;
+				}
 			}
 			typetoetsNaam = typetoets.getNaam();
 			soort.setText(typetoetsNaam);
 			
 			CustomDate tmpDate = new CustomDate();
+//			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//        	Date date1 = null;
+//        	Date date2 = null;
+//			try {
+//				date1 = sdf.parse(toets.getDatumtijd().toStringForDB());
+//				date2 = sdf.parse(tmpDate.toStringForDB());
+//			} catch (ParseException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//        	
+//        	Calendar cal1 = Calendar.getInstance();
+//        	Calendar cal2 = Calendar.getInstance();
+//        	cal1.setTime(date1);
+//        	cal2.setTime(date2);
+			
+			
+			
+			//Als de toets verleden is:
+			//TODO data's vergelijking controleren
 			if (toets.getDatumtijd().before(tmpDate)) {
 				cijfer.setText(Double.toString(toets.getCijfer()));
 				doelcijfer.setText("");
@@ -68,7 +92,7 @@ public class ToetsenOverzichtAdapter extends ArrayAdapter<Toets>{
 					Double teBehalen = db.selectMinCijferVak(toets.getId(), MININALECIJFER, typetoets.getSom());
 					db.close();
 					if (teBehalen.isNaN() || teBehalen.isInfinite()) doelcijfer.setText("Minimaal: N.V.T.");
-					else if (teBehalen < 0) doelcijfer.setText("Minimaal:" + Double.toString(0));
+					else if (teBehalen <= 10) doelcijfer.setText("Minimaal:" + teBehalen);
 					else if (teBehalen > 10){
 						//Te laag gemiddelde, waardoor het volgende cijfer hoger moet zijn dan een 10, 
 						// dus nu moet het verdeeld worden.			
