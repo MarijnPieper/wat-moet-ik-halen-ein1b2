@@ -132,7 +132,7 @@ public class DbAdapter {
 		cursor.moveToFirst();
 
 		while (cursor.isAfterLast() == false) {			
-			Toets toets = new Toets(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), new CustomDate(cursor.getString(3)), cursor.getInt(4), cursor.getString(5));
+			Toets toets = new Toets(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), new CustomDate(cursor.getString(3)), cursor.getDouble(4), cursor.getString(5));
 			toetsen.add(toets);
 			cursor.moveToNext();
 		}
@@ -188,13 +188,13 @@ public class DbAdapter {
 		}
 	}
 	
-	public Double selectMinCijferVak(int toetsid, double minimaleCijfer, int wegingDezeToets) {
+	public Double selectMinCijferVak(int toetsid, double minimaleCijfer, int wegingDezeToets, ArrayList<Toets> tebehalentoetsen, ArrayList<TypeToets> typetoetsen) {
 		  Double totaalCijfers = new Double(0);
 		  int totaalWegingen = 0;
 		  Double teBehalen = new Double(0);
 		  
 		  String[] args = new String[]{String.valueOf(toetsid)};
-		  String query = "SELECT (sum(toets.cijfer) * sum(toetstype.som)) as totaal_cijfers, sum(toetstype.som) as totaal_wegingen " +
+		  String query = "SELECT sum(toets.cijfer * toetstype.som) as totaal_cijfers, sum(toetstype.som) as totaal_wegingen " +
 		  		"FROM toets LEFT OUTER JOIN toetstype ON toets.toetstype_id = toetstype.id " 
 				  + "WHERE toets.vak_id=(select vak_id from toets where id=? limit 1)"
 				  + "AND toets.cijfer is not NULL " +
@@ -207,7 +207,16 @@ public class DbAdapter {
 			  totaalWegingen = cursor.getInt(1);
 			  cursor.moveToNext();
 		  }
-		  
+		  for (Toets toets : tebehalentoetsen){
+			  for (TypeToets type : typetoetsen){
+				  if (type.getToetsID() == toets.getToetstype_id()){
+					  totaalCijfers += toets.getTebehalencijfer() * type.getSom();
+					  totaalWegingen += type.getSom();
+					  break;
+				  }
+			  }
+			  
+		  }
 		  teBehalen = ((minimaleCijfer * (totaalWegingen + wegingDezeToets)) - totaalCijfers) / wegingDezeToets;
 
 		  if (!teBehalen.isNaN() && !teBehalen.isInfinite()){
