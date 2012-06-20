@@ -14,8 +14,6 @@ public class ToetsenOverzichtAdapter extends ArrayAdapter<Toets>{
 	private LayoutInflater inflater;
 	private DbAdapter db;
 	private final double MININALECIJFER = 5.5;	
-	private ArrayList<TypeToets> typeToetsen;	
-	private double bijvolgendCijfer = 0;
 	private ArrayList<Toets> tebehalenToetsen;
 	
 	
@@ -24,9 +22,6 @@ public class ToetsenOverzichtAdapter extends ArrayAdapter<Toets>{
 		inflater = LayoutInflater.from(context);
 		db = new DbAdapter(context);
 		
-		db.open();
-		typeToetsen = db.selectTypeToetsen();
-		db.close();	
 	}
 	
 	@Override
@@ -44,17 +39,12 @@ public class ToetsenOverzichtAdapter extends ArrayAdapter<Toets>{
 			TextView doelcijfer = (TextView) convertView.findViewById(R.id.lblDoelcijfer);
 			
 			vak.setText(toets.getVaknaam());	
-				
-			String typetoetsNaam = "";
-			TypeToets typetoets = new TypeToets(0, "", 0);
-			for (TypeToets type : typeToetsen){
-				if (type.getToetsID() == toets.getToetstype_id()) {
-					typetoets = type;
-					break;
-				}
-			}
-			typetoetsNaam = typetoets.getNaam();
-			soort.setText(typetoetsNaam);
+			
+			db.open();
+			TypeToets typetoets = db.selectTypeToets(toets.getToetstype_id());
+			db.close();
+			
+			soort.setText(typetoets.getNaam());
 
 			CustomDate tmpDate = new CustomDate();
 			if (toets.getDatumtijd().before(tmpDate)) {
@@ -66,7 +56,7 @@ public class ToetsenOverzichtAdapter extends ArrayAdapter<Toets>{
 				//Wat te halen voor het minimale cijfer
 				if (position == 0) {
 					db.open();
-					Double teBehalen = db.selectMinCijferVak(toets.getId(), MININALECIJFER, typetoets.getSom(), new ArrayList<Toets>(), new ArrayList<TypeToets>());
+					Double teBehalen = db.selectMinCijferVak(toets, MININALECIJFER, new ArrayList<Toets>());
 					db.close();
 					if (teBehalen.isNaN() || teBehalen.isInfinite()) doelcijfer.setText("Minimaal: N.V.T.");
 					else if (teBehalen <= 0) {
@@ -77,9 +67,6 @@ public class ToetsenOverzichtAdapter extends ArrayAdapter<Toets>{
 					}
 					else if (teBehalen <= 10) doelcijfer.setText("Minimaal:" + teBehalen);
 					else if (teBehalen > 10){
-						//Te laag gemiddelde, waardoor het volgende cijfer hoger moet zijn dan een 10, 
-						// dus nu moet het verdeeld worden.			
-						//bijvolgendCijfer = (teBehalen - 10);
 						doelcijfer.setText("Minimaal: 10");
 						tebehalenToetsen = new ArrayList<Toets>();
 						toets.setTebehalencijfer(10);
@@ -87,23 +74,22 @@ public class ToetsenOverzichtAdapter extends ArrayAdapter<Toets>{
 					}
 				} else {
 					db.open();
-					Double teBehalen = db.selectMinCijferVak(toets.getId(), MININALECIJFER, typetoets.getSom(), tebehalenToetsen, typeToetsen);
+					Double teBehalen = db.selectMinCijferVak(toets, MININALECIJFER, tebehalenToetsen);
 					db.close();
-					if (teBehalen <= 0) toets.setTebehalencijfer(0);
-					else if (teBehalen <= 10) toets.setTebehalencijfer(teBehalen);
-					else toets.setTebehalencijfer(10);
+					if (teBehalen <= 0) {
+						toets.setTebehalencijfer(0);
+						doelcijfer.setText("Minimaal: 0");
+					}
+					else if (teBehalen <= 10) {
+						toets.setTebehalencijfer(teBehalen);
+						doelcijfer.setText("Minimaal: " + teBehalen);
+					}
+					else { //(teBehalen > 10)
+						doelcijfer.setText("Minimaal: 10");
+						toets.setTebehalencijfer(10);
+					}
 					tebehalenToetsen.add(toets);
-					doelcijfer.setText("Minimaal:" + teBehalen);
-//					if (bijvolgendCijfer <= (10 - MININALECIJFER)) {
-//						doelcijfer.setText("Minimaal:" + Double.toString(MININALECIJFER + bijvolgendCijfer));
-//						tebehalenToetsen = null;
-//						//bijvolgendCijfer = 0;
-//					}
-//					else {
-//						double nuBijCijfer = 10 - MININALECIJFER;						
-//						bijvolgendCijfer = bijvolgendCijfer - (10 - MININALECIJFER);
-//						doelcijfer.setText("Minimaal:" + Double.toString(MININALECIJFER + nuBijCijfer));
-//					}
+					//doelcijfer.setText("Minimaal:" + teBehalen);
 				}
 			}
 			

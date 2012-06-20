@@ -24,11 +24,11 @@
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
-        android:id="@+id/textViewCijfer"
+        android:id="@+id/lblCijfer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="6.1"
+        android:text=""
         android:textSize="75dp"
         android:textStyle="bold|italic" 
         android:textColor="#C0C0C0"/>

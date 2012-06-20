@@ -27,7 +27,7 @@ public class MenuActivity extends Activity {
 	private ImageButton periodeButton;
 	private ImageButton vakOverzichtButton;
 	private ImageButton toetsOverzichtButton;
-
+	private TextView cijfer;
 
 
 
@@ -71,6 +71,7 @@ public class MenuActivity extends Activity {
 		else {
 			CustomDate curDate = new CustomDate();
 
+			//TODO: check of dit nog nodig is
 			if (this.nID == 0){
 				for (Periode periode : periodes) {
 					if (curDate.after(periode.getStartDatum()) && curDate.before(periode.getEindDatum())
@@ -96,9 +97,11 @@ public class MenuActivity extends Activity {
 		vakNaam = (TextView)findViewById(R.id.lblMenuVakNaam);
 		toetsType = (TextView)findViewById(R.id.lblMenuType);
 		datumTijd = (TextView)findViewById(R.id.lblMenuDatum);
+		cijfer = (TextView)findViewById(R.id.lblCijfer);
 		CustomDate curDate = new CustomDate();
 		db = new DbAdapter(this);
 		db.open();
+		//TODO check of dit dubbel is
 		periodes = new ArrayList<Periode>();
 		periodes = db.selectVakkenpakketten();
 		db.close();
@@ -117,7 +120,16 @@ public class MenuActivity extends Activity {
 		if (toets != null) {
 			vakNaam.setText(toets.getVaknaam());
 			toetsType.setText(toets.getToetstypenaam());
-			datumTijd.setText(toets.getDatumtijd().toStringDatumTijd());
+			datumTijd.setText(toets.getDatumtijd().toStringDatumTijd());			
+			Double minCijfer = db.selectMinCijferVak(toets, 5.5, new ArrayList<Toets>());
+			if (minCijfer.isNaN() || minCijfer.isInfinite()) cijfer.setText("");
+			else if (minCijfer <= 0) {
+				cijfer.setText("0");
+			} else if (minCijfer <= 10) {
+				cijfer.setText(minCijfer.toString());
+			} else if (minCijfer > 10){
+				cijfer.setText("10");
+			}
 		}
 		else {
 			vakNaam.setText("");
