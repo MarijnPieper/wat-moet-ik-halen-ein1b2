@@ -116,30 +116,53 @@ public class ToetsenOverzichtActivity extends Activity implements OnCheckedChang
 		toetsAdapter.addAll(dbHelper.selectToetsen(vakid, true, false));
 		dbHelper.close();
 		rbnAankomend.setChecked(true);
-		
 	}
 
 	public void onNothingSelected(AdapterView<?> arg0) {
 		
-		
 	}
 
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		ListView lvwToetsen = (ListView) findViewById(R.id.lvwToetsen);
+		final Toets t = (Toets) lvwToetsen.getAdapter().getItem(position);
+		Double curCijfer = t.getCijfer();
+		
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 		
-		ListView lvwToetsen = (ListView) findViewById(R.id.lvwToetsen);
-		Toets t = (Toets) lvwToetsen.getAdapter().getItem(position);
+		if (curCijfer.equals(0.0)) {
+			alert.setTitle("Cijfer toevoegen");
+		}
+		else {
+			alert.setTitle("Cijfer wijzigen");
+		}
 		
-		alert.setTitle("Cijfer toevoegen");
 		alert.setMessage("Voer hieronder het cijfer in:");
 		final EditText input = new EditText(this);
 		alert.setView(input);
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			
 			public void onClick(DialogInterface dialog, int which) {
-				String vaknaam = input.getText().toString();
-				//vakToevoegen(vaknaam);
-				return;						
+				t.setCijfer(Double.parseDouble(input.getText().toString()));
+				dbHelper.open();
+				dbHelper.updateCijferToets(t);
+				dbHelper.close();
+				
+				rbnAankomend = (RadioButton) findViewById(R.id.rbnAankomend);
+				rbnGeschiedenis = (RadioButton) findViewById(R.id.rbnGeschiedenis);
+				ArrayList<Toets> toetsen;
+				dbHelper.open();
+				if (rbnAankomend.isChecked()){
+					toetsen = dbHelper.selectToetsen(vakid, true, false);
+				}
+				else {
+					toetsen = dbHelper.selectToetsen(vakid, false, true);
+				}
+				dbHelper.close();
+				toetsAdapter.clear();
+				toetsAdapter.addAll(toetsen);	
+				
+				
+				return;				 		
 			}
 		});
 		alert.setNegativeButton("Annuleren", new DialogInterface.OnClickListener() {
@@ -149,5 +172,6 @@ public class ToetsenOverzichtActivity extends Activity implements OnCheckedChang
 			}
 		});
 		alert.show();
+		
 	}
 }

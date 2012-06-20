@@ -102,8 +102,6 @@ public class DbAdapter {
 		return resultaat;
 	}
 
-
-
 	public ArrayList<Toets> selectToetsen(int vakid, boolean aankomend, boolean geschiedenis){
 		ArrayList<Toets> toetsen = new ArrayList<Toets>();
 		String[] args = null;
@@ -141,6 +139,7 @@ public class DbAdapter {
 	public void updateToets(Toets t) {
 		String[] args = null;
 		String query = "UPDATE Toets set Cijfer=? WHERE ";
+		mydb.rawQuery(query, args);
 	}
 
 	public Toets selectAankomendeToets(int periodeId) {
@@ -225,7 +224,8 @@ public class DbAdapter {
 	}
 	
 	public void updateCijferToets(Toets t) {
-		Cursor cursor = mydb.rawQuery("SELECT * FROM ", null);
+		String[] args = new String[]{Double.toString(t.getCijfer()), Integer.toString(t.getId())};
+		mydb.execSQL("UPDATE toets SET cijfer=? WHERE id=? ", args);
 	}
 
 	public ArrayList<Vak> selectVakken(int pakketID) {
