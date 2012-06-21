@@ -5,10 +5,24 @@
     android:orientation="vertical"
     android:padding="5dp" >
 
-    <Spinner
-        android:id="@+id/sprVakken"
+    <LinearLayout
+        android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content" >
+
+        <Spinner
+            android:id="@+id/sprVakken"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <ImageButton
+	        android:id="@+id/btnVoegToetsToe"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:src="@drawable/toets_add_32x"
+	        android:background="@null" />
+    </LinearLayout>
 
     <RadioGroup
         android:id="@+id/rgbTijd"

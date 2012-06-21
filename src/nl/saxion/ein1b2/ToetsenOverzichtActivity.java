@@ -6,18 +6,20 @@ import java.util.Comparator;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -25,12 +27,13 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-public class ToetsenOverzichtActivity extends Activity implements OnCheckedChangeListener, OnItemSelectedListener, OnItemClickListener, OnItemLongClickListener {
+public class ToetsenOverzichtActivity extends Activity implements OnCheckedChangeListener, OnItemSelectedListener, OnItemClickListener {
 	private DbAdapter dbHelper;
 	RadioButton rbnAankomend;
 	RadioButton rbnGeschiedenis;
 	ToetsenOverzichtAdapter toetsAdapter;
 	int vakid;
+	int periodeid;	
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -40,14 +43,14 @@ public class ToetsenOverzichtActivity extends Activity implements OnCheckedChang
 		 setContentView(R.layout.toetsenoverzicht);
 		 Bundle extras = getIntent().getExtras();
 		 vakid = extras.getInt("vakid");
-		 int periodeid = extras.getInt("periodeid");
+		 periodeid = extras.getInt("periodeid");
+		 
 		 
 		 //Database connectie
 		 dbHelper = new DbAdapter(this);
          dbHelper.open();
          ArrayList<Vak> vakken = dbHelper.selectVakken(periodeid);
-         ArrayList<Toets> toetsen = dbHelper.selectToetsen(vakid, true, false);
-         //Collections.sort(toetsen, new CompareToets());
+         ArrayList<Toets> toetsen = dbHelper.selectToetsen(vakid, periodeid, true, false);
          dbHelper.close();
 		 
          //Spinner Vakken
@@ -79,6 +82,16 @@ public class ToetsenOverzichtActivity extends Activity implements OnCheckedChang
 		 sprVakken.setAdapter(vakAdapter);		 
 		 sprVakken.setSelection(thisVak);
 		 
+		 ImageButton btnToetsToevoegen = (ImageButton)findViewById(R.id.btnVoegToetsToe);
+		 btnToetsToevoegen.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				Intent i = new Intent(ToetsenOverzichtActivity.this, ToetsToevoegenActivity.class);
+				i.putExtra("periodeid", periodeid);
+				startActivity(i);				
+			}
+		});
+		 
 		 //Radiobuttons
 		 RadioGroup rgbTijd = (RadioGroup) findViewById(R.id.rgbTijd);
 		 rbnAankomend = (RadioButton) findViewById(R.id.rbnAankomend);
@@ -98,10 +111,10 @@ public class ToetsenOverzichtActivity extends Activity implements OnCheckedChang
 		ArrayList<Toets> toetsen;
 		dbHelper.open();
 		if (checkedId == rbnAankomend.getId()){
-			toetsen = dbHelper.selectToetsen(vakid, true, false);
+			toetsen = dbHelper.selectToetsen(vakid, periodeid, true, false);
 		}
 		else {
-			toetsen = dbHelper.selectToetsen(vakid, false, true);
+			toetsen = dbHelper.selectToetsen(vakid, periodeid, false, true);
 		}
 		dbHelper.close();
 		toetsAdapter.clear();
@@ -113,8 +126,8 @@ public class ToetsenOverzichtActivity extends Activity implements OnCheckedChang
 		Vak vak = (Vak) parent.getItemAtPosition(position);
 		vakid = vak.getVakID();
 		toetsAdapter.clear();
-		dbHelper.open();
-		toetsAdapter.addAll(dbHelper.selectToetsen(vakid, true, false));
+		dbHelper.open();			
+		toetsAdapter.addAll(dbHelper.selectToetsen(vakid, periodeid, true, false));
 		dbHelper.close();
 		rbnAankomend.setChecked(true);
 	}
@@ -154,7 +167,6 @@ public class ToetsenOverzichtActivity extends Activity implements OnCheckedChang
 			public void onClick(DialogInterface dialog, int which) {
 				Double newCijfer = Double.parseDouble(input.getText().toString());
 				double maxCijfer = 10;
-				
 				int c = Double.compare(newCijfer, maxCijfer);
 				
 				if (c < 0) {
@@ -168,10 +180,10 @@ public class ToetsenOverzichtActivity extends Activity implements OnCheckedChang
 					ArrayList<Toets> toetsen;
 					dbHelper.open();
 					if (rbnAankomend.isChecked()){
-						toetsen = dbHelper.selectToetsen(vakid, true, false);
+						toetsen = dbHelper.selectToetsen(vakid, periodeid, true, false);
 					}
 					else {
-						toetsen = dbHelper.selectToetsen(vakid, false, true);
+						toetsen = dbHelper.selectToetsen(vakid, periodeid, false, true);
 					}
 					dbHelper.close();
 					toetsAdapter.clear();
@@ -181,26 +193,29 @@ public class ToetsenOverzichtActivity extends Activity implements OnCheckedChang
 				}
 				else {
 					showToastHoogCijfer();
+				rbnAankomend = (RadioButton) findViewById(R.id.rbnAankomend);
+				rbnGeschiedenis = (RadioButton) findViewById(R.id.rbnGeschiedenis);
+				ArrayList<Toets> toetsen;
+				dbHelper.open();
+				if (rbnAankomend.isChecked()){
+					toetsen = dbHelper.selectToetsen(vakid, periodeid, true, false);
+				}
+				else {
+					toetsen = dbHelper.selectToetsen(vakid, periodeid, false, true);
+				}
 				}
 			}
 		});
 		alert.setNegativeButton("Annuleren", new DialogInterface.OnClickListener() {
 			
 			public void onClick(DialogInterface dialog, int which) {
-				return;						
+				return;					S	
 			}
 		});
 		alert.show();
 		
 	}
+	
 
 
-	public boolean onItemLongClick(AdapterView<?> parent, View view, int position,
-			long id) {
-		
-		
-		
-		
-		return false;
-	}
 }
