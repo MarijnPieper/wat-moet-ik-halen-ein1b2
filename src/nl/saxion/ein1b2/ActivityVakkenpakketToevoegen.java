@@ -34,6 +34,8 @@ public class ActivityVakkenpakketToevoegen extends Activity implements OnClickLi
 	static final int ERROR_STARTDATUM_KLEINERDAN_EINDDATUM_DIALOG_ID = 2;  
 	private long viewIdDialog = 0;
 	private DbAdapter dbHelper;
+	
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,15 +81,20 @@ public class ActivityVakkenpakketToevoegen extends Activity implements OnClickLi
 		if (naam != null && !naam.equals("")
 				&& startDatum != null
 				&& eindDatum != null){
-			Periode pakket = new Periode(naam, startDatum, eindDatum, arrVak);
-			dbHelper.open();
-			dbHelper.insertVakkenpakket(pakket);
-			dbHelper.close();
-			Intent i = new Intent(this, PeriodeActivity.class);
-			i.setFlags(0x04000000);
-			startActivity(i);
-//			Intent i = new Intent(this, PeriodeActivity.class);
-//			startActivity(i);
+			
+			if (startDatum.after(eindDatum)) {
+				showDialog(ERROR_STARTDATUM_KLEINERDAN_EINDDATUM_DIALOG_ID); 
+			} else {
+				Periode pakket = new Periode(naam, startDatum, eindDatum, arrVak);
+				dbHelper.open();
+				dbHelper.insertVakkenpakket(pakket);
+				dbHelper.close();
+				Intent i = new Intent(this, PeriodeActivity.class);
+				i.setFlags(0x04000000);
+				startActivity(i);
+	//			Intent i = new Intent(this, PeriodeActivity.class);
+	//			startActivity(i);
+			}
 		}
 	}
 	
@@ -159,19 +166,19 @@ public class ActivityVakkenpakketToevoegen extends Activity implements OnClickLi
 	class setDatumListener implements OnDateSetListener{
 
 		public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-			CustomDate tmpDate = new CustomDate(dayOfMonth, monthOfYear, year);
+			CustomDate tmpDate = new CustomDate(dayOfMonth, monthOfYear +1, year);
 			
 			if (viewIdDialog == txtStartDatum.getId()){
-				if (tmpDate.before(eindDatum) || tmpDate.equals(eindDatum)) {
+				//if (tmpDate.before(eindDatum) || tmpDate.equals(eindDatum)) {
 					startDatum.set(year, monthOfYear, dayOfMonth);
 					txtStartDatum.setText(startDatum.toString());
-				} else { showDialog(ERROR_STARTDATUM_KLEINERDAN_EINDDATUM_DIALOG_ID); }				
+				//} else { showDialog(ERROR_STARTDATUM_KLEINERDAN_EINDDATUM_DIALOG_ID); }				
 			}
 			else {
-				if (startDatum.before(tmpDate) || startDatum.equals(tmpDate)) {
+				//if (startDatum.before(tmpDate) || startDatum.equals(tmpDate)) {
 					eindDatum.set(year, monthOfYear, dayOfMonth);
 					txtEindDatum.setText(eindDatum.toString());
-				} else { showDialog(ERROR_STARTDATUM_KLEINERDAN_EINDDATUM_DIALOG_ID); }
+				//} else { showDialog(ERROR_STARTDATUM_KLEINERDAN_EINDDATUM_DIALOG_ID); }
 			}
 			
 		}

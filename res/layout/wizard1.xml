@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0.78"
-        android:text="\r\nIn WatMoetIkHalen kun je al je toetsen bijhouden! Voordat je dit kunt doen moet je eerst een periode toevoegen. In het volgende scherm kun je dit doen." />
+        android:text="\r\nIn Yes I Can kun je al je toetsen bijhouden! Voordat je dit kunt doen moet je eerst een periode toevoegen. In het volgende scherm kun je dit doen." />
 
     <Button
         android:id="@+id/btnWizardVolgende"
