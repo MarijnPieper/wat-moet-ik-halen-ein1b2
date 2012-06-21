@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -17,6 +18,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -41,12 +43,12 @@ public class ToetsenOverzichtActivity extends Activity implements OnCheckedChang
 		 vakid = extras.getInt("vakid");
 		 periodeid = extras.getInt("periodeid");
 		 
+		 
 		 //Database connectie
 		 dbHelper = new DbAdapter(this);
          dbHelper.open();
          ArrayList<Vak> vakken = dbHelper.selectVakken(periodeid);
          ArrayList<Toets> toetsen = dbHelper.selectToetsen(vakid, periodeid, true, false);
-         //Collections.sort(toetsen, new CompareToets());
          dbHelper.close();
 		 
          //Spinner Vakken
@@ -77,6 +79,16 @@ public class ToetsenOverzichtActivity extends Activity implements OnCheckedChang
 		 int thisVak = vakAdapter.getPosition(vak);
 		 sprVakken.setAdapter(vakAdapter);		 
 		 sprVakken.setSelection(thisVak);
+		 
+		 ImageButton btnToetsToevoegen = (ImageButton)findViewById(R.id.btnVoegToetsToe);
+		 btnToetsToevoegen.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				Intent i = new Intent(ToetsenOverzichtActivity.this, ToetsToevoegenActivity.class);
+				i.putExtra("periodeid", periodeid);
+				startActivity(i);				
+			}
+		});
 		 
 		 //Radiobuttons
 		 RadioGroup rgbTijd = (RadioGroup) findViewById(R.id.rgbTijd);
