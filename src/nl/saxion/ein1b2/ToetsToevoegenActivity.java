@@ -74,7 +74,6 @@ public class ToetsToevoegenActivity extends Activity {
 		txtStartTijd.setOnClickListener(new showOnClickDatum());
 	}
 
-
 	class VoegToetsToeOnClickListener implements OnClickListener {
 		public void onClick(View v) {
 			

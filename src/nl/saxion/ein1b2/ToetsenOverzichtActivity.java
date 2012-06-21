@@ -6,8 +6,9 @@ import java.util.Comparator;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputFilter;
+import android.text.InputType;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -22,6 +23,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class ToetsenOverzichtActivity extends Activity implements OnCheckedChangeListener, OnItemSelectedListener, OnItemClickListener, OnItemLongClickListener {
 	private DbAdapter dbHelper;
@@ -120,6 +122,11 @@ public class ToetsenOverzichtActivity extends Activity implements OnCheckedChang
 	public void onNothingSelected(AdapterView<?> arg0) {
 		
 	}
+	
+	private void showToastHoogCijfer() {
+		Toast toast = Toast.makeText(this, "Cijfer is hoger dan 10", 5);
+		toast.show();
+	}
 
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		ListView lvwToetsen = (ListView) findViewById(R.id.lvwToetsen);
@@ -137,30 +144,44 @@ public class ToetsenOverzichtActivity extends Activity implements OnCheckedChang
 		
 		alert.setMessage("Voer hieronder het cijfer in:");
 		final EditText input = new EditText(this);
+		input.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
+		InputFilter[] FilterArray = new InputFilter[1];
+		FilterArray[0] = new InputFilter.LengthFilter(3);
+		input.setFilters(FilterArray);
 		alert.setView(input);
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			
 			public void onClick(DialogInterface dialog, int which) {
-				t.setCijfer(Double.parseDouble(input.getText().toString()));
-				dbHelper.open();
-				dbHelper.updateCijferToets(t);
-				dbHelper.close();
+				Double newCijfer = Double.parseDouble(input.getText().toString());
+				double maxCijfer = 10;
 				
-				rbnAankomend = (RadioButton) findViewById(R.id.rbnAankomend);
-				rbnGeschiedenis = (RadioButton) findViewById(R.id.rbnGeschiedenis);
-				ArrayList<Toets> toetsen;
-				dbHelper.open();
-				if (rbnAankomend.isChecked()){
-					toetsen = dbHelper.selectToetsen(vakid, true, false);
+				int c = Double.compare(newCijfer, maxCijfer);
+				
+				if (c < 0) {
+					t.setCijfer(Double.parseDouble(input.getText().toString()));
+					dbHelper.open();
+					dbHelper.updateCijferToets(t);
+					dbHelper.close();
+					
+					rbnAankomend = (RadioButton) findViewById(R.id.rbnAankomend);
+					rbnGeschiedenis = (RadioButton) findViewById(R.id.rbnGeschiedenis);
+					ArrayList<Toets> toetsen;
+					dbHelper.open();
+					if (rbnAankomend.isChecked()){
+						toetsen = dbHelper.selectToetsen(vakid, true, false);
+					}
+					else {
+						toetsen = dbHelper.selectToetsen(vakid, false, true);
+					}
+					dbHelper.close();
+					toetsAdapter.clear();
+					toetsAdapter.addAll(toetsen);	
+					
+					return;	
 				}
 				else {
-					toetsen = dbHelper.selectToetsen(vakid, false, true);
+					showToastHoogCijfer();
 				}
-				dbHelper.close();
-				toetsAdapter.clear();
-				toetsAdapter.addAll(toetsen);	
-				
-				return;				 		
 			}
 		});
 		alert.setNegativeButton("Annuleren", new DialogInterface.OnClickListener() {
