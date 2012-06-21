@@ -29,6 +29,7 @@ public class ToetsenOverzichtActivity extends Activity implements OnCheckedChang
 	RadioButton rbnGeschiedenis;
 	ToetsenOverzichtAdapter toetsAdapter;
 	int vakid;
+	int periodeid;	
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -38,13 +39,13 @@ public class ToetsenOverzichtActivity extends Activity implements OnCheckedChang
 		 setContentView(R.layout.toetsenoverzicht);
 		 Bundle extras = getIntent().getExtras();
 		 vakid = extras.getInt("vakid");
-		 int periodeid = extras.getInt("periodeid");
+		 periodeid = extras.getInt("periodeid");
 		 
 		 //Database connectie
 		 dbHelper = new DbAdapter(this);
          dbHelper.open();
          ArrayList<Vak> vakken = dbHelper.selectVakken(periodeid);
-         ArrayList<Toets> toetsen = dbHelper.selectToetsen(vakid, true, false);
+         ArrayList<Toets> toetsen = dbHelper.selectToetsen(vakid, periodeid, true, false);
          //Collections.sort(toetsen, new CompareToets());
          dbHelper.close();
 		 
@@ -96,10 +97,10 @@ public class ToetsenOverzichtActivity extends Activity implements OnCheckedChang
 		ArrayList<Toets> toetsen;
 		dbHelper.open();
 		if (checkedId == rbnAankomend.getId()){
-			toetsen = dbHelper.selectToetsen(vakid, true, false);
+			toetsen = dbHelper.selectToetsen(vakid, periodeid, true, false);
 		}
 		else {
-			toetsen = dbHelper.selectToetsen(vakid, false, true);
+			toetsen = dbHelper.selectToetsen(vakid, periodeid, false, true);
 		}
 		dbHelper.close();
 		toetsAdapter.clear();
@@ -111,8 +112,8 @@ public class ToetsenOverzichtActivity extends Activity implements OnCheckedChang
 		Vak vak = (Vak) parent.getItemAtPosition(position);
 		vakid = vak.getVakID();
 		toetsAdapter.clear();
-		dbHelper.open();
-		toetsAdapter.addAll(dbHelper.selectToetsen(vakid, true, false));
+		dbHelper.open();			
+		toetsAdapter.addAll(dbHelper.selectToetsen(vakid, periodeid, true, false));
 		dbHelper.close();
 		rbnAankomend.setChecked(true);
 	}
@@ -151,10 +152,10 @@ public class ToetsenOverzichtActivity extends Activity implements OnCheckedChang
 				ArrayList<Toets> toetsen;
 				dbHelper.open();
 				if (rbnAankomend.isChecked()){
-					toetsen = dbHelper.selectToetsen(vakid, true, false);
+					toetsen = dbHelper.selectToetsen(vakid, periodeid, true, false);
 				}
 				else {
-					toetsen = dbHelper.selectToetsen(vakid, false, true);
+					toetsen = dbHelper.selectToetsen(vakid, periodeid, false, true);
 				}
 				dbHelper.close();
 				toetsAdapter.clear();

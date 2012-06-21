@@ -106,7 +106,7 @@ public class DbAdapter {
 		return typetoets;
 	}
 
-	public ArrayList<Toets> selectToetsen(int vakid, boolean aankomend, boolean geschiedenis){
+	public ArrayList<Toets> selectToetsen(int vakid, int periodeid, boolean aankomend, boolean geschiedenis){
 		ArrayList<Toets> toetsen = new ArrayList<Toets>();
 		String[] args = null;
 		String query = "SELECT t.id, t.toetstype_id, t.beschrijving, t.datumtijd, t.cijfer, v.naam " +
@@ -115,18 +115,19 @@ public class DbAdapter {
 		String where = "";
 		String orderby = "";
 		if (vakid != 0) {
-			where = "WHERE t.vak_id=? ";
+			where = "WHERE t.vak_id=? AND ";
 			args = new String[]{String.valueOf(vakid)};
 		}
-		if (aankomend == true){
-			if (vakid == 0) where = "where ";
-			else where += "AND ";
+		else {
+			where = "where v.periode_id = ? AND ";
+			args = new String[]{String.valueOf(periodeid)};
+		}
+		
+		if (aankomend == true){			
 			where += "t.datumtijd > datetime()";
 			orderby = " ORDER BY t.datumtijd ASC";
 		}
 		else if (geschiedenis == true){
-			if (vakid == 0) where = "where ";
-			else where += "AND ";
 			where += "t.datumtijd < datetime()";
 			orderby = " ORDER BY t.datumtijd DESC";
 		}
@@ -150,7 +151,7 @@ public class DbAdapter {
 	public Toets selectAankomendeToets(int periodeId) {
 		String[] args = new String[]{String.valueOf(periodeId)};
 
-		String query = "SELECT t.datumtijd, v.naam, o.naam " +
+		String query = "SELECT t.id, t.toetstype_id, t.beschrijving, t.datumtijd, t.cijfer, v.naam, o.naam " +
 				"FROM toets t " +
 				"INNER JOIN vak v ON v.id = t.vak_ID " +
 				"INNER JOIN toetstype o ON o.id = t.toetstype_id " +
@@ -161,7 +162,9 @@ public class DbAdapter {
 		Toets toets = null;
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()){
-			toets = new Toets(new CustomDate(cursor.getString(0)), cursor.getString(1), cursor.getString(2)); 
+			toets = new Toets(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), new CustomDate(cursor.getString(3)), cursor.getDouble(4), cursor.getString(5));
+			toets.setToetstypenaam(cursor.getString(6));
+			//toets = new Toets(new CustomDate(cursor.getString(0)), cursor.getString(1), cursor.getString(2)); 
 			cursor.moveToNext();
 		}
 		return toets;
