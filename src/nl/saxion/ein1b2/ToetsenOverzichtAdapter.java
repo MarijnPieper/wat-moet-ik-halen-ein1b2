@@ -56,22 +56,23 @@ public class ToetsenOverzichtAdapter extends ArrayAdapter<Toets>{
 				//Wat te halen voor het minimale cijfer
 				if (position == 0) {
 					db.open();
-					Double teBehalen = db.selectMinCijferVak(toets, MININALECIJFER, new ArrayList<Toets>());
+					Double teBehalen = db.selectMinCijferVak(toets, MININALECIJFER, new ArrayList<Toets>()); // 1
 					db.close();
+					tebehalenToetsen = new ArrayList<Toets>();
 					if (teBehalen.isNaN() || teBehalen.isInfinite()) doelcijfer.setText("Minimaal: N.V.T.");
 					else if (teBehalen <= 0) {
 						doelcijfer.setText("Minimaal: 0");
-						tebehalenToetsen = new ArrayList<Toets>();
 						toets.setTebehalencijfer(0);
-						tebehalenToetsen.add(toets);
 					}
-					else if (teBehalen <= 10) doelcijfer.setText("Minimaal:" + teBehalen);
+					else if (teBehalen <= 10) {
+						doelcijfer.setText("Minimaal:" + teBehalen);
+						toets.setTebehalencijfer(teBehalen);
+					}
 					else if (teBehalen > 10){
 						doelcijfer.setText("Minimaal: 10");
-						tebehalenToetsen = new ArrayList<Toets>();
 						toets.setTebehalencijfer(10);
-						tebehalenToetsen.add(toets);
 					}
+					tebehalenToetsen.add(toets);
 				} else {
 					db.open();
 					Double teBehalen = db.selectMinCijferVak(toets, MININALECIJFER, tebehalenToetsen);
