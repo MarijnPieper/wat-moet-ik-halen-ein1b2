@@ -107,7 +107,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".60" 
-                    android:inputType="numberDecimal"/>
+                    android:inputType="numberDecimal"
+                    android:maxLength="3"/>
             </LinearLayout>
 
 </LinearLayout>

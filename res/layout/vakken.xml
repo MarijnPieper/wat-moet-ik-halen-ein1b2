@@ -21,13 +21,6 @@
                 android:layout_weight="0.91"
                 android:text="@string/Vakken"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            <ImageButton
-                android:id="@+id/button1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/vak_add"
-                android:background="@null" />
 
 
         </LinearLayout>

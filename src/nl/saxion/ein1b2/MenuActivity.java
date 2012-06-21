@@ -1,17 +1,15 @@
 package nl.saxion.ein1b2;
 import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.TextView;
 import android.widget.ImageButton;
-
+import android.widget.TextView;
 
 
 public class MenuActivity extends Activity {

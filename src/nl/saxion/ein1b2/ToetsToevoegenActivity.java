@@ -9,6 +9,7 @@ import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,6 +22,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 public class ToetsToevoegenActivity extends Activity {
 
@@ -86,11 +88,19 @@ public class ToetsToevoegenActivity extends Activity {
 
 			//TODO beschrijving toevoegen			
 			if (cijfer != 0){
-				Toets toets = new Toets(typetoets.getToetsID(), "", startDatum, cijfer);
-				adapter.open();
-				adapter.insertToetsToevoegen(toets, vak.getVakID());
-				adapter.close();	
-				finish();
+				if (cijfer > 10) {
+					Context context = getApplicationContext();
+					CharSequence text = "Cijfer mag niet hoger dan 10 zijn";
+					int duration = Toast.LENGTH_LONG;
+					Toast toast = Toast.makeText(context, text, duration);
+					toast.show();
+				}else {
+					Toets toets = new Toets(typetoets.getToetsID(), "", startDatum, cijfer);
+					adapter.open();
+					adapter.insertToetsToevoegen(toets, vak.getVakID());
+					adapter.close();	
+					finish();
+				}
 			}
 			else {
 				Toets toets = new Toets(typetoets.getToetsID(), "", startDatum);
@@ -98,7 +108,7 @@ public class ToetsToevoegenActivity extends Activity {
 				adapter.insertToetsToevoegen(toets, vak.getVakID());
 				adapter.close();	
 				finish();
-			}	
+			}		
 		}	
 	}
 
