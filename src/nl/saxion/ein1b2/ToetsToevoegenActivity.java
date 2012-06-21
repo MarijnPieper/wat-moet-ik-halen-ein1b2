@@ -70,7 +70,6 @@ public class ToetsToevoegenActivity extends Activity {
 		//txtStartTijd.setText(startDatum.getTimeAsString());
 		txtStartTijd.setOnFocusChangeListener(new showOnFocusTijd());
 		txtStartTijd.setOnClickListener(new showOnClickDatum());
-
 	}
 
 

@@ -162,7 +162,11 @@ public class DbAdapter {
 		}
 		return toets;
 	}
-
+	
+	public void deleteVakkenpakket(Periode p) {
+		String[] args = new String[]{Integer.toString(p.getID())};
+		mydb.execSQL("DELETE FROM Periode WHERE id=?", args);
+	}
 
 	// TODO : Proefwerk / SO
 	public double selectGemCijferVak(int VakID) {

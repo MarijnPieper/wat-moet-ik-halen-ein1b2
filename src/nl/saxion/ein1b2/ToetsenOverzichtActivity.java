@@ -13,6 +13,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -22,13 +23,12 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Spinner;
 
-public class ToetsenOverzichtActivity extends Activity implements OnCheckedChangeListener, OnItemSelectedListener, OnItemClickListener {
+public class ToetsenOverzichtActivity extends Activity implements OnCheckedChangeListener, OnItemSelectedListener, OnItemClickListener, OnItemLongClickListener {
 	private DbAdapter dbHelper;
 	RadioButton rbnAankomend;
 	RadioButton rbnGeschiedenis;
 	ToetsenOverzichtAdapter toetsAdapter;
 	int vakid;
-	
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -87,8 +87,7 @@ public class ToetsenOverzichtActivity extends Activity implements OnCheckedChang
 		 ListView lvwToetsen = (ListView) findViewById(R.id.lvwToetsen);
 		 toetsAdapter = new ToetsenOverzichtAdapter(this, R.layout.toetsenoverzicht, toetsen);
 		 lvwToetsen.setAdapter(toetsAdapter);
-		 lvwToetsen.setOnItemClickListener(this);
-		 
+		 lvwToetsen.setOnItemClickListener(this);		 
 	 }
 	 
 
@@ -161,7 +160,6 @@ public class ToetsenOverzichtActivity extends Activity implements OnCheckedChang
 				toetsAdapter.clear();
 				toetsAdapter.addAll(toetsen);	
 				
-				
 				return;				 		
 			}
 		});
@@ -173,5 +171,15 @@ public class ToetsenOverzichtActivity extends Activity implements OnCheckedChang
 		});
 		alert.show();
 		
+	}
+
+
+	public boolean onItemLongClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		
+		
+		
+		
+		return false;
 	}
 }
