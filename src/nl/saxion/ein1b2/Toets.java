@@ -11,7 +11,16 @@ public class Toets implements Serializable {
 	private double cijfer;
 	private String vaknaam;
 	private String toetstypenaam;
+	private double tebehalencijfer;
 	
+	protected void setTebehalencijfer(double tebehalencijfer) {
+		this.tebehalencijfer = tebehalencijfer;
+	}
+	
+	protected double getTebehalencijfer() {
+		return tebehalencijfer;
+	}
+
 	public Toets(String toetstypenaam, String beschrijving, CustomDate datum) {		
 		setToetstypenaam(toetstypenaam);
 		setBeschrijving(beschrijving);

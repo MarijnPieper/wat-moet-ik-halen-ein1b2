@@ -91,15 +91,19 @@ public class DbAdapter {
 		return types;
 	}
 
-	public String selectTypeToets(int id){
+	public TypeToets selectTypeToets(int id){
 		String[] args = new String[]{String.valueOf(id)};
-		Cursor cursor = mydb.rawQuery("SELECT naam FROM toetstype WHERE id=?", args);
+		Cursor cursor = mydb.rawQuery("SELECT * FROM toetstype WHERE id=?", args);
 		boolean gevonden = cursor.moveToFirst();
 
-		String resultaat = "";
-		if (gevonden) resultaat = cursor.getString(0);
+		TypeToets typetoets = null;
+		//String resultaat = "";
+		if (gevonden) {
+			typetoets = new TypeToets(cursor.getInt(0), cursor.getString(1), cursor.getInt(2)); 
+			//resultaat = cursor.getString(0);
+		}
 
-		return resultaat;
+		return typetoets;
 	}
 
 	public ArrayList<Toets> selectToetsen(int vakid, boolean aankomend, boolean geschiedenis){
@@ -130,7 +134,7 @@ public class DbAdapter {
 		cursor.moveToFirst();
 
 		while (cursor.isAfterLast() == false) {			
-			Toets toets = new Toets(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), new CustomDate(cursor.getString(3)), cursor.getInt(4), cursor.getString(5));
+			Toets toets = new Toets(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), new CustomDate(cursor.getString(3)), cursor.getDouble(4), cursor.getString(5));
 			toetsen.add(toets);
 			cursor.moveToNext();
 		}
@@ -196,13 +200,13 @@ public class DbAdapter {
 		}
 	}
 	
-	public Double selectMinCijferVak(int toetsid, double minimaleCijfer, int wegingDezeToets) {
+	public Double selectMinCijferVak(Toets dezeToets, double minimaleCijfer, ArrayList<Toets> tebehalentoetsen) {
 		  Double totaalCijfers = new Double(0);
 		  int totaalWegingen = 0;
 		  Double teBehalen = new Double(0);
 		  
-		  String[] args = new String[]{String.valueOf(toetsid)};
-		  String query = "SELECT (sum(toets.cijfer) * sum(toetstype.som)) as totaal_cijfers, sum(toetstype.som) as totaal_wegingen " +
+		  String[] args = new String[]{String.valueOf(dezeToets.getId())};
+		  String query = "SELECT sum(toets.cijfer * toetstype.som) as totaal_cijfers, sum(toetstype.som) as totaal_wegingen " +
 		  		"FROM toets LEFT OUTER JOIN toetstype ON toets.toetstype_id = toetstype.id " 
 				  + "WHERE toets.vak_id=(select vak_id from toets where id=? limit 1)"
 				  + "AND toets.cijfer is not NULL " +
@@ -215,8 +219,18 @@ public class DbAdapter {
 			  totaalWegingen = cursor.getInt(1);
 			  cursor.moveToNext();
 		  }
-		  
-		  teBehalen = ((minimaleCijfer * (totaalWegingen + wegingDezeToets)) - totaalCijfers) / wegingDezeToets;
+		  for (Toets toets : tebehalentoetsen){
+			  if (toets.getVaknaam().equals(dezeToets.getVaknaam())){
+				  TypeToets type = this.selectTypeToets(toets.getToetstype_id());
+				  if (type != null){
+					  totaalCijfers += toets.getTebehalencijfer() * type.getSom();
+					  totaalWegingen += type.getSom();					  
+				  }
+			  }
+			  
+		  }
+		  TypeToets typetoets = this.selectTypeToets(dezeToets.getToetstype_id());
+		  if (typetoets != null) teBehalen = ((minimaleCijfer * (totaalWegingen + typetoets.getSom())) - totaalCijfers) / typetoets.getSom();
 
 		  if (!teBehalen.isNaN() && !teBehalen.isInfinite()){
 			  BigDecimal bd = new BigDecimal(teBehalen);
