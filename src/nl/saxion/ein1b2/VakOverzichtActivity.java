@@ -3,6 +3,8 @@ package nl.saxion.ein1b2;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +14,7 @@ import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
@@ -44,6 +47,40 @@ public class VakOverzichtActivity extends Activity implements OnItemClickListene
     	}
     	
     	checkFirstTime();
+    	
+    	ImageButton btnVakToevoegen = (ImageButton)findViewById(R.id.btnVoegVakToe);
+    	btnVakToevoegen.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+					AlertDialog.Builder alert = new AlertDialog.Builder(VakOverzichtActivity.this);
+					
+					alert.setTitle("Vak toevoegen");
+					alert.setMessage("Voer hieronder de naam van het vak:");
+					final EditText input = new EditText(VakOverzichtActivity.this);
+					alert.setView(input);
+					alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+						
+						public void onClick(DialogInterface dialog, int which) {
+							String vaknaam = input.getText().toString();
+							vakToevoegen(vaknaam);
+							return;						
+						}
+					});
+					alert.setNegativeButton("Annuleren", new DialogInterface.OnClickListener() {
+						
+						public void onClick(DialogInterface dialog, int which) {
+							return;						
+						}
+					});
+					alert.show();
+				}
+		});
+    	ImageButton voegToetsToe = (ImageButton)findViewById(R.id.buttonVoegToetsToe);
+		voegToetsToe.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				startToetsToevoegen();
+			}
+		});
     }
     
     @Override
@@ -98,14 +135,19 @@ public class VakOverzichtActivity extends Activity implements OnItemClickListene
        	lvVakken.setOnItemClickListener(this);
        	lvVakken.setAdapter(adapter);
        	
-       	ImageButton voegToetsToe = (ImageButton)findViewById(R.id.buttonVoegToetsToe);
-		voegToetsToe.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				startToetsToevoegen();
-			}
-		});
+       	
  	}
 
+	private void vakToevoegen(String vaknaam){
+		if (vaknaam != null && !vaknaam.equals("")){
+			Vak vak = new Vak(vaknaam, true);
+			db.open();
+	    	db.insertVak(nID, vak);
+	    	db.close();
+	    	initVakOverzicht();
+		}
+		return;	
+	}
 
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		Vak vak = (Vak) parent.getItemAtPosition(position);
