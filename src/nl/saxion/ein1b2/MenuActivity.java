@@ -26,12 +26,7 @@ public class MenuActivity extends Activity {
 	private ImageButton periodeButton;
 	private ImageButton vakOverzichtButton;
 	private ImageButton toetsOverzichtButton;
-<<<<<<< HEAD
-=======
 	private TextView cijfer;
-
-
->>>>>>> addd17679d4b94ae55b52b9ac2d36a28153bc09e
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -73,7 +68,6 @@ public class MenuActivity extends Activity {
 		else {
 			CustomDate curDate = new CustomDate();
 
-			//TODO: check of dit nog nodig is
 			if (this.nID == 0){
 				for (Periode periode : periodes) {
 					if (curDate.after(periode.getStartDatum()) && curDate.before(periode.getEindDatum())
@@ -88,9 +82,6 @@ public class MenuActivity extends Activity {
 			if (nID == 0) {
 				Intent i = new Intent(this, PeriodeActivity.class);
 				startActivity(i);
-			}
-			else {
-				// TODO : Scherm vullen met eerste toets
 			}
 		}
 	}
@@ -122,9 +113,6 @@ public class MenuActivity extends Activity {
 		if (toets != null) {
 			vakNaam.setText(toets.getVaknaam());
 			toetsType.setText(toets.getToetstypenaam());
-<<<<<<< HEAD
-			//datumTijd.setText(toets.getDatumtijd().toStringDatumTijd());
-=======
 			datumTijd.setText(toets.getDatumtijd().toStringDatumTijd());			
 			Double minCijfer = db.selectMinCijferVak(toets, 5.5, new ArrayList<Toets>());
 			if (minCijfer.isNaN() || minCijfer.isInfinite()) cijfer.setText("");
@@ -135,12 +123,11 @@ public class MenuActivity extends Activity {
 			} else if (minCijfer > 10){
 				cijfer.setText("10");
 			}
->>>>>>> addd17679d4b94ae55b52b9ac2d36a28153bc09e
 		}
 		else {
 			vakNaam.setText("");
 			toetsType.setText("");
-			//datumTijd.setText("Geen aankomende toetsen");
+			datumTijd.setText("Geen aankomende toetsen");
 		}
 		
 		db.close();
