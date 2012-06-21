@@ -60,6 +60,14 @@ public class DbAdapter {
 		}
 		return newPeriode;
 	}
+	
+	public void insertVak(int periodeId, Vak vak){
+		ContentValues vakvalues = new ContentValues();
+		vakvalues.put("periode_id", periodeId);
+		vakvalues.put("naam", vak.getNaam());
+		vakvalues.put("iscijfer", vak.isIscijfer());
+		mydb.insert("vak", null, vakvalues);
+	}
 
 	public ArrayList<Periode> selectVakkenpakketten(){
 		ArrayList<Periode> periode = new ArrayList<Periode>();
